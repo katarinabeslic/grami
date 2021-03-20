@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="help/fragments :: head"/>
+<body>
+
+<div th:replace="help/fragments :: nav"></div>
+
+	<div class="container"></div>
+ <!-- Error Section Begin-->
+    <section class="deal-of-week set-bg spad" data-setbg="img/time-bg.jpg">
+        <div class="container">
+            <div class="col-lg-6 text-center">
+                <div class="section-title">
+                    <h2>Oh no, there's been an error :(</h2>
+                    <p>Oops, we don't know what happened. Click on the button below to go back to the home page.</p>
+                </div>
+                
+                <a th:href="@{/}" class="primary-btn">Go Back</a>
+            </div>
+        </div>
+    </section>
+    <!-- Error Section End -->
+<div class="container"></div>
+    
+<div th:replace="help/fragments :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/help/fragments :: admin-head" />
+
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<div th:replace="admin/help/fragments :: navbar"></div>
+
+	<section class="product-shop spad page-details checkout-section spad" th:object="${vinyl}">
+		<div class="container">
+			<div class="checkout-form">
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="product-pic-zoom-edit existingImg">
+								<img class="product-big-img" id="img-y" th:src="${vinyl.imgUrl}" alt="">
+								<div class="zoom-icon">
+									<i class="fa fa-search-plus"></i>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							<label for="name">Vinyl Name</label> <input type="text" th:value="${vinyl.vinylName}"
+								id="name">
+							<div id="vinyl-name-alert" class="alert-class"></div>
+							<label for="name">Artist</label>
+							<input type="text" id="artistName" name="artistName" th:value="${vinyl.artist.stageName}">
+							<input type="button" value="Find" onclick="findOrCreateArtist()">
+							<div id="artist-response"></div>
+							<label for="price">Price (RSD)</label>
+							<input type="text" id="price" th:value="${vinyl.price}">
+							<div id="price-alert" class="alert-class"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-10">
+							<label for="description">Description</label>
+							<textarea id="description" th:inline="text">[[${vinyl.description}]]</textarea>
+							<div id="description-alert" class="alert-class"></div>
+						</div>
+						<div class="col-lg-5 admin-img">
+							<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+								<label for="img">Image</label>
+								<input id="imgUrl" type="file" name="file" accept="image/png, image/jpeg">
+							</form>
+							<div id="image-alert" class="alert-class"></div>
+						</div>
+						<div class="col-lg-5">
+							<label for="qt">Quantity</label>
+							<div>
+								<input id="quantity" type="text" th:value="${vinyl.quantity}">
+							</div>
+							<div id="quantity-alert" class="alert-class"></div>
+						</div>
+					</div>
+					<br>
+					<hr>
+					<div class="row">
+						<div class="col-lg-4">
+							<label for="format">Format</label>
+							<input class="format-chosen" readonly type="text" th:value="${vinyl.format.name}">
+						</div>
+						<div class="col-lg-5">
+							<label for="format">Select A Different One</label>
+							<div class="select-format">
+								<select id="selected-format">
+									<option th:each="f: ${formats}" th:value="${f.id}" th:text="${f.name}"></option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-lg-8">
+							<label for="recordLabels">Record Label</label>
+							<input class="rl-chosen" readonly type="text"
+								th:value="${vinyl.recordLabel.name + ', ' + vinyl.recordLabel.year + '.'}">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-8">
+							<label for="recordLabels">Select A Different One</label>
+							<div class="select-recordlbl">
+								<select class="recordlbl" id="rl-select">
+									<option th:each="r: ${recordLabels}" th:value="${r.id}"
+										th:text="${r.name +', '+ r.year+'.'}"></option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-lg-10">
+							<label for="recordLabels">Or Create New Record Label</label>
+						</div>
+						<div class="col-lg-5">
+							<input type="text" placeholder="Record Label Name" id="rl-name">
+						</div>
+						<div class="col-lg-2">
+							<input type="text" placeholder="Year" id="rl-year">
+						</div>
+						<div class="col-lg-2">
+							<input type="button" onclick="createRecordLabel()" value="Create">
+						</div>
+						<div class="col-lg-10" id="rl-response"></div>
+					</div>
+					<br>
+					<hr>
+					<div class="row">
+						<div class="col-lg-10">
+							<label for="recordLabels">Create New Genre</label>
+						</div>
+						<div class="col-lg-5">
+							<input type="text" placeholder="New Genre" id="genreName">
+						</div>
+						<div class="col-lg-3">
+							<input type="button" id="btn-prob" onclick="createNewGenre()" value="Create">
+						</div>
+						<div class="col-lg-10">
+							<label for="recordLabels">Genres</label>
+						</div>
+						<div class="col-lg-7">
+							<div class="select-recordlbl genre_list">
+								<select class="recordlbl" id="genre-select">
+									<option th:each="g: ${genres}" th:value="${g.id}" th:text="${g.name}">
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-2">
+							<input type="button" onclick="addToListOfGenres()" value="Add">
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-lg-8">
+							<label style="padding-top: 20px;">Genre(s)</label>
+							<input type="button"
+								style="width: fit-content; float: right; padding-left: 40px; padding-right: 40px;"
+								class="reset-genres" value="Reset Genre(s)">
+						</div>
+						<div class="col-lg-8">
+							<div class="filter-widget">
+								<div class="fw-tags-edit" id="selected-genres">
+									<ul id="genres-ul">
+										<li th:each="genre: ${vinyl.genres}" th:text="${genre.name}"></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-8" id="genre-response">
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-lg-12">
+						<label style="padding-top: 20px;">Add New Song</label>
+					</div>
+					<div class="col-lg-6">
+						<input type="text" placeholder="Song Name" id="songName" name="songName">
+					</div>
+					<div class="col-lg-2">
+						<input type="text" placeholder="Duration (0:00)" id="songDuration" name="songDuration">
+					</div>
+					<div class="col-lg-3">
+						<input type="button" class="add-song" id="addSong" onclick="songToTable()" value="Add">
+					</div>
+					<div class="col-lg-8" id="song-response"></div>
+					<div class="col-lg-12">
+						<div class="specification-table" id="songTable">
+							<table>
+								<thead>
+									<th>Song name</th>
+									<th>Duration</th>
+									<th>Delete</th>
+								</thead>
+								<tbody id="songTableData">
+									<tr data-th-each="song: ${vinyl.songs}">
+										<td contenteditable="true" class="songName" th:text="${song.songName}"></td>
+										<td contenteditable="true" class="songDuration" th:text="${song.duration}"></td>
+										<td><i class="fa fa-trash-o" onclick="deleteSong(this)"
+												style="font-size:26px" />
+										</td>
+										<td style="visibility: hidden;" id="songId" th:text="${song.id}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-5">
+						<input type="button" class="new-vinyl-save" id="update-vinyl"
+							th:href="@{/admin/update(id=${vinyl.id})}" value="Save All Changes"
+							onclick="confirmDialogSaveChanges('Are you sure you want to save the changes?')">
+					</div>
+					<div class="col-lg-5">
+						<input type="button" class="new-vinyl-save" value="Cancel"
+							onclick="confirmDialogCancel('Are you sure you want to cancel?')">
+					</div>
+					<div class="col-lg-1"></div>
+					<div id="vinyl-response" class="col-lg-10">
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<div th:replace="admin/help/fragments :: scripts"></div>
+</body>
+
+</html>

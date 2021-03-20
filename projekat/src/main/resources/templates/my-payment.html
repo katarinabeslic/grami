@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="help/fragments :: head" />
+
+<body>
+
+    <div th:replace="help/fragments :: nav"></div>
+
+    <!-- Contact Section Begin -->
+    <section class="contact-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="contact-title">
+                        <h4>My Profile</h4>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="/images/creditcard.png" style="padding-bottom: 10px;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="contact-widget">
+                        <div class="cw-item" style="padding-left: 0; padding-bottom: 5px;">
+                            <div class="card-body text-center">
+                                <img src="/images/user.png" width="100" height="100" alt="User" class="rounded-circle mb-3">
+                                <h5 class="bold mb-0" th:text="${#strings.capitalize(user.username)}"></h5>
+								<small class="text-secondary" th:text="'Last seen '+${#dates.format(#dates.createNow(), 'MMM dd, yyyy')}"></small>       
+							</div>
+							<div class="list-group list-group-flush">
+								<a th:href="@{/user}" class="list-group-item list-group-item-action"><i class="ti-user mr-3"></i>Profile</a>
+								<a th:href="@{/my-address}" class="list-group-item list-group-item-action"><i class="ti-home mr-3"></i>Address</a>
+								<a th:href="@{/payment-method}" class="list-group-item list-group-item-action active"><i class="ti-credit-card mr-3"></i>Payment Information</a>
+								<a th:href="@{/my-orders}" class="list-group-item list-group-item-action"><i class="ti-shopping-cart mr-3"></i>My Orders</a>
+								<a th:href="@{/logout}" class="list-group-item list-group-item-action"><i class="ti-power-off mr-3"></i>Logout</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 offset-lg-1">
+					<form th:action="@{/update-payment}" method="POST">
+					<div class="contact-widget">
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-credit-card"></i>
+							</div>
+							<div class="ci-text">
+								<span>Card Type:</span>
+								<select class="form-control" id="cardType" th:name="type" style="margin-top: 10px; width: 300%;">
+									<option value="mastercard" th:if="${cardInformation.type == 'mastercard'} ? 'selected'">Mastercard</option>
+									<option value="visa" th:if="${cardInformation.type == 'visa'} ? 'selected'">Visa</option>
+								</select>
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-user"></i>
+							</div>
+							<div class="ci-text">
+								<span>Card Holder Name:</span>
+								<input class="form-control" type="text" th:name="cardHolderName" style="width: 140%;" th:value="${cardInformation?.cardHolderName}">
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-pencil"></i>
+							</div>
+							<div class="ci-text">
+								<span>Card Number:</span>
+								<input class="form-control" type="text" th:name="cardNumber" style="width: 140%;" required minlength="12" maxlength="12"
+								th:value="${cardInformation?.cardNumber}">
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="row">
+							<div class="ci-text">
+								<span>Expiration Date:</span>
+							</div>
+								</div>
+								<div class="row">
+								<div class="ci-text">
+								<select class="form-control" style="margin-top: 10px; width: 130%;" th:name="expirationMonth">
+									<option disabled="disabled">-- Month --</option>
+									<option value="1" th:if="${cardInformation.expirationMonth == 1} ? 'selected'">January (01)</option>
+									<option value="2" th:if="${cardInformation.expirationMonth == 2} ? 'selected'">Febuary (02)</option>
+									<option value="3" th:if="${cardInformation.expirationMonth == 3} ? 'selected'">March (03)</option>
+									<option value="4" th:if="${cardInformation.expirationMonth == 4} ? 'selected'">April (04)</option>
+									<option value="5" th:if="${cardInformation.expirationMonth == 5} ? 'selected'">May (05)</option>
+									<option value="6" th:if="${cardInformation.expirationMonth == 6} ? 'selected'">June (06)</option>
+									<option value="7" th:if="${cardInformation.expirationMonth == 7} ? 'selected'">July (07)</option>
+									<option value="8" th:if="${cardInformation.expirationMonth == 8} ? 'selected'">August (08)</option>
+									<option value="9" th:if="${cardInformation.expirationMonth == 9} ? 'selected'">September (09)</option>
+									<option value="10" th:if="${cardInformation.expirationMonth == 10} ? 'selected'">October (10)</option>
+									<option value="11" th:if="${cardInformation.expirationMonth == 11} ? 'selected'">November (11)</option>
+									<option value="12" th:if="${cardInformation.expirationMonth == 12} ? 'selected'">December (12)</option>
+								</select>
+								</div>
+								<div class="ci-text" style="float:right;">
+								<select class="form-control" style="margin-top: 10px; margin-left: 40px; width: 155%;" th:name="expirationYear">
+									<option disabled="disabled">-- Year --</option>
+									<option value="2021" th:if="${cardInformation.expirationYear == 2021} ? 'selected'">2021</option>
+									<option value="2022" th:if="${cardInformation.expirationYear == 2022} ? 'selected'">2022</option>
+									<option value="2023" th:if="${cardInformation.expirationYear == 2023} ? 'selected'">2023</option>
+									<option value="2024" th:if="${cardInformation.expirationYear == 2024} ? 'selected'">2024</option>
+									<option value="2025" th:if="${cardInformation.expirationYear == 2025} ? 'selected'">2025</option>
+									<option value="2026" th:if="${cardInformation.expirationYear == 2026} ? 'selected'">2026</option>
+								</select>
+								</div>					
+								</div>
+							</div>
+							<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-credit-card"></i>
+							</div>
+							<div class="ci-text">
+								<span>CVC:</span>
+								<input type="number" class="form-control" style="width: 150%;" th:name="cvc" required th:value="${cardInformation?.cvc}">
+							</div>
+						</div>
+						</div>
+					<div class="row">
+						<div class="container" style="padding-top: 30px; width: 50%;">
+							<button type="submit" class="site-btn">Save Changes</button>
+						</div>
+					</div>
+					</form>
+				</div>
+				</div>
+			</div>
+	</section>
+	<!-- Contact Section End -->
+
+	<div th:replace="help/fragments :: footer"></div>
+
+</body>
+
+</html>

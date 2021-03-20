@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="help/fragments :: head" />
+<body>
+	<div th:replace="help/fragments :: nav"></div>
+	
+	    <!-- Hero Section Begin -->
+    <section class="hero-section">
+        <div class="hero-items owl-carousel">
+			<div class="single-hero-items set-bg" data-setbg="images/hero-2.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <span>Check out the highlights</span>
+                            <h1 style="color: #f0f0ff;">of year 2020</h1>
+                            <p>It might've been a bad year overall but music-wise definitely not!</p>
+                            <a th:href="@{/shop}" class="primary-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="off-card">
+                        <h2>Shop<span>vinyls</span></h2>
+                    </div>
+                </div>
+			</div>
+			<div class="single-hero-items set-bg" data-setbg="images/hero-3.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <span style="font-weight: 1000; text-shadow: #f0f0ff;">Find out everything</span>
+                            <h1 style="color: #f0f0ff;">ABOUT US</h1>
+                            <p style="color: #f0f0ff;">Click on one of the two buttons below depending on what you're interested in!</p>
+							<a th:href="@{/about-us}" class="primary-btn">About us</a>
+							<a th:href="@{/contact-faq}" class="primary-btn">Contact & faq</a>
+                        </div>
+                    </div>
+                    <div class="off-card">
+                        <h2 style="font-size: 20px;">Who<span style="font-size: 22px;">Are</span><span style="font-size: 20px;">We</span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="single-hero-items set-bg" data-setbg="images/hero-1.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <span>Vinyl, 2LP, 3LP</span>
+                            <h1>MF DOOM</h1>
+                            <p style="color: #f0f0ff;">Rest In Peace (July 13th 1971 - October 31st 2020)</p>
+                            <a th:href="@{/shop}" class="primary-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="off-card">
+                        <h2>Shop<span>Vinyls</span></h2>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    <!-- Hero Section End -->
+	
+<!-- Latest Blog Section Begin -->
+    <section class="latest-blog spad">
+        <div class="container">
+            <div class="benefit-items">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="single-benefit">
+                            <div class="sb-icon">
+                                <img src="img/icon-1.png" alt="">
+                            </div>
+                            <div class="sb-text">
+                                <h6>Free Shipping</h6>
+                                <p>For all orders worldwide</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="single-benefit">
+                            <div class="sb-icon">
+                                <img src="img/icon-2.png" alt="">
+                            </div>
+                            <div class="sb-text">
+                                <h6>Delivery On Time</h6>
+                                <p>Guaranteed within a week</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="single-benefit">
+                            <div class="sb-icon">
+                                <img src="img/icon-3.png" alt="">
+                            </div>
+                            <div class="sb-text">
+                                <h6>Secure Payment</h6>
+                                <p>100% secure payment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Latest Blog Section End -->
+
+
+	
+	<div th:replace="help/fragments :: footer"></div>
+</body>
+</html>

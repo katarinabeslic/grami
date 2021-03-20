@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="help/fragments :: head" />
+
+<body>
+    <div th:replace="help/fragments :: nav"></div>
+
+<!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cart-table">
+                        <table th:if="${shoppingCart != null}">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th class="p-name">Product Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th><i class="ti-trash"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="cartItem : ${shoppingCart}">
+                                    <td class="cart-pic first-row"><img th:src="${cartItem.vinyl.imgUrl}" style="width: 220px;" alt=""></td>
+                                    <td class="cart-title first-row">
+                                        <h5 th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|"></h5>
+                                    </td>
+									<td class="p-price first-row itemPrice" th:text="|${cartItem.vinyl.price} RSD|"></td>
+                                    <td class="qua-col first-row">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input class="itemQuantity" type="text" th:value="${cartItem.quantity}">
+                                            </div>
+                                        </div>
+                                    </td>
+									<td class="total-price first-row totalPrice" th:with="totalPrice = ${cartItem.vinyl.price * cartItem.quantity}" 
+										th:text="|${totalPrice} RSD|" th:value="${totalPrice}"></td>
+                                    <td class="close-td first-row"><i class="ti-trash"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="cart-buttons">
+                                <a th:href="@{/shop}" class="primary-btn continue-shop">Continue shopping</a>
+                                <a th:href="@{/update-cart}" class="primary-btn up-cart">Update cart</a>
+                            </div>
+                            <div class="discount-coupon">
+                                <h6>Discount Codes</h6>
+                                <form action="#" class="coupon-form">
+                                    <input type="text" placeholder="Enter your codes">
+                                    <button type="submit" class="site-btn coupon-btn">Apply</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 offset-lg-4">
+                            <div class="proceed-checkout">
+                                <ul>
+                                    <li class="subtotal">Shipping <span>FREE</span></li>
+                                    <li class="cart-total">Total <span th:text="|${shoppingCartTotal} RSD|"></span></li>
+                                </ul>
+                                <a th:href="@{/checkout}" class="proceed-btn">PROCEED TO CHECK OUT</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+
+    <div th:replace="help/fragments :: footer"></div>
+</body>
+
+</html>

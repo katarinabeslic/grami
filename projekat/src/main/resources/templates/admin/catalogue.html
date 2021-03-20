@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/help/fragments :: admin-head" />
+
+<body>
+	<div th:replace="admin/help/fragments :: navbar"></div>
+
+	<!-- Product Shop Section Begin -->
+	<section class="product-shop spad">
+		<form id="filter-form" th:action="@{/admin/catalogue}" method="get">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+						<p style="padding-bottom: 20px;"><span th:text="${totalItems}"></span> Product(s)</p>
+						<div class="filter-widget">
+							<h4 class="fw-title">Formats</h4>
+							<ul class="filter-catagories">
+								<li><a class="the-format" th:href="@{/admin/catalogue}">All Formats</a></li>
+								<div th:each="format: ${formats}">
+									<li><a class="the-format" th:value="${format.name}"
+											th:href="@{/admin/catalogue/format(id=${format.id})}"
+											th:utext="${format.name}"></a></li>
+								</div>
+							</ul>
+						</div>
+						<input id="format-selected" type="hidden" name="format" th:value="${filters.format}">
+						<div class="filter-widget">
+							<h4 class="fw-title">Genres</h4>
+							<div class="fw-brand-check">
+								<div class="bc-item" th:each="genre : ${genres}">
+									<label>
+										<span th:text="${genre.name}"></span>
+										<input type="checkbox" class="genre-check" th:id="${genre}" th:name="genres"
+											th:value="${genre.name}"
+											th:checked="${((param.genres != null) and (#lists.contains(param.genres, genre.name)))} ? checked">
+										<span class="checkmark"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="filter-widget">
+							<button type="submit" form="filter-form" class="filter-btn">Filter</button>
+						</div>
+					</div>
+					<div class="col-lg-9 order-1 order-lg-2">
+						<div class="product-show-option">
+							<div class="row">
+								<div class="col-lg-5 col-md-5">
+									<div class="select-option">
+										<div class="helper" style="display: none;">
+											<th:block th:switch="${filters.sort}">
+												<span id="sort-text" th:case="'*'">Newest</span>
+												<span id="sort-text" th:case="'price-asc'">Price Low-To-High</span>
+												<span id="sort-text" th:case="'price-desc'">Price High-To-Low</span>
+												<span id="sort-text" th:case="'alph-asc'">A - Z Order</span>
+												<span id="sort-text" th:case="'alph-desc'">Z - A Order</span>
+											</th:block>
+										</div>
+										<select class="sorting" id="opt-sel">
+											<option class="option-sort" value="newest">Newest</option>
+											<option class="option-sort" value="price-asc">Price Low-To-High </option>
+											<option class="option-sort" value="price-desc">Price High-To-Low </option>
+											<option class="option-sort" value="alph-asc">A - Z Order</option>
+											<option class="option-sort" value="alph-desc">Z - A Order</option>
+										</select>
+
+										<input id="input-sort" type="hidden" name="sort" th:value="${filters.sort}">
+										<select class="p-show">
+											<option value="9">Show: </option>
+										</select>
+										<script>
+											var selectedval = document.getElementById("input-sort").value;
+											if (selectedval != null && selectedval != '') {
+												document.getElementById("opt-sel").value = selectedval;
+											}
+										</script>
+									</div>
+								</div>
+								<div class="col-lg-2"></div>
+								<div class="col-lg-4 col-md-4">
+									<div class="advanced-search input-group">
+										<input type="text" placeholder="Search for vinyls..." th:name="search"
+											th:value="${filters.search}">
+										<button type="submit"><i class="ti-search"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="breadcrumb-section">
+							<div class="breadcrumb-text">
+								<span th:if="${filters.format != null} AND ${filters.format != ''}" th:utext="|Format: ${filters.format} |"></span>
+								<span th:if="${filters.genres != null} AND ${filters.genres != ''}" th:utext="| Genre(s): ${filters.genres} |"></span>
+								<span th:if="${filters.search != null} AND ${filters.search != ''}" th:utext="| Results for search: ${filters.search} |"></span>
+							</div>
+						</div>
+						<div class="product-list" id="replace-div">
+							<div class="row">
+								<div class="col-lg-4 col-sm-6" th:each="vinyl: ${vinyls}">
+									<input type="hidden" class="the-vinyl-id" th:value="${vinyl.id}">
+									<div class="product-item">
+										<div class="pi-pic">
+											<img th:src="${vinyl.imgUrl}" alt="">
+											<ul>
+												<li class="quick-view"><a th:href="@{/admin/edit(id=${vinyl.id})}">Edit
+														Item</a></li>
+												<li class="w-icon active"><a class="deleteVinyl"
+														th:href="@{/admin/remove(id=${vinyl.id})}"><i
+															class="fa fa-trash"></i></a></li>
+											</ul>
+										</div>
+										<div class="pi-text">
+											<div class="catagory-name" th:utext="${vinyl.format.name}"></div>
+											<a class="catalogue-style" th:href="@{/admin/edit(id=${vinyl.id})}">
+												<h5 th:utext="${vinyl.vinylName}"></h5>
+												<h3 th:utext="${vinyl.artist.stageName}"></h3>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="loading-more">
+							<div class="d-flex justify-content-center">
+								<div id="light-pagination"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<input id="page" hidden="hidden" type="text" name="page" th:value="${filters.page}">
+			<input id="totalitems" hidden="hidden" type="text" th:value="${totalItems}">
+			<input id="itemsperpage" hidden="hidden" type="text" th:value="${itemsPerPage}">
+
+			<input id="format-id" hidden="hidden" type="text" name="page">
+
+		</form>
+	</section>
+	<!-- Product Shop Section End -->
+
+
+	<div th:replace="admin/help/fragments :: scripts"></div>
+</body>
+
+</html>

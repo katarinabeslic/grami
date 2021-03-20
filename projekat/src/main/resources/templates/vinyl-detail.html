@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="help/fragments :: head" />
+
+<body>
+	<div th:replace="help/fragments :: nav"></div>
+
+	<section class="product-shop spad page-details">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row">
+						<div class="col-lg-5">
+							<div class="product-pic-zoom">
+								<img class="product-big-img" th:src="${vinyl.imgUrl}" alt="">
+								<div class="zoom-icon">
+									<i class="fa fa-search-plus"></i>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-1"></div>
+						<div class="col-lg-6">
+							<div class="product-details">
+								<div class="pd-title artist-name">
+									<h3 th:text="${vinyl.vinylName}"></h3>
+									<span th:text="${vinyl.artist.stageName}"></span>
+									<a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
+								</div>
+								<div class="pd-desc" style="padding-top: 15px;">
+									<h4 th:text="${vinyl.price + ' RSD'}"></h4>
+								</div>
+								<div class="pd-size-choose" style="padding-top: 15px;">
+									<div class="sc-item" th:each="genre : ${vinyl.genres}">
+										<label th:utext="${genre}"
+											style="width: fit-content; padding-left: 10px; padding-right: 10px; height: fit-content;"></label>
+									</div>
+								</div>
+								<div class="quantity">
+									<div class="pro-qty">
+										<input type="text" value="1">
+									</div>
+									<a href="#" class="primary-btn pd-cart">Add To Cart</a>
+								</div>
+								<ul class="pd-tags">
+									<li>Format: <span th:text="${vinyl.format.name}"></span></li>
+								</ul>
+								<div class="pd-color">
+									<span th:text="${vinyl.recordLabel}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="product-tab">
+						<div class="tab-item">
+							<ul class="nav" role="tablist">
+								<li>
+									<a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+								</li>
+								<li>
+									<a data-toggle="tab" href="#tab-2" role="tab">TRACKLIST</a>
+								</li>
+							</ul>
+						</div>
+						<div class="tab-item-content">
+							<div class="tab-content">
+								<div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+									<div class="product-content">
+										<div class="row">
+											<div class="col-lg-12">
+												<p th:text="${vinyl.description}"></p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="tab-2" role="tabpanel">
+									<div class="specification-table">
+										<div class="col-lg-12">
+											<div class="specification-table" id="songTable">
+												<table>
+													<thead>
+														<th>Song name</th>
+														<th>Duration</th>
+													</thead>
+													<tbody th:each="song : ${vinyl.songs}">
+														<td th:text="${song.songName}"></td>
+														<td th:text="${song.duration}"></td>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div th:replace="help/fragments :: footer"></div>
+</body>
+
+</html>

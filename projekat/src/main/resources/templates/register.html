@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="help/fragments :: head" />
+<body>
+    <div th:replace="help/fragments :: nav"></div>
+
+	<!-- Register Section Begin -->
+	<div class="register-login-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 offset-lg-3">
+					<div class="register-form">
+						
+						<h2>Customer Registration Form</h2>
+						<form th:action="@{/register}" th:object="${user}" method="post" id="registraion-form">
+							<div class="group-input">
+								<label>First name</label> <input type="text" th:field="*{firstName}" minlength="1" required>
+							</div>
+							<div class="group-input">
+								<label>Last name</label> <input type="text" th:field="*{lastName}" minlength="1" required>
+							</div>
+							<div class="group-input">
+								<label>Email address</label> <input type="email" th:field="*{email}" required>
+							</div>
+							<div class="group-input">
+								<label>Phone number</label> <input type="text" th:field="*{phoneNumber}" required>
+							</div>
+							<div class="group-input">
+								<label>Username</label> <input type="text" th:field="*{username}" minlength="2" required>
+							</div>
+							<div class="group-input">
+								<label>Password</label> <input type="password" th:field="*{password}" minlength="4" required>
+							</div>
+							<button type="submit" class="site-btn register-btn">REGISTER</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Register Form Section End -->
+	<div th:replace="help/fragments :: footer"></div>
+</body>
+</html>

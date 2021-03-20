@@ -1,0 +1,20 @@
+// .jsbeautifyrc
+//
+// This file allows you set up the formatting settings for Beautify.
+// See the example below:
+//
+// {
+//   // Settings at this level will be applied for all supported files
+//   "indent_size": 4,
+//   "indent_char": " ",
+//   // Override settings so this will be applied only to css files
+//   "css": {
+//     "indent_size": 2
+//   }
+// }
+//
+// To learn more about available settings see: https://github.com/HookyQR/VSCodeBeautify/blob/master/Settings.md
+//
+{
+
+}

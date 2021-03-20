@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="help/fragments :: head" />
+
+<body>
+	<div th:replace="help/fragments :: nav"></div>
+
+	<!-- Shopping Cart Section Begin -->
+	<section class="checkout-section spad">
+		<div class="container">
+			<form th:action="@{/card-payment}" class="checkout-form">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="row">
+							<section class="product-shop spad page-details">
+								<div class="product-tab">
+									<div class="tab-item">
+										<ul class="nav" role="tablist">
+											<li><a class="active" data-toggle="tab" href="#tab-1"
+												role="tab">Personl info</a></li>
+											<li><a data-toggle="tab" href="#tab-2" role="tab">Address</a>
+											</li>
+											<li><a data-toggle="tab" href="#tab-3" role="tab">Payment
+													Method</a></li>
+										</ul>
+									</div>
+									<div class="tab-item-content">
+										<div class="tab-content">
+											<div class="tab-pane fade-in active" id="tab-1"
+												role="tabpanel">
+												<div class="product-content">
+													<div class="row">
+														<div class="col-lg-6">
+															<label for="fir">First Name <span>*</span></label> <input
+																type="text" th:name="firstName"
+																th:value="${user.firstName}">
+														</div>
+														<div class="col-lg-5">
+															<label for="last">Last Name <span>*</span></label> <input
+																type="text" th:name="lastName"
+																th:value="${user.lastName}">
+														</div>
+														<div class="col-lg-6">
+															<label for="fir">Email <span>*</span></label> <input
+																type="text" th:name="email" th:value="${user.email}">
+														</div>
+														<div class="col-lg-5">
+															<label for="last">Phone Number <span>*</span></label> <input
+																type="text" th:name="phoneNumber"
+																th:value="${user.phoneNumber}">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="tab-2" role="tabpanel">
+												<div class="product-content">
+													<div class="row">
+														<div class="col-lg-6">
+															<label for="fir">Country <span>*</span></label> <input
+																type="text" th:name="country"
+																th:value="${user.address.country}">
+														</div>
+														<div class="col-lg-5">
+															<label for="last">City <span>*</span></label> <input
+																type="text" th:name="city"
+																th:value="${user.address.city}">
+														</div>
+														<div class="col-lg-6">
+															<label for="fir">Street and Number <span>*</span></label>
+															<input type="text" th:name="street"
+																th:value="${user.address.street}">
+														</div>
+														<div class="col-lg-5">
+															<label for="last">Zip Code <span>*</span></label> <input
+																type="text" th:name="zipCode"
+																th:value="${user.address.zipCode}">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="tab-3" role="tabpanel">
+												<div class="customer-review-option">
+													<div class="row">
+														<div class="col-lg-11">
+															<label>Card Type</label> <select class="form-control"
+																id="cardType" style="height: 46px; margin-bottom: 20px;">
+																<option value="mastercard">Mastercard</option>
+																<option value="visa">Visa</option>
+															</select>
+														</div>
+														<div class="col-lg-6">
+															<label>Card Holder Name</label> <input type="text"
+																th:value="${user.cardInformation.cardHolderName}">
+														</div>
+														<div class="col-lg-5">
+															<label>Card Number</label> <input type="text"
+																th:value="${user.cardInformation.cardNumber}">
+														</div>
+														<div class="col-lg-4">
+															<label>Expiration Month</label> <select
+																class="form-control" th:name="expirationMonth"
+																style="height: 46px;">
+																<option disabled="disabled">-- Month --</option>
+																<option value="1"
+																	th:if="${user.cardInformation.expirationMonth == 1} ? 'selected'">January
+																	(01)</option>
+																<option value="2"
+																	th:if="${user.cardInformation.expirationMonth == 2} ? 'selected'">Febuary
+																	(02)</option>
+																<option value="3"
+																	th:if="${user.cardInformation.expirationMonth == 3} ? 'selected'">March
+																	(03)</option>
+																<option value="4"
+																	th:if="${user.cardInformation.expirationMonth == 4} ? 'selected'">April
+																	(04)</option>
+																<option value="5"
+																	th:if="${user.cardInformation.expirationMonth == 5} ? 'selected'">May
+																	(05)</option>
+																<option value="6"
+																	th:if="${user.cardInformation.expirationMonth == 6} ? 'selected'">June
+																	(06)</option>
+																<option value="7"
+																	th:if="${user.cardInformation.expirationMonth == 7} ? 'selected'">July
+																	(07)</option>
+																<option value="8"
+																	th:if="${user.cardInformation.expirationMonth == 8} ? 'selected'">August
+																	(08)</option>
+																<option value="9"
+																	th:if="${user.cardInformation.expirationMonth == 9} ? 'selected'">September
+																	(09)</option>
+																<option value="10"
+																	th:if="${user.cardInformation.expirationMonth == 10} ? 'selected'">October
+																	(10)</option>
+																<option value="11"
+																	th:if="${user.cardInformation.expirationMonth == 11} ? 'selected'">November
+																	(11)</option>
+																<option value="12"
+																	th:if="${user.cardInformation.expirationMonth == 12} ? 'selected'">December
+																	(12)</option>
+															</select>
+														</div>
+														<div class="col-lg-4">
+															<label>Expiration Year</label> <select
+																class="form-control" th:name="expirationYear"
+																style="height: 46px;">
+																<option disabled="disabled">-- Year --</option>
+																<option value="2021"
+																	th:if="${user.cardInformation.expirationYear == 2021} ? 'selected'">2021</option>
+																<option value="2022"
+																	th:if="${user.cardInformation.expirationYear == 2022} ? 'selected'">2022</option>
+																<option value="2023"
+																	th:if="${user.cardInformation.expirationYear == 2023} ? 'selected'">2023</option>
+																<option value="2024"
+																	th:if="${user.cardInformation.expirationYear == 2024} ? 'selected'">2024</option>
+																<option value="2025"
+																	th:if="${user.cardInformation.expirationYear == 2025} ? 'selected'">2025</option>
+																<option value="2026"
+																	th:if="${user.cardInformation.expirationYear == 2026} ? 'selected'">2026</option>
+															</select>
+														</div>
+														<div class="col-lg-3">
+															<label>CVC:</label> <input type="number" th:name="cvc"
+																required th:value="${user.cardInformation?.cvc}">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="place-order">
+							<h4>Your Order</h4>
+							<div class="order-total">
+								<ul class="order-table">
+									<li>Product <span>Total</span></li>
+									<li class="fw-normal" th:each="item : ${shoppingCart}"
+										th:text="| ${item.vinyl.vinylName} X ${item.quantity} - ${item.vinyl.price} RSD|"></li>
+									<li class="total-price">Total <span
+										th:text="|${shoppingCartTotal} RSD|">$240.00</span></li>
+								</ul>
+								<div class="payment-check">
+									<div class="pc-item">
+										<label for="pc-check"> Credit Card <input
+											type="checkbox" id="pc-check"> <span
+											class="checkmark"></span>
+										</label>
+									</div>
+									<div class="pc-item">
+										<label for="pc-paypal"> Paypal <input type="checkbox"
+											id="pc-paypal"> <span class="checkmark"></span>
+										</label>
+									</div>
+								</div>
+								<input type="hidden" id="price" th:value="${shoppingCartTotal}">
+								<input type="hidden" id="currency" value="USD"> <input
+									type="hidden" id="method" value="paypal"> <input
+									type="hidden" id="intent" value="sale"> <input
+									type="hidden" id="description"
+									value="this is my descripton of bla">
+
+								<div class="order-btn">
+									<button type="submit" id="place-order"
+										class="site-btn place-btn">Place Order</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+	<!-- Shopping Cart Section End -->
+
+	<div th:replace="help/fragments :: footer"></div>
+</body>
+
+</html>

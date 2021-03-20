@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="admin-head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" th:href="@{../images/icon.png}">
+    <title>Grami | Admin Page</title>
+
+    <!-- Google Font -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap}"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" th:href="@{../css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/font-awesome.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/themify-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/elegant-icons.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/owl.carousel.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/nice-select.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/jquery-ui.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/slicknav.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/simplePagination.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{../css/style.css}" type="text/css">
+</head>
+
+<body>
+    <div class="nav-item" th:fragment="navbar">
+        <div class="container">
+            <nav class="nav-menu mobile-menu">
+                <ul>
+                    <li th:classappend="${#request.requestURI == '/admin' ? 'active':''}"><a th:href="@{/admin}">Home</a></li>
+                    <li th:classappend="${#request.requestURI == '/admin/catalogue' ? 'active':''}"><a th:href="@{/admin/catalogue}">Vinyl Catalogue</a></li>
+                    <li th:classappend="${#request.requestURI == '/admin/add' ? 'active':''}"><a th:href="@{/admin/add}">Add New</a></li>
+                    <li th:classappend="${#request.requestURI == '/admin' ? 'active':''}"><a th:href="@{/admin}">Orders</a></li>
+                    <li th:classappend="${#request.requestURI == '/admin' ? 'active':''}"><a th:href="@{/admin}">Contact & FAQ</a></li>
+                    <li><a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="login-panel"><i class="fa fa-user"></i> Logout</a></li>
+                </ul>
+            </nav>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </div>
+
+    <div th:fragment="scripts">
+        <!-- Js Plugins -->
+        <script type="text/javascript" th:src="@{../js/jquery-3.3.1.min.js}"></script>
+        <script type="text/javascript" th:src="@{../js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{../js/jquery-ui.min.js}"></script>
+        <script type="text/javascript" th:src="@{../js/jquery.countdown.min.js}"></script>
+        <script type="text/javascript" th:src="@{../js/jquery.nice-select.min.js}"></script>
+        <script type="text/javascript" th:src="@{../js/jquery.zoom.min.js}"></script>
+        <script type="text/javascript" th:src="@{../js/jquery.dd.min.js}"></script>
+        <script type="text/javascript" th:src="@{../js/jquery.slicknav.js}"></script>
+        <script type="text/javascript" th:src="@{../js/owl.carousel.min.js}"></script>
+        <script type="text/javascript" th:src="@{../js/main.js}"></script>
+        <script type="text/javascript" th:src="@{../js/jquery.simplePagination.js}"></script>
+        <script type="text/javascript" th:src="@{../js/mine-admin.js}"></script>
+        <script>
+            $(function () {
+                $('form').submit(function () {
+                    $("button[type='submit']", this)
+                        .text("Please Wait...")
+                        .attr('disabled', 'disabled');
+                    return true;
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

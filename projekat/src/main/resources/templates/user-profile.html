@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="help/fragments :: head" />
+
+	<body>
+
+		<div th:replace="help/fragments :: nav"></div>
+
+		<!-- Contact Section Begin -->
+		<section class="contact-section spad">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="contact-title">
+							<h4>My Profile</h4>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="contact-widget">
+							<div class="cw-item" style="padding-left: 0; padding-bottom: 5px;">
+								<div class="card-body text-center">
+									<img src="/images/user.png" width="100" height="100" alt="User"
+										class="rounded-circle mb-3">
+									<h5 class="bold mb-0" th:text="${#strings.capitalize(user.username)}"></h5>
+								<small class="text-secondary" th:text="'Last seen '+${#dates.format(#dates.createNow(), 'MMM dd, yyyy')}"></small>       
+							</div>
+							<div class="list-group list-group-flush">
+								<a th:href="@{/user}" class="list-group-item list-group-item-action active"><i class="ti-user mr-3"></i>Profile</a>
+								<a th:href="@{/my-address}" class="list-group-item list-group-item-action"><i class="ti-home mr-3"></i>Address</a>
+								<a th:href="@{/payment-method}" class="list-group-item list-group-item-action"><i class="ti-credit-card mr-3"></i>Payment Information</a>
+								<a th:href="@{/my-orders}" class="list-group-item list-group-item-action"><i class="ti-shopping-cart mr-3"></i>My Orders</a>
+								<a th:href="@{/logout}" class="list-group-item list-group-item-action"><i class="ti-power-off mr-3"></i>Logout</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 offset-lg-1">
+					<div th:if="${updateSuccess}" class="alert alert-success alert-dismissible fade show" role="alert">
+						<strong>Profile updated!</strong>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div th:if="${incorrectPassword}" class="alert alert-danger alert-dismissible fade show" role="alert">
+						<strong>Incorrect password</strong>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form id="form-user" th:action="@{/update-user}" method="POST">
+					<input id="user-id" type="hidden" th:name="id" th:value="${user.id}">
+					<div class="contact-widget">
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-user"></i>
+							</div>
+							<div class="ci-text">
+								<span>First name:</span>
+								<input th:name="firstName" type="text" th:value="${user.firstName}">
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-user"></i>
+							</div>
+							<div class="ci-text">
+								<span>Last name:</span>
+								<input th:name="lastName" type="text" th:value="${user.lastName}">
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-mobile"></i>
+							</div>
+							<div class="ci-text">
+								<span>Phone:</span>
+								<input th:name="phoneNumber" type="text" th:value="${user.phoneNumber}">
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-email"></i>
+							</div>
+							<div class="ci-text">
+								<span>Email:</span>
+								<input th:name="email" type="email" th:value="${user.email}">
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-user"></i>
+							</div>
+							<div class="ci-text">
+								<span>Username:</span>
+								<input th:name="username" th:value="${user.username}" readonly>
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-lock"></i>
+							</div>
+							<div class="ci-text">
+								<span>New Password:</span>
+								<input type="password" id="new-password" name="newPassword" style="width: 90%;">
+							</div>
+						</div>
+						<div class="cw-item">
+							<div class="ci-icon">
+								<i class="ti-unlock"></i>
+							</div>
+							<div class="ci-text">
+								<span>Confirm Password:</span>
+								<input type="password" class="form-control" id="confirm-password" style="width: 120%;">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="container" style="padding-top: 30px; width: 50%;">
+						<button type="button" id="update-user" class="site-btn">Save Changes</button>
+						</div>
+					</div>
+
+					<!--  password check modal -->
+					<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Type your current password</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<input type="password" class="form-control" id="password" name="password">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary" style="background-color: #e7ab3c; border-color: #e7ab3c;">Update</button>
+						</div>
+						</div>
+					</div>
+					</div> 
+					<!--  /password check modal -->
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Contact Section End -->
+
+	<div th:replace="help/fragments :: footer"></div>
+
+</body>
+
+</html>
