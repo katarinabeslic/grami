@@ -26,7 +26,7 @@
 								<small class="text-secondary" th:text="'Last seen '+${#dates.format(#dates.createNow(), 'MMM dd, yyyy')}"></small>       
 							</div>
 							<div class="list-group list-group-flush">
-								<a th:href="@{/user}" class="list-group-item list-group-item-action"><i class="ti-user mr-3"></i>Profile</a>
+								<a th:href="@{/my-profile}" class="list-group-item list-group-item-action"><i class="ti-user mr-3"></i>Profile</a>
 								<a th:href="@{/my-address}" class="list-group-item list-group-item-action active"><i class="ti-home mr-3"></i>Address</a>
 								<a th:href="@{/payment-method}" class="list-group-item list-group-item-action"><i class="ti-credit-card mr-3"></i>Payment Information</a>
 								<a th:href="@{/my-orders}" class="list-group-item list-group-item-action"><i class="ti-shopping-cart mr-3"></i>My Orders</a>
@@ -44,7 +44,7 @@
 							</div>
 							<div class="ci-text">
 								<span>Country:</span>
-								<input type="text" th:name="country" th:value="${address?.country}">
+								<input type="text" th:name="country" th:value="${user?.address?.country}">
 							</div>
 						</div>
 						<div class="cw-item">
@@ -53,7 +53,7 @@
 							</div>
 							<div class="ci-text">
 								<span>City:</span>
-								<input type="text" th:name="city" th:value="${address?.city}">
+								<input type="text" th:name="city" th:value="${user?.address?.city}">
 							</div>
 						</div>
 						<div class="cw-item">
@@ -62,7 +62,7 @@
 							</div>
 							<div class="ci-text">
 								<span>Zip Code:</span>
-								<input type="text" th:name="zipCode" th:value="${address?.zipCode}">
+								<input type="text" th:name="zipCode" th:value="${user?.address?.zipCode}">
 							</div>
 						</div>
 						<div class="cw-item">
@@ -71,7 +71,7 @@
 							</div>
 							<div class="ci-text">
 								<span>Street and Number:</span>
-								<input type="text" th:name="street" th:value="${address?.street}">
+								<input type="text" th:name="street" th:value="${user?.address?.street}">
 							</div>
 						</div>
 					</div>

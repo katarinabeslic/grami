@@ -96,6 +96,6 @@ public class UserRole {
 
 	@Override
 	public String toString() {
-		return "UserRole [id=" + id + ", user=" + user + ", role=" + role + "]";
+		return role.toString();
 	}
 }

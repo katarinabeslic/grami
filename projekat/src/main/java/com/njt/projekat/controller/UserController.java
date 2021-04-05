@@ -2,7 +2,10 @@ package com.njt.projekat.controller;
 
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.List;
 
+import com.njt.projekat.entity.*;
+import com.njt.projekat.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,13 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.njt.projekat.entity.Address;
-import com.njt.projekat.entity.CardInformation;
-import com.njt.projekat.entity.User;
-import com.njt.projekat.service.AddressService;
-import com.njt.projekat.service.CardInformationService;
-import com.njt.projekat.service.UserService;
 import com.njt.projekat.service.impl.UserSecurityService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
@@ -38,6 +37,12 @@ public class UserController {
 	
 	@Autowired
 	private CardInformationService cardInformationService;
+
+	@Autowired
+	private OrderService orderService;
+
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 	
 	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -71,7 +76,7 @@ public class UserController {
 		userSecurityService.authenticateUser(user.getUsername());
 		model.addAttribute("user", user);
 		
-		return "redirect:/user";
+		return "redirect:/my-profile";
 	}
 
 	@GetMapping("/success")
@@ -83,70 +88,100 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/user")
-	public String showUserProfile(Model model, Authentication authentication) {
-		User user = (User) authentication.getPrincipal();
+	@GetMapping("/my-profile")
+	public String showUserProfile(Model model, Principal principal) {
+		if (principal == null) {
+			return "redirect:/login";
+		}
+		User user = userService.findByUsername(principal.getName());
 		model.addAttribute("user", user);
-		return "user-profile";
+		return "my-profile";
 	}
 	
 	@GetMapping("/my-address")
 	public String showUserAddress(Model model, Principal principal) {
 		User user = userService.findByUsername(principal.getName());
-		Address address = addressService.findByUser(user);
 		model.addAttribute("user", user);
-		model.addAttribute("address", address);
 		return "my-address";
 	}
 	
 	@GetMapping("/payment-method")
 	public String showUserPaymentInfo(Model model, Principal principal) {
 		User user = userService.findByUsername(principal.getName());
-		CardInformation cardInformation = cardInformationService.findByUser(user);
 		model.addAttribute("user", user);
-		model.addAttribute("cardInformation", cardInformation);
 		return "my-payment";
 	}
 	
 	@PostMapping("/update-user")
-	public String updateUser(@ModelAttribute("user") User user, @RequestParam("newPassword") String newPassword, Model model, Principal principal) {
+	public String updateUser(@ModelAttribute("user") User user, @RequestParam("newPassword") String newPassword, Model model, Principal principal, HttpServletRequest request) {
+		String referer = request.getHeader("Referer");
 		User currentUser = userService.findByUsername(principal.getName());
-		if (newPassword != null && !newPassword.isEmpty()) {
+		if (newPassword.equals("no")) {
+			user.setPassword(currentUser.getPassword());
+			userService.save(user);
+			return "redirect:" + referer;
+		}
+		if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals("")) {
 			if (bCryptPasswordEncoder.matches(user.getPassword(), currentUser.getPassword())) {
 				user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+				userService.save(user);
 			} else {
 				model.addAttribute("incorrectPassword", true);
-				return "user-profile";
+				return "redirect:" + referer;
 			}
 		}
-		user = userService.save(user);
-		model.addAttribute("user", user);
-		return "redirect:/user";
+		return "redirect:" + referer;
 	}
 	
 	@PostMapping("/update-address")
-	public String updateAddress(@ModelAttribute("address") Address address, Model model, Principal principal) {
-		User currentUser = userService.findByUsername(principal.getName());
-		address.setUser(currentUser);
-		address = addressService.save(address);
-		model.addAttribute("address", address);
-		return "redirect:/my-address";
+	public String updateAddress(@ModelAttribute("address") Address address, Principal principal, HttpServletRequest request) {
+		String referer = request.getHeader("Referer");
+		User user = userService.findByUsername(principal.getName());
+		Address existingAddress = addressService.findByUser(user);
+		if (existingAddress != null) {
+			address.setId(existingAddress.getId());
+		}
+		address.setUser(user);
+		addressService.save(address);
+		return "redirect:" + referer;
 	}
-	
+
 	@PostMapping("/update-payment")
-	public String updatePayment(@ModelAttribute("cardInformation") CardInformation cardInformation, Model model, Principal principal) {
-		User currentUser = userService.findByUsername(principal.getName());
-		cardInformation.setUser(currentUser);
-		cardInformation = cardInformationService.save(cardInformation);
-		System.out.println(cardInformation);
-		model.addAttribute("cardInformation", cardInformation);
-		return "redirect:/payment-method";
+	public String updatePayment(@ModelAttribute("cardInformation") CardInformation cardInformation, Principal principal, HttpServletRequest request) {
+		String referer = request.getHeader("Referer");
+		User user = userService.findByUsername(principal.getName());
+		CardInformation existingCardInformation = cardInformationService.findByUser(user);
+		if (existingCardInformation != null) {
+			cardInformation.setId(existingCardInformation.getId());
+		}
+		cardInformation.setUser(user);
+		cardInformationService.save(cardInformation);
+		return "redirect:" + referer;
 	}
 	
 	@GetMapping("/cart")
 	public String showShoppingCart(Model model, Principal principal) {
-		//User currentUser = userService.findByUsername(principal.getName());
-		
+		User user = userService.findByUsername(principal.getName());
+		List<CartItem> shoppingCart = shoppingCartService.findAllByUserAndOrderIsNull(user);
+		if (shoppingCart.isEmpty()) {
+			return "redirect:/shop";
+		}
 		return "shopping-cart";
+	}
+
+	@GetMapping("/my-orders")
+	public String showOrders(Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		List<Order> orders = orderService.findByUser(user);
+		model.addAttribute("user", user);
+		model.addAttribute("orders",orders);
+		return "my-orders";
+	}
+
+	@GetMapping("/order-detail")
+	public String showOrderDetail(@RequestParam("id") int id, Model model) {
+		Order order = orderService.findById(id);
+		model.addAttribute("order", order);
+		return "order-detail";
 	}
 }

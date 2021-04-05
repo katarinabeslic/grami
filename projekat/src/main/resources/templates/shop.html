@@ -50,11 +50,11 @@
 									<div class="select-option">
 										<div class="helper" style="display: none;">
 											<th:block th:switch="${filters.sort}">
-												<span id="sort-text" th:case="'*'">Newest</span>
-												<span id="sort-text" th:case="'price-asc'">Price Low-To-High</span>
-												<span id="sort-text" th:case="'price-desc'">Price High-To-Low</span>
-												<span id="sort-text" th:case="'alph-asc'">A - Z Order</span>
-												<span id="sort-text" th:case="'alph-desc'">Z - A Order</span>
+												<span th:case="'*'">Newest</span>
+												<span th:case="'price-asc'">Price Low-To-High</span>
+												<span th:case="'price-desc'">Price High-To-Low</span>
+												<span th:case="'alph-asc'">A - Z Order</span>
+												<span th:case="'alph-desc'">Z - A Order</span>
 											</th:block>
 										</div>
 										<select class="sorting" id="opt-sel">
@@ -68,6 +68,8 @@
 										<input id="input-sort" type="hidden" name="sort" th:value="${filters.sort}">
 										<select class="p-show">
 											<option value="9">Show: </option>
+											<option value="18">Show: </option>
+											<option value="30">Show: </option>
 										</select>
 										<script>
 											var selectedval = document.getElementById("input-sort").value;
@@ -106,8 +108,7 @@
 											<img th:src="${vinyl.imgUrl}" alt="">
 											<ul>
 												<li class="quick-view"><a th:href="@{/shop/vinyl(id=${vinyl.id})}">View Vinyl</a></li>
-												<li class="w-icon active"><a class="deleteVinyl"
-														th:href="@{/shop/add-to-cart(id=${vinyl.id})}"><i
+												<li class="w-icon active"><a th:href="@{/shop/add-to-cart(id=${vinyl.id})}"><i
 															class="fa fa-shopping-cart"></i></a></li>
 											</ul>
 										</div>
@@ -129,14 +130,12 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 			<input id="page" hidden="hidden" type="text" name="page" th:value="${filters.page}">
 			<input id="totalitems" hidden="hidden" type="text" th:value="${totalItems}">
 			<input id="itemsperpage" hidden="hidden" type="text" th:value="${itemsPerPage}">
-
+			<input id="quantity" hidden="hidden" type="text" th:value="${quantity}">
 			<input id="format-id" hidden="hidden" type="text" name="page">
-
 		</form>
 	</section>
 	<!-- Product Shop Section End -->

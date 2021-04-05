@@ -6,9 +6,11 @@
 <body>
 	<div th:replace="help/fragments :: nav"></div>
 
-	<section class="product-shop spad page-details">
+	<section class="product-shop spad page-details" style="padding-top: 80px; padding-bottom: 80px">
 		<div class="container">
 			<div class="row">
+				<form th:action="@{/shop/add-to-cart}" method="get">
+				<input type="hidden" name="id" th:value="${vinyl.id}">
 				<div class="col-lg-12">
 					<div class="row">
 						<div class="col-lg-5">
@@ -38,9 +40,9 @@
 								</div>
 								<div class="quantity">
 									<div class="pro-qty">
-										<input type="text" value="1">
+										<input type="text" id="quantity" name="quantity" th:value="${quantity}">
 									</div>
-									<a href="#" class="primary-btn pd-cart">Add To Cart</a>
+									<button type="submit" class="primary-btn pd-cart">Add To Cart</button>
 								</div>
 								<ul class="pd-tags">
 									<li>Format: <span th:text="${vinyl.format.name}"></span></li>
@@ -51,7 +53,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="product-tab">
+					<div class="product-tab" style="padding-top: 80px">
 						<div class="tab-item">
 							<ul class="nav" role="tablist">
 								<li>
@@ -95,6 +97,7 @@
 						</div>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</section>

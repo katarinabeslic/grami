@@ -15,11 +15,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cart_item")
 public class CartItem implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +31,10 @@ public class CartItem implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-	// order?
+
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	private Order order;
 
 	public CartItem() {
 	
@@ -47,6 +44,13 @@ public class CartItem implements Serializable {
 		this.vinyl = vinyl;
 		this.quantity = quantity;
 		this.user = user;
+	}
+
+	public CartItem(Vinyl vinyl, int quantity, User user, Order order) {
+		this.vinyl = vinyl;
+		this.quantity = quantity;
+		this.user = user;
+		this.order = order;
 	}
 
 	public int getId() {
@@ -81,6 +85,14 @@ public class CartItem implements Serializable {
 		this.user = user;
 	}
 
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,7 +120,16 @@ public class CartItem implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CartItem [id=" + id + ", vinyl=" + vinyl.getVinylName() + " - " + vinyl.getArtist().getStageName() + ", quantity=" + quantity + "]";
+		return "CartItem{" +
+				"vinyl=" + vinyl.getVinylName() +
+				", quantity=" + quantity +
+				", user=" + user.getUsername() +
+				", order=ORD-" + order.getId() + " : " + order.getTotalPrice() +
+				'}';
 	}
 
+    public void increaseQuantity(int qty) {
+		int quantity = this.quantity + qty;
+		setQuantity(quantity);
+    }
 }

@@ -24,9 +24,6 @@ public class VinylSpecification {
 	public static Specification<Vinyl> filterBy(String format, List<String> genres, String search) {
 		return new Specification<Vinyl>() {
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 5501773012641694036L;
 
 			@Override

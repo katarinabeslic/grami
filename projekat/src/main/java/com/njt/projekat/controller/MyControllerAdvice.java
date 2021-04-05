@@ -45,12 +45,12 @@ public class MyControllerAdvice {
 			User user =  (User) auth.getPrincipal(); 
 			if (user != null) {
 				double cartTotal = 0;
-				List<CartItem> cartItems = shoppingCartService.findAllByUser(user);
+				List<CartItem> cartItems = shoppingCartService.findAllByUserAndOrderIsNull(user);
 				for (CartItem cartItem : cartItems) {
 					cartTotal += cartItem.getVinyl().getPrice() * cartItem.getQuantity();
 				}
 				
-				model.addAttribute("shoppingCartItemNumber", shoppingCartService.getNumberOfItems(user));
+				model.addAttribute("shoppingCartItemNumber", shoppingCartService.countDistinctByUserAndOrderIsNull(user));
 				model.addAttribute("shoppingCartTotal", cartTotal);
 				model.addAttribute("shoppingCart", cartItems);
 			}

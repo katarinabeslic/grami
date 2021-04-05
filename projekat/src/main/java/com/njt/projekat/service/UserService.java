@@ -14,4 +14,9 @@ public interface UserService {
 
 	User createUser(User user, List<String> roles);
 
+    List<User> findAll();
+
+    void deleteById(int id);
+
+    User findById(int id);
 }

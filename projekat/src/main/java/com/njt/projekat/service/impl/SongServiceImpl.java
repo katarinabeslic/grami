@@ -6,5 +6,4 @@ import com.njt.projekat.service.SongService;
 
 @Service
 public class SongServiceImpl implements SongService {
-
 }

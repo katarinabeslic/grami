@@ -198,5 +198,12 @@ public class Vinyl implements Serializable {
 				+ ", format=" + format + ", genres=" + genres + ", songs=" + songs + "]";
 	}
 
-	
+
+    public void decreaseQuantity(int quantity) {
+		this.quantity -= quantity;
+    }
+
+    public void increaseQuantity(int quantity) {
+		this.quantity += quantity;
+    }
 }

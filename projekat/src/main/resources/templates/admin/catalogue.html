@@ -7,7 +7,7 @@
 	<div th:replace="admin/help/fragments :: navbar"></div>
 
 	<!-- Product Shop Section Begin -->
-	<section class="product-shop spad">
+	<section class="product-shop spad" style="padding-top: 80px; padding-bottom: 80px">
 		<form id="filter-form" th:action="@{/admin/catalogue}" method="get">
 			<div class="container">
 				<div class="row">
@@ -50,11 +50,11 @@
 									<div class="select-option">
 										<div class="helper" style="display: none;">
 											<th:block th:switch="${filters.sort}">
-												<span id="sort-text" th:case="'*'">Newest</span>
-												<span id="sort-text" th:case="'price-asc'">Price Low-To-High</span>
-												<span id="sort-text" th:case="'price-desc'">Price High-To-Low</span>
-												<span id="sort-text" th:case="'alph-asc'">A - Z Order</span>
-												<span id="sort-text" th:case="'alph-desc'">Z - A Order</span>
+												<span th:case="'*'">Newest</span>
+												<span th:case="'price-asc'">Price Low-To-High</span>
+												<span th:case="'price-desc'">Price High-To-Low</span>
+												<span th:case="'alph-asc'">A - Z Order</span>
+												<span th:case="'alph-desc'">Z - A Order</span>
 											</th:block>
 										</div>
 										<select class="sorting" id="opt-sel">
@@ -70,7 +70,7 @@
 											<option value="9">Show: </option>
 										</select>
 										<script>
-											var selectedval = document.getElementById("input-sort").value;
+											let selectedval = document.getElementById("input-sort").value;
 											if (selectedval != null && selectedval != '') {
 												document.getElementById("opt-sel").value = selectedval;
 											}

@@ -15,8 +15,8 @@ public class CardInformationServiceImpl implements CardInformationService {
 	private CardInformationRepository cardInformationRepository;
 
 	@Override
-	public CardInformation save(CardInformation cardInformation) {
-		return cardInformationRepository.save(cardInformation);
+	public void save(CardInformation cardInformation) {
+		cardInformationRepository.save(cardInformation);
 	}
 
 	@Override

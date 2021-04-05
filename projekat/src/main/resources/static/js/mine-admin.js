@@ -479,7 +479,7 @@ $('.deleteVinyl').on('click', function (event) {
 	event.preventDefault();
 	var href = $(this).attr('href');
 	console.log(href);
-	confirmDialogDelete('Are you sure you want to delete this vinyl?', href);
+	confirmDialogDelete('Are you sure you want to delete this vinyl?', href, 'http://localhost:8080/admin/catalogue');
 });
 
 function confirmDialogCancel(message) {
@@ -507,7 +507,7 @@ function confirmDialogCancel(message) {
 		});
 }
 
-function confirmDialogDelete(message, href) {
+function confirmDialogDelete(message, $href, addressToGoTo) {
 	$('<div id="confirm-dialog"></div>').appendTo('body')
 		.html('<div><h5>' + message + '</h5></div>')
 		.dialog({
@@ -521,9 +521,9 @@ function confirmDialogDelete(message, href) {
 				Yes: function () {
 					$.ajax({
 						type: "GET",
-						url: href,
+						url: $href,
 						success: function (data) {
-							$(location).attr('href', 'http://localhost:8080/admin/catalogue');
+							$(location).attr('href', addressToGoTo);
 						}
 					});
 					$(this).dialog("close");
@@ -608,4 +608,45 @@ $(function () {
 			$('#filter-form').submit()
 		}
 	});
-})
+});
+
+$('.href-icon').css('cursor', 'pointer');
+
+$('.remove-order').click(
+	function () {
+		event.preventDefault();
+		let $row = $(this).closest("td");
+		let $href = $row.find("a").attr('href');
+		console.log($href);
+		confirmDialogDelete("Are you sure you want to remove the order?", $href, 'http://localhost:8080/admin/orders');
+	}
+);
+
+$('.edit-order').click(
+	function () {
+		event.preventDefault();
+		let $row = $(this).closest("td");
+		let $href = $row.find("a").attr('href');
+		$.ajax({
+			type: "GET",
+			url: $href,
+			success: function (data) {
+				$(location).attr('href', $href);
+			}
+		});
+	}
+);
+
+function cancelOrderEditing() {
+	$(location).attr('href', 'http://localhost:8080/admin/orders');
+}
+
+$('.remove-user').click(
+	function () {
+		event.preventDefault();
+		let $row = $(this).closest("td");
+		let $href = $row.find("a").attr('href');
+		console.log($href);
+		confirmDialogDelete("Are you sure you want to remove the user?", $href, 'http://localhost:8080/admin/users');
+	}
+);

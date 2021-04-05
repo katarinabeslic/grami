@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="help/fragments :: head" />
+<body>
+<div th:replace="help/fragments :: nav"></div>
+
+<section class="shopping-cart spad">
+        <input type="hidden" name="id" th:value="${order.id}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cart-table">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th th:text="|ORD - ${order.id}|" style="color: #e7ab3c; font-size: 20px"></th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cartItem : ${order.cartItems}">
+                                <td class="cart-pic first-row"><img th:src="${cartItem.vinyl.imgUrl}" style="width: 220px; padding: 15px"></td>
+                                <td class="cart-title first-row">
+                                    <h5 th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|"></h5>
+                                </td>
+                                <td class="p-price first-row itemPrice" th:text="|${cartItem.vinyl.price} ${order.currency}|"></td>
+                                <td class="qua-col first-row" th:text="${cartItem.quantity}">
+                                </td>
+                                <td class="total-price first-row totalPrice" th:with="totalPrice = ${cartItem.vinyl.price * cartItem.quantity}"
+                                    th:text="|${totalPrice} RSD|" th:value="${totalPrice}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12" style="padding: 0px">
+                    <div class="proceed-checkout">
+                        <ul>
+                            <li class="subtotal">Customer: <span
+                                    th:text="|${order.user.firstName} ${order.user.lastName}|"></span></li>
+                            <li class="subtotal" style="padding-top: 10px">Address: <span
+                                    th:text="|${order.address.street}, ${order.address.city} ${order.address.zipCode}|"></span>
+                            </li>
+                            <li class="subtotal" style="padding-top: 10px">Phone Number: <span
+                                    th:text="${order.user.phoneNumber}"></span></li>
+                            <li class="subtotal" style="padding-top: 10px">Price: <span
+                                    th:text="|${order.totalPrice} RSD|"></span></li>
+                            <li class="subtotal" style="padding-top: 10px">Shipping Cost: <span>FREE</span></li>
+                            <li class="subtotal" style="padding-top: 10px">Order TOTAL: <span
+                                    th:text="|${order.totalPrice} RSD|"></span></li>
+                            <li class="subtotal" style="padding-top: 10px">Order Placed: <span
+                                    th:text="${#dates.format(order.dateAndTime, 'dd.MM.yyyy. HH:mm')}"></span></li>
+                            <li class="subtotal" style="padding-top: 10px">Payment Method: <span
+                                    th:text="${order.paymentMethod}"></span></li>
+                            <li class="subtotal" style="padding-top: 10px">Order Status: <span style="padding-top: 6px; font-size: 15px; text-transform: uppercase"
+                                                        th:classappend="${(order.orderStatus == 'Received' ? 'badge badge-secondary' : '') +
+                                                        (order.orderStatus == 'Confirmed' ? 'badge badge-info' : '') +
+                                                        (order.orderStatus == 'Cancelled' ? 'badge badge-danger' : '') +
+                                                        (order.orderStatus == 'Delivered' ? 'badge badge-success' : '')}" th:text="${order.orderStatus}"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+<div th:replace="help/fragments :: footer"></div>
+</body>
+</html>

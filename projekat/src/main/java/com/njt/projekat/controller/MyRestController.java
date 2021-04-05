@@ -5,32 +5,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
+import com.njt.projekat.entity.*;
+import com.njt.projekat.service.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.njt.projekat.entity.Artist;
-import com.njt.projekat.entity.Genre;
-import com.njt.projekat.entity.RecordLabel;
-import com.njt.projekat.entity.Vinyl;
-import com.njt.projekat.service.ArtistService;
-import com.njt.projekat.service.GenreService;
-import com.njt.projekat.service.RecordLabelService;
-import com.njt.projekat.service.SongService;
-import com.njt.projekat.service.VinylService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class MyRestController {
@@ -39,17 +32,23 @@ public class MyRestController {
 	private RecordLabelService recordLabelService;
 	private GenreService genreService;
 	private VinylService vinylService;
+	private SongService songService;
+	private OrderService orderService;
+	private ShoppingCartService shoppingCartService;
 	private ObjectMapper objectMapper = new ObjectMapper();
 	private Artist artist = null;
 	private RecordLabel recordLabel = null;
 	
 	@Autowired
 	public MyRestController(ArtistService artistService, RecordLabelService recordLabelService,
-			GenreService genreService, VinylService vinylService, SongService songService) {
+			GenreService genreService, VinylService vinylService, SongService songService, OrderService orderService, ShoppingCartService shoppingCartService) {
 		this.artistService = artistService;
 		this.recordLabelService = recordLabelService;
 		this.genreService = genreService;
 		this.vinylService = vinylService;
+		this.songService = songService;
+		this.orderService = orderService;
+		this.shoppingCartService = shoppingCartService;
 	}
 
 	@PostMapping("/admin/find-create-artist")
@@ -182,5 +181,18 @@ public class MyRestController {
 		out.close();
 		return getWorkingPath(path);
 	}
-	
+
+	@GetMapping("/admin/remove-order")
+	public String removeOrder(@RequestParam("id") int id, Model model) {
+		orderService.deleteById(id);
+		return "redirect:/admin/orders";
+	}
+
+	@GetMapping("/cart/remove-item")
+	private String removeItemFromCart(@RequestParam("id") int id, HttpServletRequest request) {
+		String referer = request.getHeader("Referer");
+		shoppingCartService.removeCartItemById(id);
+		return referer;
+	}
+
 }

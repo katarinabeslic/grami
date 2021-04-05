@@ -39,7 +39,7 @@
                                     </td>
 									<td class="total-price first-row totalPrice" th:with="totalPrice = ${cartItem.vinyl.price * cartItem.quantity}" 
 										th:text="|${totalPrice} RSD|" th:value="${totalPrice}"></td>
-                                    <td class="close-td first-row"><i class="ti-trash"></i></td>
+                                    <td class="close-td first-row"><a class="item-href" th:href="@{/cart/remove-item(id=${cartItem.id})}"></a><i class="remove-cart-item ti-trash"></i></td>
                                 </tr>
                             </tbody>
                         </table>

@@ -3,6 +3,7 @@ package com.njt.projekat.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.aspectj.weaver.ast.Or;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,9 +30,6 @@ import com.njt.projekat.entity.security.UserRole;
 @Entity
 @Table(name = "user")
 public class User implements Serializable, UserDetails {
-
-	/** automatically generated serial version number **/
-	private static final long serialVersionUID = -8451025525518524024L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -161,6 +160,7 @@ public class User implements Serializable, UserDetails {
 	public void setCardInformation(CardInformation cardInformation) {
 		this.cardInformation = cardInformation;
 	}
+
 
 	@Override
 	public int hashCode() {

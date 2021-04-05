@@ -1,22 +1,16 @@
 package com.njt.projekat.entity;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "address")
 public class Address implements Serializable {
 
-	private static final long serialVersionUID = -7727846881327702762L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -37,7 +31,7 @@ public class Address implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	public Address() {
 	}
 

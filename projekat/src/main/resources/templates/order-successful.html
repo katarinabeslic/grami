@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="help/fragments :: head" />
+
+<body>
+
+<div th:replace="help/fragments :: nav"></div>
+
+<div class="container page-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="text-center py-3">
+                <i data-feather="check-circle" class="text-success" width="48" height="48"></i>
+                <h1>Thank you.</h1>
+                <p>Your order has been received and will be processed as soon as possible.</p>
+                <p class="mb-0">
+                    <span class="text-muted">Order ID: </span>
+                    <span class="text-info">#ORD<span th:text="${order.id}"></span></span>
+                </p>
+                <p>
+                    <span class="text-muted">Amount: </span>
+                    <span class="text-info"><span th:text="${order.totalPrice}"></span> RSD</span>
+                </p>
+                <a th:href="@{/shop}" class="btn btn-info rounded mb-3">CONTINUE SHOPPING</a>
+                <a th:href="@{/}" class="btn btn-primary rounded mb-3">VIEW ORDER</a>
+            </div>
+        </div>
+    </div>
+</div> <!-- end container -->
+
+<div th:replace="help/fragments :: footer"></div>
+
+</body>
+
+</html>

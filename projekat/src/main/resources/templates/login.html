@@ -28,10 +28,10 @@
                         <form action="#" th:action="@{/login}" th:object="${user}" method="POST" id="login-form">
                             <div class="group-input">
                                 <label for="username">Username</label>
-                                <input type="text" th:field="*{username}" id="username" required>
+                                <input type="text" th:field="*{username}" id="username" required autofocus>
                             </div>
                             <div class="group-input">
-                                <label for="pass">Password</label>
+                                <label>Password</label>
                                 <input type="password" th:field="*{password}" id="password" required>
                             </div>
                             <p th:if="${param.error}" class="alert alert-danger">Invalid username or password</p>

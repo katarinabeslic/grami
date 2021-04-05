@@ -1,24 +1,15 @@
 package com.njt.projekat.entity;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "card_info")
 public class CardInformation implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -855979546822091079L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +37,7 @@ public class CardInformation implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
 
 	public int getId() {
 		return id;
@@ -113,7 +105,7 @@ public class CardInformation implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CardInformation [type=" + type + ", cardHolderName=" + cardHolderName + ", cardNumber=" + cardNumber
+		return "CardInformation [id= "+ id +",  type=" + type + ", cardHolderName=" + cardHolderName + ", cardNumber=" + cardNumber
 				+ ", expirationMonth=" + expirationMonth + ", expirationYear=" + expirationYear + ", cvc=" + cvc + "]";
 	}
 
@@ -141,7 +133,5 @@ public class CardInformation implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

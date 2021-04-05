@@ -5,7 +5,7 @@ import com.njt.projekat.entity.User;
 
 public interface CardInformationService {
 	
-	CardInformation save(CardInformation cardInformation);
+	void save(CardInformation cardInformation);
 
 	CardInformation findByUser(User user);
 
