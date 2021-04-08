@@ -45,15 +45,15 @@
 						</div>
 						<div class="col-lg-5 admin-img">
 							<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
-								<label for="img">Image</label>
+								<label>Image</label>
 								<input id="imgUrl" type="file" name="file" accept="image/png, image/jpeg">
 							</form>
 							<div id="image-alert" class="alert-class"></div>
 						</div>
 						<div class="col-lg-5">
-							<label for="qt">Quantity</label>
+							<label>Quantity</label>
 							<div>
-								<input id="quantity" type="text" th:value="${vinyl.quantity}">
+								<input id="quantity" type="text" th:value="${vinyl.stock}">
 							</div>
 							<div id="quantity-alert" class="alert-class"></div>
 						</div>
@@ -62,11 +62,11 @@
 					<hr>
 					<div class="row">
 						<div class="col-lg-4">
-							<label for="format">Format</label>
+							<label>Format</label>
 							<input class="format-chosen" readonly type="text" th:value="${vinyl.format.name}">
 						</div>
 						<div class="col-lg-5">
-							<label for="format">Select A Different One</label>
+							<label>Select A Different One</label>
 							<div class="select-format">
 								<select id="selected-format">
 									<option th:each="f: ${formats}" th:value="${f.id}" th:text="${f.name}"></option>
@@ -77,14 +77,14 @@
 					<hr>
 					<div class="row">
 						<div class="col-lg-8">
-							<label for="recordLabels">Record Label</label>
+							<label>Record Label</label>
 							<input class="rl-chosen" readonly type="text"
 								th:value="${vinyl.recordLabel.name + ', ' + vinyl.recordLabel.year + '.'}">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-8">
-							<label for="recordLabels">Select A Different One</label>
+							<label>Select A Different One</label>
 							<div class="select-recordlbl">
 								<select class="recordlbl" id="rl-select">
 									<option th:each="r: ${recordLabels}" th:value="${r.id}"
@@ -96,7 +96,7 @@
 					<br>
 					<div class="row">
 						<div class="col-lg-10">
-							<label for="recordLabels">Or Create New Record Label</label>
+							<label>Or Create New Record Label</label>
 						</div>
 						<div class="col-lg-5">
 							<input type="text" placeholder="Record Label Name" id="rl-name">
@@ -113,7 +113,7 @@
 					<hr>
 					<div class="row">
 						<div class="col-lg-10">
-							<label for="recordLabels">Create New Genre</label>
+							<label>Create New Genre</label>
 						</div>
 						<div class="col-lg-5">
 							<input type="text" placeholder="New Genre" id="genreName">
@@ -122,7 +122,7 @@
 							<input type="button" id="btn-prob" onclick="createNewGenre()" value="Create">
 						</div>
 						<div class="col-lg-10">
-							<label for="recordLabels">Genres</label>
+							<label>Genres</label>
 						</div>
 						<div class="col-lg-7">
 							<div class="select-recordlbl genre_list">

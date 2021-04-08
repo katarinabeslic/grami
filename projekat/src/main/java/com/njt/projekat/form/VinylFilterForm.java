@@ -8,6 +8,7 @@ public class VinylFilterForm {
 	private List<String> genres;
 	private String sort;
 	private Integer page;
+	private Integer itemsPerPage;
 	private String search;
 	
 	public VinylFilterForm() {
@@ -46,6 +47,14 @@ public class VinylFilterForm {
 		this.page = page;
 	}
 
+	public Integer getItemsPerPage() {
+		return itemsPerPage;
+	}
+
+	public void setItemsPerPage(Integer itemsPerPage) {
+		this.itemsPerPage = itemsPerPage;
+	}
+
 	public String getSearch() {
 		return search;
 	}
@@ -56,8 +65,13 @@ public class VinylFilterForm {
 
 	@Override
 	public String toString() {
-		return "VinylFilterForm [format=" + format + ", genres=" + genres + ", sort=" + sort + ", page=" + page
-				+ ", search=" + search + "]";
+		return "VinylFilterForm{" +
+				"format='" + format + '\'' +
+				", genres=" + genres +
+				", sort='" + sort + '\'' +
+				", page=" + page +
+				", itemsPerPage=" + itemsPerPage +
+				", search='" + search + '\'' +
+				'}';
 	}
-
 }

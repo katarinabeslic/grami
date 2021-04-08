@@ -12,6 +12,9 @@
 				<form th:action="@{/shop/add-to-cart}" method="get">
 				<input type="hidden" name="id" th:value="${vinyl.id}">
 				<div class="col-lg-12">
+					<div th:if="${notEnoughStock}">
+						<div class="alert alert-danger">Oops, looks like that vinyl's out of stock!</div>
+					</div>
 					<div class="row">
 						<div class="col-lg-5">
 							<div class="product-pic-zoom">
@@ -21,9 +24,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-1"></div>
-						<div class="col-lg-6">
-							<div class="product-details">
+						<div class="col-lg-7">
+							<div class="product-details" style="padding-left: 100px">
 								<div class="pd-title artist-name">
 									<h3 th:text="${vinyl.vinylName}"></h3>
 									<span th:text="${vinyl.artist.stageName}"></span>
@@ -42,7 +44,7 @@
 									<div class="pro-qty">
 										<input type="text" id="quantity" name="quantity" th:value="${quantity}">
 									</div>
-									<button type="submit" class="primary-btn pd-cart">Add To Cart</button>
+									<button type="submit" class="site-btn pd-cart">Add To Cart</button>
 								</div>
 								<ul class="pd-tags">
 									<li>Format: <span th:text="${vinyl.format.name}"></span></li>

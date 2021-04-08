@@ -25,7 +25,7 @@
 						</div>
 						 -->
 
-                        <form action="#" th:action="@{/login}" th:object="${user}" method="POST" id="login-form">
+                        <form th:action="@{/login}" th:object="${user}" method="POST" id="login-form">
                             <div class="group-input">
                                 <label for="username">Username</label>
                                 <input type="text" th:field="*{username}" id="username" required autofocus>
@@ -35,11 +35,10 @@
                                 <input type="password" th:field="*{password}" id="password" required>
                             </div>
                             <p th:if="${param.error}" class="alert alert-danger">Invalid username or password</p>
-
                             <button type="submit" class="site-btn login-btn">Sign In</button>
                         </form>
                         <div class="switch-login">
-                            <a th:href="@{/register}" class="or-login">Or Create An Account</a>
+                            <a th:href="@{/register}" class="or-login">Don't have an account? Click to register</a>
                         </div>
                     </div>
                 </div>

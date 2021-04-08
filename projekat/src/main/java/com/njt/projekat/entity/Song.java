@@ -17,8 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "song")
 public class Song implements Serializable {
 
-	private static final long serialVersionUID = 998503059299319346L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

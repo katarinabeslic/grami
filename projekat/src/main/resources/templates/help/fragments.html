@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
@@ -72,15 +73,17 @@
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-7">
+                            <form th:action="@{/shop}" method="get">
                             <div class="advanced-search">
                                 <button type="button" class="category-btn">All Categories</button>
                                 <div class="input-group">
-                                    <input type="text" placeholder="What do you need?">
-                                    <button type="button" style="padding: 12px 16px 35px;">
+                                    <input type="text" placeholder="Search for vinyls..." th:name="search">
+                                    <button type="submit" style="padding: 12px 16px 35px;">
                                         <i class="ti-search"></i>
                                     </button>
                                 </div>
                             </div>
+                            </form>
                         </div>
                         <div class="col-lg-3 text-right col-md-3">
                             <ul class="nav-right">

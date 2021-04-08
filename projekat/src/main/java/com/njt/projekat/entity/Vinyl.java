@@ -20,8 +20,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "vinyl")
 public class Vinyl implements Serializable {
-
-	private static final long serialVersionUID = 8822676566899316380L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +38,8 @@ public class Vinyl implements Serializable {
 	@Column(name = "price")
 	private double price;
 	
-	@Column(name = "quantity")
-	private int quantity;
+	@Column(name = "stock")
+	private int stock;
 	
 	@ManyToOne
 	@JoinColumn(name = "artist_id")
@@ -75,7 +73,7 @@ public class Vinyl implements Serializable {
 		this.description = description;
 		this.imgUrl = imgUrl;
 		this.price = price;
-		this.quantity = quantity;
+		this.stock = quantity;
 	}
 
 	public double getPrice() {
@@ -86,12 +84,12 @@ public class Vinyl implements Serializable {
 		this.price = price;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public int getStock() {
+		return stock;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 	public String getVinylName() {
@@ -194,16 +192,16 @@ public class Vinyl implements Serializable {
 	@Override
 	public String toString() {
 		return "Vinyl [id=" + id + ", vinylName=" + vinylName + ", description=" + description + ", imgUrl=" + imgUrl
-				+ ", price=" + price + ", quantity=" + quantity + ", artist=" + artist + ", recordLabel=" + recordLabel
+				+ ", price=" + price + ", stock=" + stock + ", artist=" + artist + ", recordLabel=" + recordLabel
 				+ ", format=" + format + ", genres=" + genres + ", songs=" + songs + "]";
 	}
 
 
     public void decreaseQuantity(int quantity) {
-		this.quantity -= quantity;
+		this.stock -= quantity;
     }
 
     public void increaseQuantity(int quantity) {
-		this.quantity += quantity;
+		this.stock += quantity;
     }
 }

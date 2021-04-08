@@ -17,8 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "record_label")
 public class RecordLabel implements Serializable {
-
-	private static final long serialVersionUID = -7473521989179323292L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

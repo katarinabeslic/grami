@@ -40,7 +40,7 @@
 							</div>
 						</div>
 						<div class="filter-widget">
-							<button type="submit" form="filter-form" class="filter-btn">Filter</button>
+							<button type="submit" form="filter-form" class="site-btn">Filter</button>
 						</div>
 					</div>
 					<div class="col-lg-9 order-1 order-lg-2">
@@ -64,17 +64,21 @@
 											<option class="option-sort" value="alph-asc">A - Z Order</option>
 											<option class="option-sort" value="alph-desc">Z - A Order</option>
 										</select>
-
 										<input id="input-sort" type="hidden" name="sort" th:value="${filters.sort}">
-										<select class="p-show">
-											<option value="9">Show: </option>
-											<option value="18">Show: </option>
-											<option value="30">Show: </option>
+										<input id="itemsPerPage" type="hidden" name="itemsPerPage" th:value="${filters.itemsPerPage}">
+										<select class="p-show" id="opt-ipp">
+											<option value="9" >Show: 9</option>
+											<option value="18">Show: 18</option>
+											<option value="30">Show: 30</option>
 										</select>
 										<script>
-											var selectedval = document.getElementById("input-sort").value;
-											if (selectedval != null && selectedval != '') {
-												document.getElementById("opt-sel").value = selectedval;
+											let selectedValSort = document.getElementById("input-sort").value;
+											if (selectedValSort != null && selectedValSort != '') {
+												document.getElementById("opt-sel").value = selectedValSort;
+											}
+											let selectedValIPP = document.getElementById("itemsPerPage").value;
+											if (selectedValIPP != null && selectedValIPP != '') {
+												document.getElementById("opt-ipp").value = selectedValIPP;
 											}
 										</script>
 									</div>
@@ -100,6 +104,9 @@
 							</div>
 						</div>
 						<div class="product-list" id="replace-div">
+							<div th:if="${notEnoughStock}">
+								<div class="alert alert-danger">Oops, looks like that vinyl's out of stock!</div>
+							</div>
 							<div class="row">
 								<div class="col-lg-4 col-sm-6" th:each="vinyl: ${vinyls}">
 									<input type="hidden" class="the-vinyl-id" th:value="${vinyl.id}">
@@ -132,16 +139,12 @@
 				</div>
 			</div>
 			<input id="page" hidden="hidden" type="text" name="page" th:value="${filters.page}">
-			<input id="totalitems" hidden="hidden" type="text" th:value="${totalItems}">
-			<input id="itemsperpage" hidden="hidden" type="text" th:value="${itemsPerPage}">
+			<input id="totalItems" hidden="hidden" type="text" th:value="${totalItems}">
 			<input id="quantity" hidden="hidden" type="text" th:value="${quantity}">
 			<input id="format-id" hidden="hidden" type="text" name="page">
 		</form>
 	</section>
 	<!-- Product Shop Section End -->
-
-
-
 	<div th:replace="help/fragments :: footer"></div>
 </body>
 

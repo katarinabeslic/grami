@@ -17,8 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "format")
 public class Format implements Serializable {
 
-	private static final long serialVersionUID = -4896067429470994902L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

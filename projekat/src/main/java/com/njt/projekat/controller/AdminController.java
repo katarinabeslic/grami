@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.njt.projekat.entity.*;
+import com.njt.projekat.entity.security.Role;
 import com.njt.projekat.service.*;
 import com.njt.projekat.service.impl.UserSecurityService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
@@ -34,12 +35,13 @@ public class AdminController {
 	private OrderService orderService;
 	private ArtistService artistService;
 	private UserService userService;
+	private RoleService roleService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 	@Autowired
 	public AdminController(VinylService vinylService, FormatService formatService, RecordLabelService recordLabelService,
 						   GenreService genreService, OrderService orderService, ArtistService artistService,
-						   UserService userService, UserSecurityService userSecurityService) {
+						   UserService userService, RoleService roleService) {
 		this.vinylService = vinylService;
 		this.formatService = formatService;
 		this.recordLabelService = recordLabelService;
@@ -47,6 +49,7 @@ public class AdminController {
 		this.orderService = orderService;
 		this.artistService = artistService;
 		this.userService = userService;
+		this.roleService = roleService;
 	}
 
 	@GetMapping("/admin/catalogue")
@@ -55,21 +58,26 @@ public class AdminController {
 		if (filters.getFormat() == "") {
 			filters.setFormat(null);
 		}
+		if (filters.getItemsPerPage() == null) {
+			filters.setItemsPerPage(9);
+		}
 		Integer page = filters.getPage();
+		System.out.println("PAGE: " + page);
 		int pageNumber = (page == null || page <= 0) ? 0 : page - 1;
 		SortFilter sortFilter = new SortFilter(filters.getSort());
 		Page<Vinyl> pageResult = vinylService.findVinylsByCriteria(
-				PageRequest.of(pageNumber, 9, sortFilter.getSortType()), filters.getFormat(), filters.getGenres(), filters.getSearch()); 
+				PageRequest.of(pageNumber, filters.getItemsPerPage(), sortFilter.getSortType()), filters.getFormat(), filters.getGenres(), filters.getSearch());
 
 		String classActiveSort = "active" + filters.getSort();
 		classActiveSort = classActiveSort.replaceAll("\\s+", "");
 		classActiveSort = classActiveSort.replaceAll("&", "");
+
 		model.addAttribute(classActiveSort, true);
 		model.addAttribute("vinyls", pageResult.getContent());
 		model.addAttribute("formats", formatService.findAll());
 		model.addAttribute("genres", genreService.findAll());
 		model.addAttribute("totalItems", pageResult.getTotalElements());
-		model.addAttribute("itemsPerPage", 9);
+		model.addAttribute("itemsPerPage", filters.getItemsPerPage());
 		return "admin/catalogue";
 	}
 
@@ -161,6 +169,9 @@ public class AdminController {
 	@GetMapping("/admin/edit-user")
 	public String showAdminEditUser(@RequestParam("id") int id, Model model) {
 		model.addAttribute("user", userService.findById(id));
+		List<Role> roles = roleService.findAll();
+		System.out.println(roles);
+		model.addAttribute("roles", roles);
 		return "admin/edit-user";
 	}
 

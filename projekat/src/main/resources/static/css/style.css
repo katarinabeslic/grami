@@ -2098,7 +2098,6 @@ ol {
 	position: absolute;
 	right: 48px;
 	top: 0;
-	content: "09";
 	font-size: 16px;
 	color: #252525;
 }
@@ -4145,7 +4144,8 @@ ol {
 .register-form .switch-login .or-login,
 .login-form .switch-login .or-login {
 	color: #252525;
-	font-size: 14px;
+	font-weight: 600;
+	font-size: 17px;
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	position: relative;

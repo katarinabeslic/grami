@@ -52,21 +52,26 @@ public class ShopController {
         if (filters.getFormat() == "") {
             filters.setFormat(null);
         }
+        if (filters.getItemsPerPage() == null) {
+            filters.setItemsPerPage(9);
+        }
         Integer page = filters.getPage();
+        System.out.println("PAGE: " + page);
         int pageNumber = (page == null || page <= 0) ? 0 : page - 1;
         SortFilter sortFilter = new SortFilter(filters.getSort());
         Page<Vinyl> pageResult = vinylService.findVinylsByCriteria(
-                PageRequest.of(pageNumber, 9, sortFilter.getSortType()), filters.getFormat(), filters.getGenres(), filters.getSearch());
+                PageRequest.of(pageNumber, filters.getItemsPerPage(), sortFilter.getSortType()), filters.getFormat(), filters.getGenres(), filters.getSearch());
 
         String classActiveSort = "active" + filters.getSort();
         classActiveSort = classActiveSort.replaceAll("\\s+", "");
         classActiveSort = classActiveSort.replaceAll("&", "");
+
         model.addAttribute(classActiveSort, true);
         model.addAttribute("vinyls", pageResult.getContent());
         model.addAttribute("formats", formatService.findAll());
         model.addAttribute("genres", genreService.findAll());
         model.addAttribute("totalItems", pageResult.getTotalElements());
-        model.addAttribute("itemsPerPage", 9);
+        model.addAttribute("itemsPerPage", filters.getItemsPerPage());
         model.addAttribute("quantity", 1);
         return "shop";
     }
@@ -79,18 +84,26 @@ public class ShopController {
     }
 
     @GetMapping("/shop/add-to-cart")
-    public String addItemToCart(@RequestParam("id") Vinyl vinyl, @RequestParam(value = "quantity", required = false) String quantity, Principal principal) {
+    public String addItemToCart(@RequestParam("id") Vinyl vinyl, @RequestParam(value = "quantity", required = false) String quantity, Principal principal, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String referer = request.getHeader("Referer");
         int qty = 0;
         if (quantity == null) {
-           qty = 1;
+            qty = 1;
         } else {
             qty = Integer.valueOf(quantity);
         }
+
         if (principal == null) {
             return "redirect:/login";
         }
+
         User user = userService.findByUsername(principal.getName());
         CartItem existingItem = shoppingCartService.findByUserAndVinylAndOrderIsNull(user, vinyl);
+
+        if (qty > vinyl.getStock()) {
+            redirectAttributes.addFlashAttribute("notEnoughStock", true);
+            return "redirect:" + referer;
+        }
 
         if (existingItem == null) {
             CartItem cartItem = new CartItem(vinyl, qty, user);
@@ -99,7 +112,7 @@ public class ShopController {
             existingItem.increaseQuantity(qty);
             shoppingCartService.save(existingItem);
         }
-        return "redirect:/shop";
+        return "redirect:" + referer;
     }
 
     //??????????????????????????
@@ -135,7 +148,6 @@ public class ShopController {
     @GetMapping("/order-successful")
     private String showUserSuccessfulOrder(Model model) {
         Order order = (Order) model.asMap().get("order");
-        //System.out.println("MAPPED ORDER" + order);
         if (order != null) {
             model.addAttribute("order", order);
             return "order-successful";

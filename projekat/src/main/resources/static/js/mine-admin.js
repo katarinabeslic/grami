@@ -591,11 +591,18 @@ $('.sorting').on('change', function () {
 	$('#input-sort').val(selected);
 	$('#filter-form').submit();
 });
+$('.p-show').change(
+	function () {
+		let selected = $(this).val();
+		$('#itemsPerPage').val(selected);
+		$('#filter-form').submit();
+	}
+);
 
 $(function () {
 	$('#light-pagination').pagination({
-		items: $('#totalitems').val(),
-		itemsOnPage: $('#itemsperpage').val(),
+		items: $('#totalItems').val(),
+		itemsOnPage: $('#itemsPerPage').val(),
 		currentPage: $('#page').val(),
 		cssStyle: 'light-theme',
 		useAnchors: false,
@@ -648,5 +655,12 @@ $('.remove-user').click(
 		let $href = $row.find("a").attr('href');
 		console.log($href);
 		confirmDialogDelete("Are you sure you want to remove the user?", $href, 'http://localhost:8080/admin/users');
+	}
+);
+
+$('.role-add').change(
+	function () {
+		let selected = $(this).val();
+		console.log(selected);
 	}
 );

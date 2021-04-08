@@ -79,6 +79,7 @@ public class UserController {
 		return "redirect:/my-profile";
 	}
 
+	// this is not used at all
 	@GetMapping("/success")
 	public String loginPageRedirect(Model model, Authentication auth) {
 		if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {

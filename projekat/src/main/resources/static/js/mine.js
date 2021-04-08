@@ -12,15 +12,23 @@ $('.the-format').on('click', function (event) {
 });
 
 $('.sorting').on('change', function () {
-    var selected = $(this).val();
+    let selected = $(this).val();
     $('#input-sort').val(selected);
     $('#filter-form').submit();
 });
 
+$('.p-show').change(
+    function () {
+        let selected = $(this).val();
+        $('#itemsPerPage').val(selected);
+        $('#filter-form').submit();
+    }
+);
+
 $(function () {
     $('#light-pagination').pagination({
-        items: $('#totalitems').val(),
-        itemsOnPage: $('#itemsperpage').val(),
+        items: $('#totalItems').val(),
+        itemsOnPage: $('#itemsPerPage').val(),
         currentPage: $('#page').val(),
         cssStyle: 'light-theme',
         useAnchors: false,
@@ -151,5 +159,11 @@ $('.address-btn').click(
 $('.card-btn').click(
     function () {
         $(location).attr('href', 'http://localhost:8080/payment-method');
+    }
+);
+
+$('.category-btn').click(
+    function () {
+        $(location).attr('href', 'http://localhost:8080/shop');
     }
 );
