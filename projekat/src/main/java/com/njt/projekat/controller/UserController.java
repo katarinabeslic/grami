@@ -46,47 +46,37 @@ public class UserController {
 	
 	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
+	@GetMapping("/login")
+	public String showLoginPage(Model model) {
+		model.addAttribute("emailExists", model.asMap().get("emailExists"));
+		model.addAttribute("user", new User());
+		return "login";
+	}
+
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
+		model.addAttribute("usernameExists", model.asMap().get("usernameExists"));
 		model.addAttribute("user", new User());
 		return "register";
 	}
 
-	@PostMapping("/register")
-	public String registerUser(@ModelAttribute("user") User user, BindingResult bindingResults, RedirectAttributes redirectAttributes, Model model) {
-		boolean invalidFields = false;
+	@PostMapping("/register-user")
+	public String registerUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		
-		if (bindingResults.hasErrors()) {
-			return "redirect:/login";
-		}
+
 		if (userService.findByUsername(user.getUsername()) != null) {
 			redirectAttributes.addFlashAttribute("usernameExists", true);
-			invalidFields = true;
+			return "redirect:/register";
 		}
 		if (userService.findByEmail(user.getEmail()) != null) {
 			redirectAttributes.addFlashAttribute("emailExists", true);
-			invalidFields = true;
-		}
-		if (invalidFields) {
 			return "redirect:/login";
 		}
 		
 		user = userService.createUser(user, Arrays.asList("ROLE_CUSTOMER"));
 		userSecurityService.authenticateUser(user.getUsername());
-		model.addAttribute("user", user);
-		
-		return "redirect:/my-profile";
-	}
 
-	// this is not used at all
-	@GetMapping("/success")
-	public String loginPageRedirect(Model model, Authentication auth) {
-		if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-			return "redirect:admin";
-		} else {
-			return "redirect:";
-		}
+		return "redirect:/my-profile";
 	}
 
 	@GetMapping("/my-profile")
@@ -161,10 +151,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/cart")
-	public String showShoppingCart(Model model, Principal principal) {
+	public String showShoppingCart(Principal principal, RedirectAttributes redirectAttributes) {
 		User user = userService.findByUsername(principal.getName());
 		List<CartItem> shoppingCart = shoppingCartService.findAllByUserAndOrderIsNull(user);
 		if (shoppingCart.isEmpty()) {
+			redirectAttributes.addFlashAttribute("cartEmpty", true);
 			return "redirect:/shop";
 		}
 		return "shopping-cart";

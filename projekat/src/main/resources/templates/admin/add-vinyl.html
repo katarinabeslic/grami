@@ -26,7 +26,7 @@
                     <div id="price-alert" class="alert-class"></div>
                 </div>
                 <div class="col-lg-6">
-                    <label for="quantity">Quantity</label> <input type="number" id="quantity">
+                    <label for="stock">Stock</label> <input type="number" id="stock">
                     <div id="quantity-alert" class="alert-class"></div>
                 </div>
                 <div class="col-lg-6 admin-img">
@@ -66,20 +66,6 @@
                         <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
                             <br> <br>
                             <div class="row">
-                                <div class="col-lg-10" style="padding-bottom: 40px">
-                                    <div class="specification-table" id="artistTable" style="padding-top: 0px">
-                                        <table>
-                                            <thead>
-                                            <th style="width: 80px;">ID</th>
-                                            <th>Stage name</th>
-                                            </thead>
-                                            <tbody th:each="artist : ${artists}">
-                                            <td th:text="${artist.id}"></td>
-                                            <td th:text="${artist.stageName}"></td>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
                                 <div class="col-lg-7">
                                     <input type="text" id="artistName" name="artistName" placeholder="Artist Name">
                                 </div>
@@ -196,6 +182,8 @@
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-lg-10" id="genre-contains">
                                 </div>
                             </div>
                         </div>

@@ -23,4 +23,5 @@ public interface VinylService {
 
 	public Page<Vinyl> findVinylsByCriteria(Pageable pageable, String format, List<String> genres, String search);
 
+    Vinyl checkIfExists(String vinylName, String stageName);
 }

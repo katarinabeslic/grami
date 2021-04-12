@@ -30,19 +30,19 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <label>First Name <span>*</span></label>
-														<input type="text" th:name="firstName" th:value="${user?.firstName}">
+														<input type="text" readonly th:name="firstName" th:value="${user?.firstName}">
                                                     </div>
                                                     <div class="col-lg-5">
                                                         <label>Last Name <span>*</span></label>
-														<input type="text" th:name="lastName" th:value="${user?.lastName}">
+														<input type="text" readonly th:name="lastName" th:value="${user?.lastName}">
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <label>Email <span>*</span></label>
-														<input type="text" th:name="email" th:value="${user?.email}">
+														<input type="text" readonly th:name="email" th:value="${user?.email}">
                                                     </div>
                                                     <div class="col-lg-5">
                                                         <label>Phone Number <span>*</span></label>
-														<input type="text" th:name="phoneNumber" th:value="${user?.phoneNumber}">
+														<input type="text" readonly th:name="phoneNumber" th:value="${user?.phoneNumber}">
                                                     </div>
                                                 </div>
 												<div class="row">
@@ -57,19 +57,19 @@
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <label>Country <span>*</span></label>
-														<input type="text" th:name="country" th:value="${user?.address?.country}">
+														<input type="text" readonly th:name="country" th:value="${user?.address?.country}">
                                                     </div>
                                                     <div class="col-lg-5">
                                                         <label>City <span>*</span></label>
-														<input type="text" th:name="city" th:value="${user?.address?.city}">
+														<input type="text" readonly th:name="city" th:value="${user?.address?.city}">
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <label>Street and Number <span>*</span></label>
-                                                        <input type="text" th:name="street" th:value="${user?.address?.street}">
+                                                        <input type="text" readonly th:name="street" th:value="${user?.address?.street}">
                                                     </div>
                                                     <div class="col-lg-5">
                                                         <label>Zip Code <span>*</span></label>
-														<input type="text" th:name="zipCode" th:value="${user?.address?.zipCode}">
+														<input type="text" readonly th:name="zipCode" th:value="${user?.address?.zipCode}">
                                                     </div>
                                                 </div>
 												<div class="row">
@@ -91,11 +91,17 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <label>Card Holder Name <span>*</span></label>
-                                                        <input type="text" th:name="cardHolderName" th:value="${user.cardInformation?.cardHolderName}">
+                                                        <input type="text" readonly th:name="cardHolderName" th:value="${user.cardInformation?.cardHolderName}">
                                                     </div>
                                                     <div class="col-lg-5">
                                                         <label>Card Number <span>*</span></label>
-                                                        <input type="text" th:name="cardNumber" th:value="${user.cardInformation?.cardNumber}">
+                                                        <input type="hidden" id="cardNumber" readonly th:name="cardNumber" th:value="${user.cardInformation?.cardNumber}">
+                                                        <input type="text" id="cardNumberShow" readonly >
+                                                        <script>
+                                                            let cardNumber = document.getElementById('cardNumber').value;
+                                                            let cardNumberShow = document.getElementById('cardNumberShow');
+                                                            cardNumberShow.value = new Array(cardNumber.length-3).join('●') + cardNumber.substr(cardNumber.length-4,4);
+                                                        </script>
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <label>Expiration Month <span>*</span></label>
@@ -129,7 +135,7 @@
                                                     </div>
                                                     <div class="col-lg-3">
                                                         <label>CVC: <span>*</span></label>
-														<input type="number" th:name="cvc" required th:value="${user.cardInformation?.cvc}">
+														<input type="password" readonly th:name="cvc" th:value="${user.cardInformation?.cvc}">
                                                     </div>
 													<div class="row" style="align-content: center">
 														<div class="container" style="padding-top: 30px; padding-left: 30px">
@@ -152,9 +158,8 @@
                             <ul class="order-table">
                                 <li>Product <span>Total</span></li>
                                 <li class="fw-normal" th:each="item : ${shoppingCart}"
-                                    th:text="| ${item.vinyl.vinylName} X ${item.quantity} - ${item.vinyl.price} RSD|"></li>
-                                <li class="total-price">Total <span
-                                        th:text="|${shoppingCartTotal} RSD|"></span></li>
+                                    th:text="| ${item.vinyl.vinylName} - ${item.vinyl.artist.stageName} X ${item.quantity}|"></li>
+                                <li class="total-price">Total <span th:text="|${shoppingCartTotal} RSD|"></span></li>
                             </ul>
                             <div class="payment-check">
                                 <div class="pc-item">
@@ -171,9 +176,8 @@
                             <input type="hidden" id="method" value="paypal">
 
                             <div class="order-btn">
-                                <button type="submit" id="place-order"
-                                        class="site-btn place-btn">Place Order
-                                </button>
+                                <button type="submit" id="place-order" class="site-btn place-btn">Place Order</button>
+                                <p style="padding-top: 30px">By placing an order you agree with the terms and conditions of the Grami store. </p>
                             </div>
                         </div>
                     </div>

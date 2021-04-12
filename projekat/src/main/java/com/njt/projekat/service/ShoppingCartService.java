@@ -21,4 +21,9 @@ public interface ShoppingCartService {
     void removeCartItemById(int id);
 
 	CartItem findByUserAndVinylAndOrderIsNull(User user, Vinyl vinyl);
+
+    void updateCartItemQty(int cartItemId, int newQuantity);
+
+	CartItem findCartItemById(int cartItemId);
+
 }

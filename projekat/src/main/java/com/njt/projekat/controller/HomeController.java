@@ -14,12 +14,6 @@ public class HomeController {
 	public String showErrorPage() {
 		return "error";
 	}
-
-	@GetMapping("/login") 
-	public String showLoginPage(Model model) {
-		model.addAttribute("user", new User());
-		return "login";
-	}
 	
 	@GetMapping("/")
 	public String showIndexPage() {

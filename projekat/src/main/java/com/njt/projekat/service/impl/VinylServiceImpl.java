@@ -57,4 +57,9 @@ public class VinylServiceImpl implements VinylService {
 		return vinylRepository.findAll(VinylSpecification.filterBy(format, genres, search), pageable);
 	}
 
+	@Override
+	public Vinyl checkIfExists(String vinylName, String stageName) {
+		return vinylRepository.findVinylWhereVinylNameEquals(vinylName, stageName);
+	}
+
 }

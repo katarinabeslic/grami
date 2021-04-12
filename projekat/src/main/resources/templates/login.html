@@ -13,19 +13,10 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
                         <h2>Login Form</h2>
-
-                        <!-- logout message -->
-                        <div th:if="${param.logout}">
-                            <div class="alert alert-success">You have been logged out.</div>
-                        </div>
-
-                        <!-- 
-						<div th:if="successfulRegistration">
-							<div class="alert alert-success">Congratulations, you've successfully registered! Please log in: </div>
-						</div>
-						 -->
-
                         <form th:action="@{/login}" th:object="${user}" method="POST" id="login-form">
+                            <div th:if="${emailExists}">
+                                <div class="alert alert-danger">Existing email, looks like you've already registered so please log in!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+                            </div>
                             <div class="group-input">
                                 <label for="username">Username</label>
                                 <input type="text" th:field="*{username}" id="username" required autofocus>
@@ -34,7 +25,7 @@
                                 <label>Password</label>
                                 <input type="password" th:field="*{password}" id="password" required>
                             </div>
-                            <p th:if="${param.error}" class="alert alert-danger">Invalid username or password</p>
+                            <p th:if="${param.error}" class="alert alert-danger">Invalid username or password<a class="close" data-dismiss="alert" aria-label="close">×</a></p>
                             <button type="submit" class="site-btn login-btn">Sign In</button>
                         </form>
                         <div class="switch-login">

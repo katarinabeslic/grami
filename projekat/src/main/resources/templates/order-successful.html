@@ -7,7 +7,7 @@
 
 <div th:replace="help/fragments :: nav"></div>
 
-<div class="container page-content">
+<div class="container page-content" style="padding-top: 100px; padding-bottom: 100px">
     <div class="card">
         <div class="card-body">
             <div class="text-center py-3">
@@ -16,18 +16,18 @@
                 <p>Your order has been received and will be processed as soon as possible.</p>
                 <p class="mb-0">
                     <span class="text-muted">Order ID: </span>
-                    <span class="text-info">#ORD<span th:text="${order.id}"></span></span>
+                    <span style="color: #e7ab3c">#ORD<span th:text="${order.id}" style="color: #e7ab3c"></span></span>
                 </p>
-                <p>
-                    <span class="text-muted">Amount: </span>
-                    <span class="text-info"><span th:text="${order.totalPrice}"></span> RSD</span>
+                <p style="padding-bottom: 30px">
+                    <span class="text-muted">Total Amount: </span>
+                    <span style="color: #e7ab3c"><span th:text="${order.totalPrice}" style="color: #e7ab3c">7299</span> RSD</span>
                 </p>
-                <a th:href="@{/shop}" class="btn btn-info rounded mb-3">CONTINUE SHOPPING</a>
-                <a th:href="@{/}" class="btn btn-primary rounded mb-3">VIEW ORDER</a>
+                <a th:href="@{/shop}" class="site-btn" style="color: white">CONTINUE SHOPPING</a>
+                <a th:href="@{/order-detail(id=${order.id})}" class="site-btn place-btn" style="color: white">VIEW ORDER</a>
             </div>
         </div>
     </div>
-</div> <!-- end container -->
+</div>
 
 <div th:replace="help/fragments :: footer"></div>
 

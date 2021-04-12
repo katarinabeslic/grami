@@ -43,11 +43,6 @@ $(function () {
     });
 });
 
-/*
-$('#update-user').on('click', function() {
-	$('#form-user').submit();
-});*/
-
 function checkPasswordMatch() {
     let password = $("#new-password").val();
     let confirmPassword = $("#confirm-password").val();
@@ -165,5 +160,53 @@ $('.card-btn').click(
 $('.category-btn').click(
     function () {
         $(location).attr('href', 'http://localhost:8080/shop');
+    }
+);
+
+$('.qty-dec').click(
+    function () {
+        let qty = $('.itemQuantity').val();
+        if (qty > 1) {
+            let newQty = qty - 1;
+            let cartItemId = $('#cartItemId').val();
+            let rData = {
+                "cartItemId" : parseInt(cartItemId),
+                "newQuantity" : newQty
+            }
+            $.ajax({
+                type: "POST",
+                url: "/decrease-cart-qty",
+                contentType: 'application/json',
+                data: JSON.stringify(rData),
+                success: function () {
+                    console.log("Decreased");
+                }
+            });
+        }
+    }
+);
+
+$('.qty-inc').click(
+    function () {
+        let qty = parseInt($('.itemQuantity').val()) + 1;
+        let cartItemId = parseInt($('#cartItemId').val());
+        let rData = {
+            "cartItemId" : cartItemId,
+            "newQuantity" : qty
+        }
+        $.ajax({
+            type: "POST",
+            url: "/increase-cart-qty",
+            contentType: 'application/json',
+            data: JSON.stringify(rData),
+            success: function (response) {
+                if (response == "success") {
+                    console.log("Increased")
+                } else {
+                    console.log("OH NOOO")
+                }
+            },
+
+        });
     }
 );

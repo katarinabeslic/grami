@@ -3,6 +3,7 @@ package com.njt.projekat.service.impl;
 import java.util.List;
 
 import com.njt.projekat.entity.Vinyl;
+import com.njt.projekat.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	@Override
 	public CartItem findByUserAndVinylAndOrderIsNull(User user, Vinyl vinyl) {
 		return shoppingCartRepository.findByUserAndVinylAndOrderIsNull(user, vinyl);
+	}
+
+	@Override
+	public void updateCartItemQty(int cartItemId, int newQuantity) {
+		shoppingCartRepository.updateCartItemQty(cartItemId, newQuantity);
+	}
+
+	@Override
+	public CartItem findCartItemById(int cartItemId) {
+		return shoppingCartRepository.findById(cartItemId);
 	}
 
 }

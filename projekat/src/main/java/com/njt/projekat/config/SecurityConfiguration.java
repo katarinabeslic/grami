@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 			"/img/**",
 			"/",
 			"/register",
+			"/register-user",
 			"/login",
 			"/shop/**",
 			"/vinyl",				
@@ -59,9 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 			.loginPage("/login").permitAll()
 			.and()
 			.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/?logout").deleteCookies("remember-me").permitAll()
-			.and()
-			.rememberMe().key("aSecretKey");
+			.logoutSuccessUrl("/?logout").permitAll();
 	}
 	
 	@Autowired

@@ -3,14 +3,10 @@ package com.njt.projekat.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import com.njt.projekat.entity.*;
 import com.njt.projekat.entity.security.Role;
 import com.njt.projekat.service.*;
-import com.njt.projekat.service.impl.UserSecurityService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.njt.projekat.form.VinylFilterForm;
 import com.njt.projekat.util.SortFilter;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AdminController {
@@ -92,7 +89,7 @@ public class AdminController {
 		model.addAttribute("recordLabels", recordLabelService.findAll());
 		model.addAttribute("genres", genreService.findAll());
 		model.addAttribute("artists", artistService.findAll());
-		return "admin/add_new";
+		return "admin/add-vinyl";
 	}
 
 	@GetMapping("/admin/edit")
@@ -101,7 +98,7 @@ public class AdminController {
 		model.addAttribute("recordLabels", recordLabelService.findAll());
 		model.addAttribute("genres", genreService.findAll());
 		model.addAttribute("formats", formatService.findAll());
-		return "admin/edit_vinyl";
+		return "admin/edit-vinyl";
 	}
 
 	@GetMapping("/admin/remove")
@@ -147,12 +144,6 @@ public class AdminController {
 		return "admin/users";
 	}
 
-	@GetMapping("/admin/remove-user")
-	public String removeUser(@RequestParam("id") int id) {
-		userService.deleteById(id);
-		return "redirect:/admin/users";
-	}
-
 	@GetMapping("/admin/add-user")
 	public String showAdminAddUser(Model model) {
 		model.addAttribute("user", new User());
@@ -170,15 +161,7 @@ public class AdminController {
 	public String showAdminEditUser(@RequestParam("id") int id, Model model) {
 		model.addAttribute("user", userService.findById(id));
 		List<Role> roles = roleService.findAll();
-		System.out.println(roles);
 		model.addAttribute("roles", roles);
 		return "admin/edit-user";
-	}
-
-	@PostMapping("/admin/edit-user")
-	public String editUser(@ModelAttribute("user") User user) {
-		System.out.println(user.getId());
-		System.out.println(user);
-		return "redirect:/admin/users";
 	}
 }

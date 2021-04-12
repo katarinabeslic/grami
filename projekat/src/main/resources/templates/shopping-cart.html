@@ -25,6 +25,7 @@
                             </thead>
                             <tbody>
                                 <tr th:each="cartItem : ${shoppingCart}">
+                                    <input type="hidden" id="cartItemId" th:value="${cartItem.id}">
                                     <td class="cart-pic first-row"><img th:src="${cartItem.vinyl.imgUrl}" style="width: 220px;" alt=""></td>
                                     <td class="cart-title first-row">
                                         <h5 th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|"></h5>
@@ -33,7 +34,7 @@
                                     <td class="qua-col first-row">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <input class="itemQuantity" type="text" th:value="${cartItem.quantity}">
+                                                <input class="itemQuantity" readonly type="text" th:value="${cartItem.quantity}">
                                             </div>
                                         </div>
                                     </td>
@@ -47,8 +48,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="cart-buttons">
-                                <a th:href="@{/shop}" class="primary-btn continue-shop">Continue shopping</a>
-                                <a th:href="@{/update-cart}" class="primary-btn up-cart">Update cart</a>
+                                <a th:href="@{/shop}" class="primary-btn up-cart">Continue shopping</a>
                             </div>
                             <div class="discount-coupon">
                                 <h6>Discount Codes</h6>

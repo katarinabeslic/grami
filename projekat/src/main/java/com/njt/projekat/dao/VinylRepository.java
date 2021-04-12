@@ -21,4 +21,6 @@ public interface VinylRepository extends JpaRepository<Vinyl, Integer>, JpaSpeci
 	@Query("SELECT v From Vinyl v WHERE v.format.id=?1")
 	List<Vinyl> findByFormatId(int id);
 
+	@Query("SELECT v FROM Vinyl v JOIN Artist a WHERE v.vinylName=?1 AND a.stageName=?2")
+	Vinyl findVinylWhereVinylNameEquals(String vinylName, String stageName);
 }

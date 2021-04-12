@@ -105,7 +105,10 @@
 						</div>
 						<div class="product-list" id="replace-div">
 							<div th:if="${notEnoughStock}">
-								<div class="alert alert-danger">Oops, looks like that vinyl's out of stock!</div>
+								<div class="alert alert-danger">Oops, looks like that vinyl's out of stock!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+							</div>
+							<div th:if="${cartEmpty}">
+								<div class="alert alert-danger">Your cart is empty!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-sm-6" th:each="vinyl: ${vinyls}">

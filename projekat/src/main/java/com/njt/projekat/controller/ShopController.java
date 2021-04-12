@@ -56,12 +56,10 @@ public class ShopController {
             filters.setItemsPerPage(9);
         }
         Integer page = filters.getPage();
-        System.out.println("PAGE: " + page);
         int pageNumber = (page == null || page <= 0) ? 0 : page - 1;
         SortFilter sortFilter = new SortFilter(filters.getSort());
         Page<Vinyl> pageResult = vinylService.findVinylsByCriteria(
                 PageRequest.of(pageNumber, filters.getItemsPerPage(), sortFilter.getSortType()), filters.getFormat(), filters.getGenres(), filters.getSearch());
-
         String classActiveSort = "active" + filters.getSort();
         classActiveSort = classActiveSort.replaceAll("\\s+", "");
         classActiveSort = classActiveSort.replaceAll("&", "");
@@ -113,14 +111,6 @@ public class ShopController {
             shoppingCartService.save(existingItem);
         }
         return "redirect:" + referer;
-    }
-
-    //??????????????????????????
-    @GetMapping("/update-cart")
-    public String updateShoppingCart(@ModelAttribute List<CartItem> shoppingCart, Model model, Principal principal) {
-        //shoppingCartService.saveAll(shoppingCart);
-        System.out.println(shoppingCart);
-        return "redirect:/cart";
     }
 
     @GetMapping("/checkout")

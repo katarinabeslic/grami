@@ -46,7 +46,7 @@
                                 <th>Status</th>
                             </thead>
                             <tbody th:each="order : ${orders}">
-                                <td scope="row"><a th:href="@{/order-detail(id=${order.id})}" class="text-primary">ORD-<span
+                                <td scope="row"><a th:href="@{/order-detail(id=${order.id})}" style="color: #e7ab3c">ORD-<span
                                         th:text="${order.id}"></span></a></td>
                                 <td th:text="${#dates.format(order.dateAndTime, 'dd-MMM-yyyy')}"></td>
                                 <td><span th:text="${order.totalPrice}"></span> RSD</td>
