@@ -66,14 +66,14 @@ public class Vinyl implements Serializable {
 		
 	}
 	
-	public Vinyl(int id, String vinylName, String description, String imgUrl, double price, int quantity) {
+	public Vinyl(int id, String vinylName, String description, String imgUrl, double price, int stock) {
 		super();
 		this.id = id;
 		this.vinylName = vinylName;
 		this.description = description;
 		this.imgUrl = imgUrl;
 		this.price = price;
-		this.stock = quantity;
+		this.stock = stock;
 	}
 
 	public double getPrice() {
@@ -197,11 +197,11 @@ public class Vinyl implements Serializable {
 	}
 
 
-    public void decreaseQuantity(int quantity) {
-		this.stock -= quantity;
+    public void decreaseStock(int stock) {
+		this.stock -= stock;
     }
 
-    public void increaseQuantity(int quantity) {
-		this.stock += quantity;
+    public void increaseStock(int stock) {
+		this.stock += stock;
     }
 }

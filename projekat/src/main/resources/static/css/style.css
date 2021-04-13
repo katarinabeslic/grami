@@ -1740,7 +1740,6 @@ ol {
 -----------------------*/
 
 .breadcrumb-text {
-	border-bottom: 1px solid #ebebeb;
 	padding: 15px 0;
 }
 
@@ -3185,7 +3184,7 @@ ol {
 	background-color: #FAC451;
 	font-size: 18px;
 	font-weight: 600;
-	color: #252525;
+	color: #ffffff;
 	height: 50px;
 	margin-top: 50px;
 	margin-bottom: 50px;

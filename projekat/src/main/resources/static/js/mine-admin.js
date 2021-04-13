@@ -13,6 +13,7 @@ function validation_alert(element, message, alerttype) {
 function songToTable() {
     let songName = $("input[name = 'songName']").val();
     let songDuration = $("input[name = 'songDuration']").val();
+    let songObj = { "songName": songName, "duration": songDuration };
 
     if (songName == '' || songDuration == '') {
         $('#alertdiv').remove();
@@ -27,12 +28,18 @@ function songToTable() {
         }
     } else {
         $('#alertdiv').remove();
+        for (let i=0; listOfSongs.length; i++) {
+            let song = listOfSongs[i];
+            console.log(song);
+            console.log(listOfSongs)
+            if (songObj == song) {
+                console.log("AHA")
+            }
+        }
+        validation_alert($('#song-response'), "The song was already added!", 'alert-danger');
+        return;
     }
 
-    var songObj = {
-        "songName": songName,
-        "duration": songDuration
-    };
 
     listOfSongs.push(songObj);
 
@@ -62,7 +69,7 @@ function deleteSong(el) {
 }
 
 function findOrCreateArtist() {
-    var artistName = $("input[name = 'artistName']").val();
+    let artistName = $('#artistName').val();
     console.log(artistName);
 
     $.ajax({
@@ -172,50 +179,50 @@ function createNewGenre() {
 }
 
 function saveNewVinyl() {
-    var name = $('#name').val();
-    var description = $('#description').val();
-    var price = $('#price').val();
-    var stock = $('#stock').val();
-    var selectedFormat = $('#selected-format').find(':selected');
-    var formatObj = {
+    let name = $('#name').val();
+    let description = $('#description').val();
+    let price = $('#price').val();
+    let stock = $('#stock').val();
+    let selectedFormat = $('#selected-format').find(':selected');
+    let formatObj = {
         "id": selectedFormat.val(),
         "name": selectedFormat.html()
     };
-    var stageName = $('#artistName').val();
-    var selectedRL = $('#rl-select').find(':selected');
+    let stageName = $('#artistName').val();
+    let selectedRL = $('#rl-select').find(':selected');
 
 
-    var rlResult = selectedRL.html().split(',');
-    var year = rlResult[1].split('.');
-    var rlObj = {
+    let rlResult = selectedRL.html().split(',');
+    let year = rlResult[1].split('.');
+    let rlObj = {
         "name": rlResult[0],
         "year": year[0]
     };
 
-    var vinylData = {
+    let vinylData = {
         'vinylName': name,
         'description': description,
         'price': price,
         'stock': stock,
-        'artist': {
-            stageName
-        },
+        'artist': { stageName },
         'recordLabel': rlObj,
         'format': formatObj,
         'genres': listOfGenres,
         'songs': listOfSongs,
     };
 
-    var form = $('#fileUploadForm')[0];
-    var data = new FormData(form);
+    let form = $('#fileUploadForm')[0];
+    let data = new FormData(form);
     data.append("vinylData", JSON.stringify(vinylData));
 
-    var fileCheck = $('#imgUrl').val();
+    let fileCheck = $('#imgUrl').val();
 
-    var valid = final_validation(name, description, price, stock, stageName, fileCheck, listOfSongs, listOfGenres);
+    let valid = final_validation(name, description, price, stock, stageName, fileCheck, listOfSongs, listOfGenres);
     if (!valid) {
         return;
     }
+
+    console.log(vinylData);
 
     $.ajax({
         type: "POST",
@@ -235,7 +242,7 @@ function saveNewVinyl() {
                 validation_alert($('#vinyl-response'), "Oh no! The vinyl with that title and artist already exists :(", 'alert-danger');
             } else {
                 $('#alertdiv').remove();
-                validation_alert($('#vinyl-response'), "Oh no! The viny wasn't saved :(", 'alert-danger');
+                validation_alert($('#vinyl-response'), "Oh no! The vinyl wasn't saved :(", 'alert-danger');
             }
         }
     });
@@ -277,7 +284,7 @@ function updateVinyl(href) {
         'description': $('#description').val(),
         'imgUrl': imgUrl,
         'price': $('#price').val(),
-        'quantity': $('#quantity').val(),
+        'stock': $('#stock').val(),
         'artist': {
             stageName
         },
@@ -290,7 +297,7 @@ function updateVinyl(href) {
         'songs': listOfSongs
     };
 
-    var valid = final_validation($('#name').val(), $('#description').val(), $('#price').val(), $('#quantity').val(),
+    var valid = final_validation($('#name').val(), $('#description').val(), $('#price').val(), $('#stock').val(),
         stageName, imgUrl, listOfSongs, listOfGenres);
 
     if (!valid) {
@@ -311,8 +318,6 @@ function updateVinyl(href) {
             if (response == "success") {
                 $('#alertdiv').remove();
                 validation_alert($('#vinyl-response'), "The vinyl was successfully updated!", 'alert-success');
-                clear_vinyl_form();
-                $('#img-y').css('display', 'none');
             } else {
                 $('#alertdiv').remove();
                 validation_alert($('#vinyl-response'), "Oh no! The vinyl wasn't updated :(", 'alert-danger');
@@ -332,7 +337,7 @@ function addToListOfGenres() {
         let genreObj = {
             "name": selectedGenre.html()
         };
-        getListOfGenres().push(genreObj);
+        listOfGenres.push(genreObj);
         $("#selected-genres ul").append(`<li>${selectedGenre.html()}</li>`);
     }
 }
@@ -368,14 +373,12 @@ function getListOfSongs() {
 }
 
 function getListOfGenres() {
-    let genres = new Array;
+    listOfGenres = new Array;
     $('#genres-ul li').each(function (index, li) {
-        let genre = {
-            "name": li.textContent
-        };
-        genres.push(genre);
+        let genre = { "name": li.textContent };
+        listOfGenres.push(genre);
     });
-    return genres;
+    return listOfGenres;
 }
 
 function clear_vinyl_form() {
@@ -421,12 +424,10 @@ $("#price").focusout(function () {
     }
 });
 
-$("#quantity").focusout(function () {
+$("#stock").focusout(function () {
     $('#alertdiv').remove();
-    if ($('#quantity').val() == '') {
-        validation_alert($('#quantity-alert'), "Quantity can't be empty!", 'alert-danger');
-    } else if (!$.isNumeric($('#quantity').val())) {
-        validation_alert($('#quantity-alert'), "Quantity has to be a number!", 'alert-danger');
+    if ($('#stock').val() == '') {
+        validation_alert($('#quantity-alert'), "Stock can't be empty!", 'alert-danger');
     }
 });
 
@@ -437,7 +438,7 @@ $("#artistName").focusout(function () {
     }
 });
 
-function final_validation(name, description, price, quantity, stageName, fileCheck, listOfSongs, listOfGenres) {
+function final_validation(name, description, price, stock, stageName, fileCheck, listOfSongs, listOfGenres) {
     var valid = true;
     if (name == '') {
         validation_alert($('#vinyl-name-alert'), "The vinyl name can't be empty!", 'alert-danger');
@@ -460,11 +461,8 @@ function final_validation(name, description, price, quantity, stageName, fileChe
         validation_alert($('#price-alert'), "Price has to be a number!", 'alert-danger');
         valid = false;
     }
-    if (quantity == '') {
-        validation_alert($('#quantity-alert'), "Quantity can't be empty!", 'alert-danger');
-        valid = false;
-    } else if (!$.isNumeric(quantity)) {
-        validation_alert($('#quantity-alert'), "Quantity has to be a number!", 'alert-danger');
+    if (stock == '') {
+        validation_alert($('#quantity-alert'), "Stock can't be empty!", 'alert-danger');
         valid = false;
     }
     if (stageName == '') {
@@ -707,7 +705,7 @@ $('.remove-user').click(
         event.preventDefault();
         let $row = $(this).closest("td");
         let $href = $row.find("a").attr('href');
-        confirmDialogDeleteUser(this,"Are you sure you want to remove the user?", $href, 'http://localhost:8080/admin/users');
+        confirmDialogDeleteUser(this, "Are you sure you want to remove the user?", $href, 'http://localhost:8080/admin/users');
     }
 );
 
@@ -720,26 +718,36 @@ function getListOfRoles() {
     return listOfRoles;
 }
 
+function removeRoles() {
+    console.log("ahaaa");
+    $('#current-roles').empty();
+}
+
 $('#role-add').change(
     function () {
         if (document.getElementById("alertdiv") !== null) {
             $('#alertdiv').remove();
         }
-        let selectedRole = $('#role-add').find(':selected').val();
-        if (getListOfRoles().some(e => e.name === selectedRole)) {
-            validation_alert($('#role-alert'), "The user already has the selected role!", 'alert-danger');
-            return;
-        } else {
-            let roleObj = {"name": selectedRole};
-            listOfRoles.push(roleObj);
-            let classToAppend = '';
-            if (selectedRole === 'ROLE_CUSTOMER') {
-                classToAppend = 'badge-success';
+        if (getListOfRoles().length < 2) {
+            let selectedRole = $('#role-add').find(':selected').val();
+            if (getListOfRoles().some(e => e.name === selectedRole)) {
+                validation_alert($('#role-alert'), "The user already has the selected role!", 'alert-danger');
+                return;
             } else {
-                classToAppend = 'badge-danger';
+                let roleObj = {"name": selectedRole};
+                listOfRoles.push(roleObj);
+                let classToAppend = '';
+                if (selectedRole === 'ROLE_CUSTOMER') {
+                    classToAppend = 'badge-success';
+                } else {
+                    classToAppend = 'badge-danger';
+                }
+                $("#role-part ul").append('<li style="padding-top: 10px"><span style="padding: 10px" class="badge ' + classToAppend + '">' + selectedRole + '</span></li>');
+                console.log(listOfRoles)
             }
-            $("#role-part ul").append('<li style="padding-top: 10px"><span style="padding: 10px" class="badge ' + classToAppend + '">' + selectedRole + '</span></li>');
-            console.log(listOfRoles)
+        } else {
+            validation_alert($('#role-alert'), "There's no more roles to add!", 'alert-danger');
+            return;
         }
     }
 );
@@ -747,18 +755,24 @@ $('#role-add').change(
 $('.update-user-btn').click(
     function () {
         event.preventDefault();
-        let href = $(this).attr('href');
-        console.log(href)
         let user = {
             "id": $('#user-id').val(),
             "userRoles": listOfRoles,
         };
         $.ajax({
             type: "POST",
-            url: href,
+            url: "/admin/edit-user",
             data: JSON.stringify(user),
-            success: function () {
-                $(location).attr('href', 'http://localhost:8080/admin/users');
+            contentType: 'application/json',
+            success: function (data) {
+                if (document.getElementById("alertdiv") !== null) {
+                    $('#alertdiv').remove();
+                }
+                if (data == "success") {
+                    validation_alert($('.user-edited-response'), "The user was successfully updated!", "alert-success");
+                } else {
+                    validation_alert($('.user-edited-response'), "No changes were made!", "alert-info");
+                }
             }
         });
     }

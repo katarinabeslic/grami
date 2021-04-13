@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.njt.projekat.form.VinylFilterForm;
 import com.njt.projekat.util.SortFilter;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AdminController {
@@ -129,7 +128,7 @@ public class AdminController {
 		if (status.equals("Cancelled")) {
 			for (CartItem item: existingOrder.getCartItems()) {
 				int quantity = item.getQuantity();
-				item.getVinyl().increaseQuantity(quantity);
+				item.getVinyl().increaseStock(quantity);
 				vinylService.save(item.getVinyl());
 			}
 		}

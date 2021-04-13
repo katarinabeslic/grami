@@ -46,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
         order = orderRepository.save(order);
         for (CartItem cartItem: shoppingCart) {
             Vinyl vinyl = cartItem.getVinyl();
-            vinyl.decreaseQuantity(cartItem.getQuantity());
+            vinyl.decreaseStock(cartItem.getQuantity());
             vinylService.save(vinyl);
             cartItem.setOrder(order);
             shoppingCartService.save(cartItem);
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
         for (CartItem item : boughtItems) {
             if (!order.getOrderStatus().equals("Cancelled")) {
                 int quantity = item.getQuantity();
-                item.getVinyl().increaseQuantity(quantity);
+                item.getVinyl().increaseStock(quantity);
                 vinylService.save(item.getVinyl());
             }
             shoppingCartService.removeCartItemById(item.getId());

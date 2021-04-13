@@ -39,18 +39,18 @@
                             </select>
                         </div>
                         <div class="group-input" id="role-part">
-                            <label>Current Role(s)</label>
+                            <label>Current Role(s)<span style="float: right">
+                                <i class="fa fa-trash" aria-hidden="true" style="font-size: 20px; cursor: pointer;" onclick="removeRoles()"></i></span></label>
                             <ul id="current-roles" style="list-style-type: none">
                                 <li th:each="userRole : *{userRoles}" th:value="${userRole.role.name}">
                                     <span th:classappend="${(userRole.role.name == 'ROLE_CUSTOMER' ? 'badge badge-success' : '') +
                                     (userRole.role.name == 'ROLE_ADMIN' ? 'badge badge-danger' : '')}"
-                                             th:text="${userRole.role.name}" style="padding: 10px"></span>
+                                             th:text="${userRole.role.name}" style="padding: 10px; margin-top: 10px"></span>
                                 </li>
                             </ul>
                         </div>
-                        <div id="role-alert">
-
-                        </div>
+                        <div class="user-edited-response"></div>
+                        <div id="role-alert"></div>
                         <button type="button" th:href="@{/admin/edit-user(id=${user.id})}" class="site-btn register-btn update-user-btn" style="margin-top: 20px">Update User Info
                         </button>
                     </form>

@@ -4,10 +4,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.njt.projekat.entity.*;
+import com.njt.projekat.entity.security.Role;
+import com.njt.projekat.entity.security.UserRole;
 import com.njt.projekat.service.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 public class MyRestController {
 
     private UserService userService;
+    private RoleService roleService;
     private ArtistService artistService;
     private RecordLabelService recordLabelService;
     private GenreService genreService;
@@ -41,9 +45,10 @@ public class MyRestController {
     private RecordLabel recordLabel = null;
 
     @Autowired
-    public MyRestController(UserService userService, ArtistService artistService, RecordLabelService recordLabelService,
+    public MyRestController(UserService userService, RoleService roleService, ArtistService artistService, RecordLabelService recordLabelService,
                             GenreService genreService, VinylService vinylService, SongService songService, OrderService orderService, ShoppingCartService shoppingCartService) {
         this.userService = userService;
+        this.roleService = roleService;
         this.artistService = artistService;
         this.recordLabelService = recordLabelService;
         this.genreService = genreService;
@@ -102,6 +107,7 @@ public class MyRestController {
             artist = artistService.findByStageName(stageName);
         }
         vinyl.setArtist(artist);
+        System.out.println("THE ARTIST IM SEARCHING FOR: " + artist.getStageName());
         if (vinylService.checkIfExists(vinyl.getVinylName(), artist.getStageName()) != null){
             return "vinylExists";
         }
@@ -132,7 +138,6 @@ public class MyRestController {
         return "fail";
     }
 
-
     @PostMapping("/admin/update")
     public String updateVinyl(@RequestParam("editedVinylJSON") String vinylJSON, @RequestParam("file") MultipartFile file) throws IOException {
         Vinyl vinyl = objectMapper.readValue(vinylJSON, Vinyl.class);
@@ -150,9 +155,7 @@ public class MyRestController {
         String year = rlJSON.getString("year").trim();
         Gson gson = new Gson();
         JSONArray gJ = o.getJSONArray("genres");
-        List<Genre> gs = gson.fromJson(gJ.toString(), new TypeToken<List<Genre>>() {
-        }.getType());
-        System.out.println();
+        List<Genre> gs = gson.fromJson(gJ.toString(), new TypeToken<List<Genre>>() {}.getType());
         Genre g = null;
         vinyl.getGenres().clear();
         for (Genre genre : gs) {
@@ -223,7 +226,7 @@ public class MyRestController {
         shoppingCartService.updateCartItemQty(cartItemId, newQuantity);
         CartItem cartItem = shoppingCartService.findCartItemById(cartItemId);
         Vinyl vinyl = cartItem.getVinyl();
-        vinyl.increaseQuantity(1);
+        vinyl.increaseStock(1);
         vinylService.save(vinyl);
         return "success";
     }
@@ -239,7 +242,7 @@ public class MyRestController {
             return "fail";
         }
         shoppingCartService.updateCartItemQty(cartItemId, newQuantity);
-        vinyl.decreaseQuantity(1);
+        vinyl.decreaseStock(1);
         vinylService.save(vinyl);
         return "success";
     }
@@ -247,7 +250,24 @@ public class MyRestController {
     @PostMapping("/admin/edit-user")
     public String editUser(@RequestBody String data) {
         JSONObject jsonObject = new JSONObject(data);
-        System.out.println(jsonObject);
-        return "redirect:/admin/users";
+        int id = Integer.valueOf(jsonObject.getString("id"));
+        User user = userService.findById(id);
+        Gson gson = new Gson();
+        JSONArray jur = jsonObject.getJSONArray("userRoles");
+        List<Role> roles = gson.fromJson(jur.toString(), new TypeToken<List<Role>>() {}.getType());
+        Set<UserRole> userRoles = new HashSet<>();
+        UserRole userRole = null;
+        for (Role r : roles) {
+            r = roleService.findByName(r.getName());
+            userRole = new UserRole(user, r);
+            userRoles.add(userRole);
+        }
+        if (userRoles == user.getUserRoles()) {
+            return "no change";
+        }
+        userService.deleteUserRoles(user);
+        user.setUserRoles(userRoles);
+        userService.save(user);
+        return "success";
     }
 }

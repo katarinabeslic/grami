@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import com.njt.projekat.dao.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	private UserRoleRepository userRoleRepository;
 
 	@Override
 	public User save(User user) {
@@ -75,6 +79,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findById(int id) {
 		return userRepository.findById(id);
+	}
+
+	@Override
+	public void deleteUserRoles(User user) {
+		userRoleRepository.deleteByUser(user);
 	}
 
 }

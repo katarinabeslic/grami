@@ -19,4 +19,6 @@ public interface UserService {
     void deleteById(int id);
 
     User findById(int id);
+
+    void deleteUserRoles(User user);
 }

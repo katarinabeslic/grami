@@ -33,7 +33,7 @@
 							<input type="button" value="Find" onclick="findOrCreateArtist()">
 							<div id="artist-response"></div>
 							<label for="price">Price (RSD)</label>
-							<input type="text" id="price" th:value="${vinyl.price}">
+							<input type="number" id="price" th:value="${vinyl.price}">
 							<div id="price-alert" class="alert-class"></div>
 						</div>
 					</div>
@@ -51,9 +51,9 @@
 							<div id="image-alert" class="alert-class"></div>
 						</div>
 						<div class="col-lg-5">
-							<label>Quantity</label>
+							<label>Stock</label>
 							<div>
-								<input id="quantity" type="text" th:value="${vinyl.stock}">
+								<input id="stock" type="number" th:value="${vinyl.stock}">
 							</div>
 							<div id="quantity-alert" class="alert-class"></div>
 						</div>
