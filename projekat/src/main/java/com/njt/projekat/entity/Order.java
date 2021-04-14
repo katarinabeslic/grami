@@ -44,6 +44,11 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
+	@Transient
+	private String intent;
+	@Transient
+	private String description;
 	
 	public Order() {
 	
@@ -53,6 +58,8 @@ public class Order implements Serializable {
 		this.totalPrice = price;
 		this.currency = currency;
 		this.paymentMethod = method;
+		this.intent = intent;
+		this.description = description;
 	}
 
 	public Order(Timestamp dateAndTime, double totalPrice, String currency, String paymentMethod, String orderStatus, List<CartItem> cartItems, CardInformation cardInformation, Address address, User user) {
@@ -89,6 +96,22 @@ public class Order implements Serializable {
 
 	public void setPaymentMethod(String paymentMethod) {
 		this.paymentMethod = paymentMethod;
+	}
+
+	public String getIntent() {
+		return intent;
+	}
+
+	public void setIntent(String intent) {
+		this.intent = intent;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public int getId() {
@@ -165,4 +188,5 @@ public class Order implements Serializable {
 				", user=" + user.getFirstName() + " " + user.getLastName() +
 				'}';
 	}
+
 }

@@ -26,35 +26,6 @@
 </head>
 
 <body>
-<!--
-    <div class="nav-item" th:fragment="navbar">
-        <div class="container">
-            <nav class="nav-menu mobile-menu">
-                <ul>
-                    <li><a th:href="@{/}"><img th:src="@{../images/logo-footer.png}" alt="" style="height: 22px;"></a></li>
-                    <li th:classappend="${#request.requestURI == '/admin' ? 'active':''}"><a th:href="@{/admin}">Home</a></li>
-                    <li>
-                        <a>Vinyls</a>
-                        <ul>
-                            <li><a th:href="@{/admin/catalogue}">Catalogue</a> </li>
-                            <li><a th:href="@{/admin/add}">Add New</a></li>
-                        </ul>
-                    </li>
-                    <li th:classappend="${#request.requestURI == '/admin/orders' ? 'active':''}"><a th:href="@{/admin/orders}">Orders</a></li>
-                    <li>
-                        <a>Users</a>
-                        <ul>
-                            <li><a th:href="@{/admin/users}">View All</a></li>
-                            <li><a th:href="@{/admin/add-user}">Add New</a></li>
-                        </ul>
-                    </li>
-                    <li><a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="login-panel"><i class="fa fa-user"></i> Logout</a></li>
-                </ul>
-            </nav>
-            <div id="mobile-menu-wrap"></div>
-        </div>
-    </div>
--->
 
 <header class="header-section" th:fragment="navbar">
     <div class="nav-item">

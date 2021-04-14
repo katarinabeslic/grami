@@ -14,6 +14,14 @@
                 <div class="col-lg-8">
                     <div class="row">
                         <section class="product-shop spad page-details">
+                            <div th:if="${user?.address == null && user?.cardInformation == null}">
+                                <div class="alert alert-danger">Please add your address and card information!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+                            </div>
+                            <div th:if="${user?.address == null && user?.cardInformation != null}">
+                                <div class="alert alert-danger">Please add your address!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+                            </div>
+                            <input type="hidden" id="isCardInfoNull" th:value="${user?.cardInformation == null}">
+                            <input type="hidden" id="isAddressNull" th:value="${user?.address == null}">
                             <div class="product-tab">
                                 <div class="tab-item">
                                     <ul class="nav" role="tablist">
@@ -159,8 +167,9 @@
                                 <li>Product <span>Total</span></li>
                                 <li class="fw-normal" th:each="item : ${shoppingCart}"
                                     th:text="| ${item.vinyl.vinylName} - ${item.vinyl.artist.stageName} X ${item.quantity}|"></li>
-                                <li class="total-price">Total <span th:text="|${shoppingCartTotal} RSD|"></span></li>
+                                <li class="total-price">Total <span th:text="${shoppingCartTotal + '€'}"></span></li>
                             </ul>
+                            <!--
                             <div class="payment-check">
                                 <div class="pc-item">
                                     <label for="pc-check"> Credit Card <input type="checkbox" id="pc-check"> <span class="checkmark"></span>
@@ -171,12 +180,22 @@
                                     </label>
                                 </div>
                             </div>
+                             -->
                             <input type="hidden" id="price" th:value="${shoppingCartTotal}">
-                            <input type="hidden" id="currency" value="RSD">
+                            <input type="hidden" id="currency" value="EUR">
                             <input type="hidden" id="method" value="paypal">
+                            <input type="hidden" id="intent" value="sale">
+                            <input type="hidden" id="description" value="customer buying from grami store">
 
                             <div class="order-btn">
-                                <button type="submit" id="place-order" class="site-btn place-btn">Place Order</button>
+                                <button type="submit" id="place-order" class="site-btn place-btn">PAY WITH YOUR CARD</button>
+                                <p style="padding-top: 15px">Or with</p>
+                            </div>
+
+                            <div class="order-btn" style="padding-bottom: 10px">
+                                <div id="paypal-payment-btn">
+                                    <button type="button" class="pp-btn" id="pp-btn">Pay with Paypal</button>
+                                </div>
                                 <p style="padding-top: 30px">By placing an order you agree with the terms and conditions of the Grami store. </p>
                             </div>
                         </div>
@@ -189,6 +208,10 @@
 <!-- Shopping Cart Section End -->
 
 <div th:replace="help/fragments :: footer"></div>
+<!--
+<script src="https://www.paypal.com/sdk/js?client-id=AXtd_hQpord0ShJJZj6jiEntmvcuoxrZ70q04BHhpooK98aHArYY0PdvmfgcWJmGG9bmULS_OqXKE6MS&disable-funding=credit,card"></script>
+<script>paypal.Buttons().render('#paypal-payment-btn');</script>
+-->
 </body>
 
 </html>

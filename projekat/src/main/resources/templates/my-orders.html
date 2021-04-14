@@ -49,7 +49,7 @@
                                 <td scope="row"><a th:href="@{/order-detail(id=${order.id})}" style="color: #e7ab3c">ORD-<span
                                         th:text="${order.id}"></span></a></td>
                                 <td th:text="${#dates.format(order.dateAndTime, 'dd-MMM-yyyy')}"></td>
-                                <td><span th:text="${order.totalPrice}"></span> RSD</td>
+                                <td><span th:text="${order.totalPrice}"></span> €</td>
                                 <td><span th:classappend="${(order.orderStatus == 'Received' ? 'badge badge-secondary' : '') +
                                     (order.orderStatus == 'Confirmed' ? 'badge badge-info' : '') +
                                     (order.orderStatus == 'Cancelled' ? 'badge badge-danger' : '') +

@@ -23,7 +23,7 @@
                         <tr>
                             <td th:text="|ORD-${order.id}|"></td>
                             <td th:text="${#dates.format(order.dateAndTime, 'dd-MMM-yyyy')}"></td>
-                            <td th:text="|${order.totalPrice} RSD|"></td>
+                            <td th:text="|${order.totalPrice} €|"></td>
                             <td><span th:classappend="${(order.orderStatus == 'Received' ? 'badge badge-secondary' : '') +
                                                         (order.orderStatus == 'Confirmed' ? 'badge badge-info' : '') +
                                                         (order.orderStatus == 'Cancelled' ? 'badge badge-danger' : '') +

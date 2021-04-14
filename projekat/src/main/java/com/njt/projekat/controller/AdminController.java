@@ -58,7 +58,6 @@ public class AdminController {
 			filters.setItemsPerPage(9);
 		}
 		Integer page = filters.getPage();
-		System.out.println("PAGE: " + page);
 		int pageNumber = (page == null || page <= 0) ? 0 : page - 1;
 		SortFilter sortFilter = new SortFilter(filters.getSort());
 		Page<Vinyl> pageResult = vinylService.findVinylsByCriteria(

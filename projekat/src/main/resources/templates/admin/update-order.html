@@ -32,7 +32,7 @@
                                 <td class="qua-col first-row" th:text="${cartItem.quantity}">
                                 </td>
                                 <td class="total-price first-row totalPrice" th:with="totalPrice = ${cartItem.vinyl.price * cartItem.quantity}"
-                                    th:text="|${totalPrice} RSD|" th:value="${totalPrice}"></td>
+                                    th:text="${totalPrice + '€'} " th:value="${totalPrice}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -51,10 +51,10 @@
                             <li class="subtotal" style="padding-top: 10px">Phone Number: <span
                                     th:text="${order.user.phoneNumber}"></span></li>
                             <li class="subtotal" style="padding-top: 10px">Price: <span
-                                    th:text="|${order.totalPrice} RSD|"></span></li>
+                                    th:text="${order.totalPrice + '€'}"></span></li>
                             <li class="subtotal" style="padding-top: 10px">Shipping Cost: <span>FREE</span></li>
                             <li class="subtotal" style="padding-top: 10px">Order TOTAL: <span
-                                    th:text="|${order.totalPrice} RSD|"></span></li>
+                                    th:text="${order.totalPrice + '€'}"></span></li>
                             <li class="subtotal" style="padding-top: 10px">Order Placed: <span
                                     th:text="${#dates.format(order.dateAndTime, 'dd.MM.yyyy. HH:mm')}"></span></li>
                             <li class="subtotal" style="padding-top: 10px">Payment Method: <span

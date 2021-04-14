@@ -1,11 +1,11 @@
 $('#selected-format').on('change', function () {
-    var selectedFormat = $('#selected-format').find(':selected').html();
+    let selectedFormat = $('#selected-format').find(':selected').html();
     $('.format-chosen').val(selectedFormat);
 })
 
 $('.the-format').on('click', function (event) {
     event.preventDefault();
-    var value = $(this).attr('value');
+    let value = $(this).attr('value');
     console.log(value);
     $('#format-selected').val(value);
     $('#filter-form').submit();
@@ -72,34 +72,43 @@ $('#update-user').click(function () {
     }
 });
 
-$('#place-order').click(function () {
-    var paypal = $('#pc-paypal').is(":checked");
-
-    if (paypal) {
-        event.preventDefault();
-        console.log("prevented");
+$('#pp-btn').click(function () {
+    let addressNull = $('#isAddressNull').val();
+    console.log(addressNull)
+    if (addressNull) {
+        $('#pp-btn').attr('disabled', true);
+    } else {
+        $('#pp-btn').attr('disabled', false);
     }
 
-    var orderObject = {
+    let orderObject = {
         "price": $('#price').val(),
         "currency": $('#currency').val(),
-        "method": $('#method').val()
+        "method": $('#method').val(),
+        "intent" : $('#intent').val(),
+        "description" : $('#description').val()
     };
-
     console.log(orderObject);
-
-    if (paypal) {
-        $.ajax({
-            type: "POST",
-            url: "/paypal-pay",
-            contentType: 'application/json',
-            data: JSON.stringify(orderObject),
-            success: function () {
-                console.log("success")
+    $.ajax({
+        type: "POST",
+        url: "/paypal-pay",
+        contentType: 'application/json',
+        data: JSON.stringify(orderObject),
+        success: function (response) {
+            if (response == "fail") {
+                $(location).attr('href', 'http://localhost:8080/error');
             }
-        });
-    }
+            else {
+                $(location).attr('href', response);
+            }
+        }
+    });
 });
+
+let cardInfoNull = $('#isCardInfoNull').val();
+if (cardInfoNull) {
+    $('#place-order').attr('disabled', true);
+}
 
 function confirmDialogDelete(message, href) {
     $('<div id="confirm-dialog"></div>').appendTo('body')
@@ -179,7 +188,7 @@ $('.qty-dec').click(
                 contentType: 'application/json',
                 data: JSON.stringify(rData),
                 success: function () {
-                    console.log("Decreased");
+                    $(location).attr('href', 'http://localhost:8080/cart');
                 }
             });
         }
@@ -201,7 +210,7 @@ $('.qty-inc').click(
             data: JSON.stringify(rData),
             success: function (response) {
                 if (response == "success") {
-                    console.log("Increased")
+                    $(location).attr('href', 'http://localhost:8080/cart');
                 } else {
                     console.log("OH NOOO")
                 }

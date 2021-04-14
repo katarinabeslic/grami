@@ -12,7 +12,7 @@ public class SortFilter {
 
 	public Sort getSortType() {
 		if (this.sortType == null) {
-			return Sort.by("id").descending();
+			return Sort.by("id").ascending();
 		}
 		switch (this.sortType) {
 		case "price-asc":

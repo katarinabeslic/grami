@@ -1,6 +1,6 @@
-var listOfSongs = new Array;
-var listOfGenres = new Array;
-var listOfRoles = new Array;
+let listOfSongs = new Array;
+let listOfGenres = new Array;
+let listOfRoles = new Array;
 
 function validation_alert(element, message, alerttype) {
     element.append(
@@ -21,7 +21,7 @@ function songToTable() {
         return;
     } else if (songDuration != '') {
         $('#alertdiv').remove();
-        var regex = /^[0-9]{1}:[0-5]{1}[0-9]{1}$/;
+        let regex = /^[0-9]{1}:[0-5]{1}[0-9]{1}$/;
         if (regex.test(songDuration) == false) {
             validation_alert($('#song-response'), "Invalid format for song duration!", 'alert-danger');
             return;
@@ -50,16 +50,16 @@ function songToTable() {
 }
 
 function deleteSong(el) {
-    var row = el.parentNode.parentNode;
-    var tdSongName = row.getElementsByTagName("td")[0].innerHTML;
-    var tdDuration = row.getElementsByTagName("td")[1].innerHTML;
+    let row = el.parentNode.parentNode;
+    let tdSongName = row.getElementsByTagName("td")[0].innerHTML;
+    let tdDuration = row.getElementsByTagName("td")[1].innerHTML;
 
-    var songObj = {
+    let songObj = {
         "songName": tdSongName,
         "duration": tdDuration
     };
 
-    for (var i = listOfSongs.length; i >= 0; --i) {
+    for (let i = listOfSongs.length; i >= 0; --i) {
         if (JSON.stringify(listOfSongs[i]) == JSON.stringify(songObj)) {
             listOfSongs.splice(i, 1);
         }
@@ -86,18 +86,18 @@ function findOrCreateArtist() {
             }
         },
         error: function (xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
+            let err = eval("(" + xhr.responseText + ")");
             console.log(err.Message);
         }
     });
 }
 
 function createRecordLabel() {
-    var rlName = $('#rl-name').val();
-    var rlYear = $('#rl-year').val();
+    let rlName = $('#rl-name').val();
+    let rlYear = $('#rl-year').val();
 
     // 1900 -2099
-    var regEx = /^(19|20)\d{2}$/;
+    let regEx = /^(19|20)\d{2}$/;
 
     if (rlName == '' || rlYear == '') {
         validation_alert($('#rl-response'), "Name and year both have to be filled!", 'alert-danger');
@@ -110,7 +110,7 @@ function createRecordLabel() {
         $('#alertdiv').remove();
     }
 
-    var rlObj = {
+    let rlObj = {
         "name": rlName,
         "year": rlYear
     };
@@ -128,8 +128,8 @@ function createRecordLabel() {
                 validation_alert($('#rl-response'), "The record label was successfully saved to the database!", 'alert-success');
                 console.log(data[data.length - 1]);
                 $('#rl-select').empty();
-                for (var i = 0; i < data.length; i++) {
-                    var rl = data[i];
+                for (let i = 0; i < data.length; i++) {
+                    let rl = data[i];
                     $('#rl-select').append("<option>" + rl.name + ", " + rl.year + ".</option>")
                 }
                 $('#rl-name').val('');
@@ -142,7 +142,7 @@ function createRecordLabel() {
 }
 
 function createNewGenre() {
-    var genreName = $('#genreName').val();
+    let genreName = $('#genreName').val();
 
     if (genreName == '') {
         validation_alert($('#genre-response'), "The genre name has to be filled!", 'alert-danger');
@@ -162,8 +162,8 @@ function createNewGenre() {
                 $('#alertdiv').remove();
                 validation_alert($('#genre-response'), "The new genre was successfully saved to the database!", 'alert-success');
                 $('#genre-select').empty();
-                for (var i = 0; i < data.length; i++) {
-                    var genre = data[i];
+                for (let i = 0; i < data.length; i++) {
+                    let genre = data[i];
                     $('#genre-select').append('<option>' + genre.name + '</option>');
                 }
                 $('#genreName').val('');
@@ -172,7 +172,7 @@ function createNewGenre() {
             }
         },
         error: function (xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
+            let err = eval("(" + xhr.responseText + ")");
             console.log(err.Message);
         }
     });
@@ -250,35 +250,35 @@ function saveNewVinyl() {
 
 
 function updateVinyl(href) {
-    var stageName = $('#artistName').val();
-    var rlResult = $('.rl-chosen').val().split(',');
-    var year = rlResult[1].split('.');
-    var rlObj = {
+    let stageName = $('#artistName').val();
+    let rlResult = $('.rl-chosen').val().split(',');
+    let year = rlResult[1].split('.');
+    let rlObj = {
         "name": rlResult[0].trim(),
         "year": year[0].trim()
     };
-    var format = $('.format-chosen').val();
+    let format = $('.format-chosen').val();
     listOfGenres = JSON.parse(JSON.stringify(getListOfGenres()));
     listOfSongs = JSON.parse(JSON.stringify(getListOfSongs()));
 
-    var id = "";
+    let id = "";
 
-    for (var i = 0; i < href.length; i++) {
+    for (let i = 0; i < href.length; i++) {
         if ($.isNumeric(href[i])) {
             id = id + href[i];
         }
     }
 
-    var imgUrl = '';
-    var form = $('#fileUploadForm')[0];
-    var data = new FormData(form);
+    let imgUrl = '';
+    let form = $('#fileUploadForm')[0];
+    let data = new FormData(form);
     if ($('#imgUrl').get(0).files.length === 0) {
         imgUrl = $('.existingImg img').attr('src');
     }
 
-    var formatId = $('#selected-format').find(':selected').val();
+    let formatId = $('#selected-format').find(':selected').val();
 
-    var editedVinylJSON = {
+    let editedVinylJSON = {
         'id': id,
         'vinylName': $('#name').val(),
         'description': $('#description').val(),
@@ -297,7 +297,7 @@ function updateVinyl(href) {
         'songs': listOfSongs
     };
 
-    var valid = final_validation($('#name').val(), $('#description').val(), $('#price').val(), $('#stock').val(),
+    let valid = final_validation($('#name').val(), $('#description').val(), $('#price').val(), $('#stock').val(),
         stageName, imgUrl, listOfSongs, listOfGenres);
 
     if (!valid) {
@@ -344,24 +344,24 @@ function addToListOfGenres() {
 
 
 function getListOfSongs() {
-    var songs = [];
+    let songs = [];
     $('#songTable tr').each(function (index, tr) {
-        var cols = [];
+        let cols = [];
         $(this).find('td').each(function (colIndex, c) {
             if (c.textContent != '') {
-                var el = c.textContent;
+                let el = c.textContent;
                 cols.push(el);
             }
         });
         songs.push(cols);
     });
 
-    var songsJSON = new Array;
-    for (var i = 1; i < songs.length; i++) {
-        var songName = songs[i][0];
-        var duration = songs[i][1];
-        var id = songs[i][2];
-        var song = {
+    let songsJSON = new Array;
+    for (let i = 1; i < songs.length; i++) {
+        let songName = songs[i][0];
+        let duration = songs[i][1];
+        let id = songs[i][2];
+        let song = {
             "id": id,
             "songName": songName,
             "duration": duration
@@ -439,7 +439,7 @@ $("#artistName").focusout(function () {
 });
 
 function final_validation(name, description, price, stock, stageName, fileCheck, listOfSongs, listOfGenres) {
-    var valid = true;
+    let valid = true;
     if (name == '') {
         validation_alert($('#vinyl-name-alert'), "The vinyl name can't be empty!", 'alert-danger');
         valid = false;
@@ -484,7 +484,7 @@ function final_validation(name, description, price, stock, stageName, fileCheck,
 
 $('.deleteVinyl').on('click', function (event) {
     event.preventDefault();
-    var href = $(this).attr('href');
+    let href = $(this).attr('href');
     console.log(href);
     confirmDialogDelete('Are you sure you want to delete this vinyl?', href, 'http://localhost:8080/admin/catalogue');
 });
@@ -557,7 +557,7 @@ function confirmDialogSaveChanges(message) {
             resizable: false,
             buttons: {
                 Yes: function () {
-                    var href = $('#update-vinyl').attr('href');
+                    let href = $('#update-vinyl').attr('href');
                     updateVinyl(href);
                     $(this).dialog("close");
                 },
@@ -580,25 +580,25 @@ $('.reset-genres').on('click', function () {
 });
 
 $('#rl-select').on('change', function () {
-    var selectedRL = $('#rl-select').find(':selected').html();
+    let selectedRL = $('#rl-select').find(':selected').html();
     $('.rl-chosen').val(selectedRL);
 });
 
 $('#selected-format').on('change', function () {
-    var selectedFormat = $('#selected-format').find(':selected').html();
+    let selectedFormat = $('#selected-format').find(':selected').html();
     $('.format-chosen').val(selectedFormat);
 })
 
 $('.the-format').on('click', function (event) {
     event.preventDefault();
-    var value = $(this).attr('value');
+    let value = $(this).attr('value');
     console.log(value);
     $('#format-selected').val(value);
     $('#filter-form').submit();
 });
 
 $('.sorting').on('change', function () {
-    var selected = $(this).val();
+    let selected = $(this).val();
     $('#input-sort').val(selected);
     $('#filter-form').submit();
 });

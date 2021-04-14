@@ -691,6 +691,22 @@ ol {
 	padding: 15px 30px 12px;
 }
 
+.pp-btn {
+	background-color: #e7ab3c;
+	font-size: 15px;
+	letter-spacing: 1px;
+	display: block;
+	text-align: center;
+	color: #ffffff;
+	padding: 10px;
+	text-transform: uppercase;
+	font-weight: 700;
+	margin: 10px 0;
+	border: none;
+	width: 100%;
+	cursor: pointer;
+}
+
 .inner-header .nav-right li.cart-price {
 	font-size: 18px;
 	font-weight: 700;

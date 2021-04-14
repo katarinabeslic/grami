@@ -23,7 +23,7 @@
         Background Set
     --------------------*/
     $('.set-bg').each(function () {
-        var bg = $(this).data('setbg');
+        let bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
     });
 
@@ -124,10 +124,10 @@
         CountDown
     --------------------*/
     // For demo preview
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
 
     if(mm == 12) {
         mm = '01';
@@ -136,14 +136,14 @@
         mm = parseInt(mm) + 1;
         mm = String(mm).padStart(2, '0');
     }
-    var timerdate = mm + '/' + dd + '/' + yyyy;
+    let timerdate = mm + '/' + dd + '/' + yyyy;
     // For demo preview end
 
     console.log(timerdate);
     
 
     // Use this for real timer date
-    /* var timerdate = "2020/01/01"; */
+    /* let timerdate = "2020/01/01"; */
 
 	$("#countdown").countdown(timerdate, function(event) {
         $(this).html(event.strftime("<div class='cd-item'><span>%D</span> <p>Days</p> </div>" + "<div class='cd-item'><span>%H</span> <p>Hrs</p> </div>" + "<div class='cd-item'><span>%M</span> <p>Mins</p> </div>" + "<div class='cd-item'><span>%S</span> <p>Secs</p> </div>"));
@@ -156,13 +156,13 @@
     $(document).ready(function(e) {
     //no use
     try {
-        var pages = $("#pages").msDropdown({on:{change:function(data, ui) {
-            var val = data.value;
+        let pages = $("#pages").msDropdown({on:{change:function(data, ui) {
+            let val = data.value;
             if(val!="")
                 window.location = val;
         }}}).data("dd");
 
-        var pagename = document.location.pathname.toString();
+        let pagename = document.location.pathname.toString();
         pagename = pagename.split("/");
         pages.setIndexByValue(pagename[pagename.length-1]);
         $("#ver").html(msBeautify.version.msDropdown);
@@ -178,7 +178,7 @@
     /*-------------------
 		Range Slider
 	--------------------- */
-	var rangeSlider = $(".price-range"),
+    let rangeSlider = $(".price-range"),
 		minamount = $("#minamount"),
 		maxamount = $("#maxamount"),
 		minPrice = rangeSlider.data('min'),
@@ -215,8 +215,8 @@
 	$('.product-thumbs-track .pt').on('click', function(){
 		$('.product-thumbs-track .pt').removeClass('active');
 		$(this).addClass('active');
-		var imgurl = $(this).data('imgbigurl');
-		var bigImg = $('.product-big-img').attr('src');
+        let imgurl = $(this).data('imgbigurl');
+        let bigImg = $('.product-big-img').attr('src');
 		if(imgurl != bigImg) {
 			$('.product-big-img').attr({src: imgurl});
 			$('.zoomImg').attr({src: imgurl});
@@ -228,18 +228,18 @@
     /*-------------------
 		Quantity change
 	--------------------- */
-    var proQty = $('.pro-qty');
+    let proQty = $('.pro-qty');
 	proQty.prepend('<span class="dec qtybtn qty-dec">-</span>');
 	proQty.append('<span class="inc qtybtn qty-inc">+</span>');
 	proQty.on('click', '.qtybtn', function () {
-		var $button = $(this);
-		var oldValue = $button.parent().find('input').val();
+        let $button = $(this);
+        let oldValue = $button.parent().find('input').val();
 		if ($button.hasClass('inc')) {
-			var newVal = parseFloat(oldValue) + 1;
+            let newVal = parseFloat(oldValue) + 1;
 		} else {
 			// Don't allow decrementing below zero
 			if (oldValue > 1) {
-				var newVal = parseFloat(oldValue) - 1;
+                let newVal = parseFloat(oldValue) - 1;
 			} else {
 				newVal = 1;
 			}

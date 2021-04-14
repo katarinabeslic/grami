@@ -3,7 +3,6 @@ package com.njt.projekat.service.impl;
 import java.util.List;
 
 import com.njt.projekat.entity.Vinyl;
-import com.njt.projekat.service.VinylService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

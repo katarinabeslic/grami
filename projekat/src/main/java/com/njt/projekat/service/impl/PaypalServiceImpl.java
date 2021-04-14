@@ -25,7 +25,7 @@ public class PaypalServiceImpl implements PaypalService {
 	private APIContext apiContext;
 
 	@Override
-	public Payment createPayment(Double total, String currency, String method, String cancelUrl, String successUrl) throws PayPalRESTException {
+	public Payment createPayment(Double total, String currency, String method, String intent, String description, String cancelUrl, String successUrl) throws PayPalRESTException {
 		
 		Amount amount = new Amount();
 		amount.setCurrency(currency);
@@ -36,12 +36,14 @@ public class PaypalServiceImpl implements PaypalService {
 		transaction.setAmount(amount);
 		
 		List<Transaction> transactions = new ArrayList<>();
+		transaction.setDescription(description);
 		transactions.add(transaction);
 		
 		Payer payer = new Payer();
-		payer.setPaymentMethod(method.toString());
+		payer.setPaymentMethod(method);
 		
 		Payment payment = new Payment();
+		payment.setIntent(intent);
 		payment.setPayer(payer);
 		payment.setTransactions(transactions);
 		

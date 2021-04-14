@@ -97,7 +97,7 @@
                                                     <td class="si-pic"><img style="width: 100px;" th:src="${cartItem.vinyl.imgUrl}" alt=""></td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p th:text="|${cartItem.vinyl.price} x ${cartItem.quantity}|"> $60.00 x 1</p>
+                                                            <p th:text="|${cartItem.vinyl.price} x ${cartItem.quantity}|"></p>
                                                             <h6 th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|"></h6>
                                                         </div>
                                                     </td>
@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="select-total">
                                         <span>total:</span>
-                                        <h5 th:text="|${shoppingCartTotal} RSD|"></h5>
+                                        <h5 th:text="${#numbers.formatDecimal(shoppingCartTotal, 0, 2) + '€'}"></h5>
                                     </div>
                                     <div class="select-button">
                                         <a th:href="@{/cart}" class="primary-btn view-card">VIEW CART</a>
@@ -119,7 +119,9 @@
                                     </div>
                                 </div>
                                 </li>
-                                <li class="cart-price" th:text="|${shoppingCartTotal} RSD|"></li>
+                                <span th:if="${shoppingCartTotal != 0 && shoppingCartTotal != null}">
+                                    <li class="cart-price" th:text="${#numbers.formatDecimal(shoppingCartTotal, 0, 2) + '€'}"></li>
+                                </span>
                             </ul>
                         </div>
                     </div>

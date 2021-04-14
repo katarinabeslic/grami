@@ -30,7 +30,7 @@
                                     <td class="cart-title first-row">
                                         <h5 th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|"></h5>
                                     </td>
-									<td class="p-price first-row itemPrice" th:text="|${cartItem.vinyl.price} RSD|"></td>
+									<td class="p-price first-row itemPrice" th:text="${cartItem.vinyl.price + '€'}"></td>
                                     <td class="qua-col first-row">
                                         <div class="quantity">
                                             <div class="pro-qty">
@@ -39,7 +39,7 @@
                                         </div>
                                     </td>
 									<td class="total-price first-row totalPrice" th:with="totalPrice = ${cartItem.vinyl.price * cartItem.quantity}" 
-										th:text="|${totalPrice} RSD|" th:value="${totalPrice}"></td>
+										th:text="${totalPrice + '€'}" th:value="${totalPrice}"></td>
                                     <td class="close-td first-row"><a class="item-href" th:href="@{/cart/remove-item(id=${cartItem.id})}"></a><i class="remove-cart-item ti-trash"></i></td>
                                 </tr>
                             </tbody>
@@ -55,7 +55,7 @@
                             <div class="proceed-checkout">
                                 <ul>
                                     <li class="subtotal">Shipping <span>FREE</span></li>
-                                    <li class="cart-total">Total <span th:text="|${shoppingCartTotal} RSD|"></span></li>
+                                    <li class="cart-total">Total <span th:text="${#numbers.formatDecimal(shoppingCartTotal, 0, 2) + '€'}"></span></li>
                                 </ul>
                                 <a th:href="@{/checkout}" class="proceed-btn">PROCEED TO CHECK OUT</a>
                             </div>

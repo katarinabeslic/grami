@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order save(double cartTotal, User user, Address address, CardInformation cardInformation, List<CartItem> shoppingCart) {
         Order order = new Order();
-        order.setCurrency("RSD");
+        order.setCurrency("EUR");
         order.setDateAndTime(Timestamp.valueOf(LocalDateTime.now()));
         order.setOrderStatus("Received");
         order.setPaymentMethod("card");

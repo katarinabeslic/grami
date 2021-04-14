@@ -1,60 +1,48 @@
 package com.njt.projekat.controller;
 
+import com.njt.projekat.entity.*;
+import com.njt.projekat.service.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import com.njt.projekat.entity.Order;
-import com.njt.projekat.service.PaypalService;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 
-@Controller
+@RestController
 public class PaypalController {
 
 	@Autowired
 	private PaypalService paypalService;
 
-	public static final String SUCCESS_URL = "pay/success";
-	public static final String CANCEL_URL = "pay/cancel";
+	public static final String SUCCESS_URL = "paypal-successful";
+	public static final String CANCEL_URL = "cancel";
+
+	private static Order order;
 
 	@PostMapping("/paypal-pay")
-	public String paymentProcessing(@RequestBody Order order) {
-		System.out.println(order);
+	public String paymentProcessing(@RequestBody String data) {
+		JSONObject jsonObject = new JSONObject(data);
+		String priceS = jsonObject.getString("price");
+		String currency = jsonObject.getString("currency");
+		String method = jsonObject.getString("method");
+		String intent = jsonObject.getString("intent");
+		String description = jsonObject.getString("description");
+		double price = Double.parseDouble(priceS);
+		order = new Order(price, currency, method, intent, description);
+		ShopController.order = order;
 		try {
 			Payment payment = paypalService.createPayment(order.getTotalPrice(), order.getCurrency(), order.getPaymentMethod(),
-					"http://localhost:8080/"+CANCEL_URL, "http://localhost:8080/"+SUCCESS_URL);
+					order.getIntent(), order.getDescription(), "http://localhost:8080/"+CANCEL_URL, "http://localhost:8080/"+SUCCESS_URL);
 			for (Links link : payment.getLinks()) {
 				if (link.getRel().equals("approval_url")) {
-					return "redirect:" + link.getHref();
+					return link.getHref();
 				}
 			}
 		} catch (PayPalRESTException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/checkout";
-	}
-
-	@GetMapping(value = CANCEL_URL)
-	public String cancelPay() {
-		return "/";
-	}
-	
-	@GetMapping(value = SUCCESS_URL)
-	public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("payerId") String payerId) {
-		try {
-			Payment payment = paypalService.executePayment(paymentId, payerId);
-			System.out.println(payment.toJSON());
-			if (payment.getState().equals("approved")) {
-				return "success";
-			}
-		} catch (PayPalRESTException e) {
-			e.printStackTrace();
-		}
-		return "redirect:/checkout";
+		return "fail";
 	}
 }

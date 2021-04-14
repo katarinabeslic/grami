@@ -3,15 +3,15 @@ package com.njt.projekat.controller;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.List;
 
 import com.njt.projekat.entity.*;
 import com.njt.projekat.service.*;
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +24,7 @@ import com.njt.projekat.util.SortFilter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.smartcardio.Card;
 
 @Controller
@@ -45,6 +46,13 @@ public class ShopController {
     private CardInformationService cardInformationService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private PaypalService paypalService;
+
+    public static final String SUCCESS_URL = "paypal-successful";
+    public static final String CANCEL_URL = "cancel";
+
+    public static Order order;
 
     @GetMapping("/shop")
     public String showUserShop(@ModelAttribute("filters") VinylFilterForm filters, Model model) {
@@ -90,19 +98,15 @@ public class ShopController {
         } else {
             qty = Integer.valueOf(quantity);
         }
-
         if (principal == null) {
             return "redirect:/login";
         }
-
         User user = userService.findByUsername(principal.getName());
         CartItem existingItem = shoppingCartService.findByUserAndVinylAndOrderIsNull(user, vinyl);
-
         if (qty > vinyl.getStock()) {
             redirectAttributes.addFlashAttribute("notEnoughStock", true);
             return "redirect:" + referer;
         }
-
         if (existingItem == null) {
             CartItem cartItem = new CartItem(vinyl, qty, user);
             shoppingCartService.save(cartItem);
@@ -114,9 +118,13 @@ public class ShopController {
     }
 
     @GetMapping("/checkout")
-    public String showUserCheckout(Model model, Principal principal) {
+    public String showUserCheckout(Model model, Principal principal, RedirectAttributes redirectAttributes) {
         User user = userService.findByUsername(principal.getName());
         List<CartItem> shoppingCart = shoppingCartService.findAllByUserAndOrderIsNull(user);
+        if (shoppingCart.isEmpty()) {
+            redirectAttributes.addFlashAttribute("cartEmpty", true);
+            return "redirect:/shop";
+        }
         model.addAttribute("user", user);
         model.addAttribute("shoppingCart", shoppingCart);
         return "checkout";
@@ -142,7 +150,41 @@ public class ShopController {
             model.addAttribute("order", order);
             return "order-successful";
         }
-        return "redirect:/";
+        return "redirect:error";
     }
 
+    @GetMapping(value = CANCEL_URL)
+    public String cancelPay() {
+        return "checkout";
+    }
+
+    @GetMapping(value = SUCCESS_URL)
+    public String successPay(@RequestParam("paymentId") String paymentId, Principal principal, RedirectAttributes redirectAttributes, HttpServletResponse response) {
+        User user = userService.findByUsername(principal.getName());
+        Address address = addressService.findByUser(user);
+        try {
+            Payment payment = paypalService.executePayment(paymentId, "FSPKT3UUKJYGJ");
+            if (payment.getState().equals("approved")) {
+                List<CartItem> cartItems = shoppingCartService.findAllByUserAndOrderIsNull(user);
+                order.setOrderStatus("Received");
+                order.setCartItems(cartItems);
+                order.setUser(user);
+                order.setAddress(address);
+                order.setDateAndTime(Timestamp.valueOf(LocalDateTime.now()));
+                order = orderService.save(order);
+                for (CartItem cartItem: cartItems) {
+                    Vinyl vinyl = cartItem.getVinyl();
+                    vinyl.decreaseStock(cartItem.getQuantity());
+                    vinylService.save(vinyl);
+                    cartItem.setOrder(order);
+                    shoppingCartService.save(cartItem);
+                }
+                redirectAttributes.addFlashAttribute("order", order);
+                return "redirect:order-successful";
+            }
+        } catch (PayPalRESTException e) {
+            e.printStackTrace();
+        }
+        return "error";
+    }
 }
