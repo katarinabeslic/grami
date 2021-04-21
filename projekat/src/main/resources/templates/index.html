@@ -11,14 +11,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-5">
-                            <span>Check out the highlights</span>
-                            <h1 style="color: #f0f0ff;">of year 2020</h1>
-                            <p>It might've been a bad year overall but music-wise definitely not!</p>
-                            <a th:href="@{/shop}" class="primary-btn">Shop Now</a>
+                            <span th:text="#{index.checkhighlights}"></span>
+                            <h1 style="color: #f0f0ff;" th:text="#{index.ofyear}"></h1>
+                            <p th:text="#{index.badyear}"></p>
+                            <a th:href="@{/shop}" class="primary-btn" th:text="#{index.shopbtn}"></a>
                         </div>
                     </div>
                     <div class="off-card">
-                        <h2>Shop<span>vinyls</span></h2>
+                        <h2><span th:utext="#{index.offcard.shop}"></span><span th:utext="#{index.offcard.vinyls}"></span></h2>
                     </div>
                 </div>
 			</div>
@@ -26,15 +26,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-5">
-                            <span style="font-weight: 1000; text-shadow: #f0f0ff;">Find out everything</span>
-                            <h1 style="color: #f0f0ff;">ABOUT US</h1>
-                            <p style="color: #f0f0ff;">Click on one of the two buttons below depending on what you're interested in!</p>
-							<a th:href="@{/about-us}" class="primary-btn">About us</a>
-							<a th:href="@{/contact-faq}" class="primary-btn">Contact & faq</a>
+                            <span style="font-weight: 1000; text-shadow: #f0f0ff;" th:text="#{index.findout}"></span>
+                            <h1 style="color: #f0f0ff;" th:text="#{index.aboutus}"></h1>
+                            <p style="color: #f0f0ff;" th:text="#{index.clickontwo}"></p>
+							<a th:href="@{/about-us}" class="primary-btn" th:text="#{index.aboutus}"></a>
+							<a th:href="@{/contact-faq}" class="primary-btn" th:text="#{index.contactfaq}"></a>
                         </div>
                     </div>
                     <div class="off-card">
-                        <h2 style="font-size: 20px;">Who<span style="font-size: 22px;">Are</span><span style="font-size: 20px;">We</span></h2>
+                        <h2><span style="font-size: 22px;" th:text="#{index.who}"></span><span style="font-size: 22px;" th:text="#{index.are}"></span><span style="font-size: 20px;" th:text="#{index.we}"></span></h2>
                     </div>
                 </div>
             </div>
@@ -42,14 +42,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-5">
-                            <span>Vinyl, 2LP, 3LP</span>
+                            <span>Vinyl, 2LP, 3LP, LP BOX Set</span>
                             <h1>MF DOOM</h1>
-                            <p style="color: #f0f0ff;">Rest In Peace (July 13th 1971 - October 31st 2020)</p>
-                            <a th:href="@{/shop?search=mf+doom}" class="primary-btn">Shop Now</a>
+                            <p style="color: #f0f0ff;" th:text="#{index.rip}"></p>
+                            <a th:href="@{/shop?search=mf+doom}" class="primary-btn" th:text="#{index.shopbtn}"></a>
                         </div>
                     </div>
                     <div class="off-card">
-                        <h2>Shop<span>Vinyls</span></h2>
+                        <h2><span th:text="#{index.offcard.shop}"></span><span th:text="#{index.offcard.vinyls}"></span></h2>
                     </div>
                 </div>
             </div>
@@ -69,8 +69,8 @@
                                 <img src="images/icon-1.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>Free Shipping</h6>
-                                <p>For all orders worldwide</p>
+                                <h6 th:text="#{index.freeshipping}"></h6>
+                                <p th:text="#{index.fororders}"></p>
                             </div>
                         </div>
                     </div>
@@ -80,8 +80,8 @@
                                 <img src="images/icon-2.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>Delivery On Time</h6>
-                                <p>Guaranteed within a week</p>
+                                <h6 th:text="#{index.delivery}"></h6>
+                                <p th:text="#{index.guaranteed}"></p>
                             </div>
                         </div>
                     </div>
@@ -91,8 +91,8 @@
                                 <img src="images/icon-3.png" alt="">
                             </div>
                             <div class="sb-text">
-                                <h6>Secure Payment</h6>
-                                <p>100% secure payment</p>
+                                <h6 th:text="#{index.secure}"></h6>
+                                <p th:text="#{index.hundredpercent}"></p>
                             </div>
                         </div>
                     </div>

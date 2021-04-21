@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" th:href="@{../images/icon.png}">
-    <title>Grami | Admin Page</title>
+    <title th:text="#{admin.title}"></title>
 
     <!-- Google Font -->
     <link th:href="@{https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap}"
@@ -33,23 +33,23 @@
             <nav class="nav-menu mobile-menu">
                 <ul>
                     <li><a th:href="@{/}"><img th:src="@{../images/logo-footer.png}" alt="" style="height: 22px;"></a></li>
-                    <li th:classappend="${#request.requestURI == '/admin' ? 'active':''}"><a th:href="@{/admin}">Home</a></li>
+                    <li th:classappend="${#request.requestURI == '/admin' ? 'active':''}"><a th:href="@{/admin}" th:text="#{admin.home}"></a></li>
                     <li th:classappend="${(#request.requestURI == '/admin/catalogue' ? 'active':'') +
-                            (#request.requestURI == '/admin/add' ? 'active':'')}"><a>Vinyls</a>
+                            (#request.requestURI == '/admin/add' ? 'active':'')}"><a th:text="#{admin.vinyls}"></a>
                         <ul class="dropdown">
-                            <li><a th:href="@{/admin/catalogue}">Catalogue</a></li>
-                            <li><a th:href="@{/admin/add}">Add New</a></li>
+                            <li><a th:href="@{/admin/catalogue}" th:text="#{admin.catalogue}"></a></li>
+                            <li><a th:href="@{/admin/add}" th:text="#{admin.vinyls.addNew}"></a></li>
                         </ul>
                     </li>
-                    <li><a th:classappend="${#request.requestURI == '/admin/orders' ? 'active':''}" th:href="@{/admin/orders}">Orders</a></li>
+                    <li><a th:classappend="${#request.requestURI == '/admin/orders' ? 'active':''}" th:href="@{/admin/orders}" th:text="#{admin.orders}"></a></li>
                     <li th:classappend="${(#request.requestURI == '/admin/users' ? 'active':'') +
-                            (#request.requestURI == '/admin/add-user' ? 'active':'')}"><a>Users</a>
+                            (#request.requestURI == '/admin/add-user' ? 'active':'')}"><a th:text="#{admin.users}"></a>
                         <ul class="dropdown">
-                            <li><a th:href="@{/admin/users}">View All</a></li>
-                            <li><a th:href="@{/admin/add-user}">Add New</a></li>
+                            <li><a th:href="@{/admin/users}" th:text="#{admin.viewUsers}"></a></li>
+                            <li><a th:href="@{/admin/add-user}" th:text="#{admin.users.addNew}"></a></li>
                         </ul>
                     </li>
-                    <li><a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="login-panel"><i class="fa fa-user"></i> Logout</a></li>
+                    <li><a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="login-panel"><i class="fa fa-user"></i><span style="padding-left: 7px" th:text="#{admin.logout}"></span></a></li>
                 </ul>
             </nav>
             <div id="mobile-menu-wrap"></div>

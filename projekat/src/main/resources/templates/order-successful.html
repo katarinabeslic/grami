@@ -12,18 +12,18 @@
         <div class="card-body">
             <div class="text-center py-3">
                 <i data-feather="check-circle" class="text-success" width="48" height="48"></i>
-                <h1>Thank you.</h1>
-                <p>Your order has been received and will be processed as soon as possible.</p>
+                <h1 th:text="#{success.thankYou}"></h1>
+                <p th:text="#{success.received}"></p>
                 <p class="mb-0">
-                    <span class="text-muted">Order ID: </span>
-                    <span style="color: #e7ab3c">#ORD<span th:text="${order.id}" style="color: #e7ab3c"></span></span>
+                    <span class="text-muted" th:text="#{success.id}"></span>
+                    <span style="color: #e7ab3c" th:text="#{success.ord}"></span><span th:text="${order.id}" style="color: #e7ab3c"></span>
                 </p>
                 <p style="padding-bottom: 30px">
-                    <span class="text-muted">Total Amount: </span>
-                    <span style="color: #e7ab3c"><span th:text="${order.totalPrice}" style="color: #e7ab3c">7299</span> €</span>
+                    <span class="text-muted" th:text="#{success.total}"></span>
+                    <span style="color: #e7ab3c"><span th:text="${order.totalPrice}" style="color: #e7ab3c"></span> €</span>
                 </p>
-                <a th:href="@{/shop}" class="site-btn" style="color: white">CONTINUE SHOPPING</a>
-                <a th:href="@{/order-detail(id=${order.id})}" class="site-btn place-btn" style="color: white">VIEW ORDER</a>
+                <a th:href="@{/shop}" class="site-btn" style="color: white" th:text="#{success.continue}"></a>
+                <a th:href="@{/order-detail(id=${order.id})}" class="site-btn place-btn" style="color: white" th:text="#{success.viewOrd}"></a>
             </div>
         </div>
     </div>

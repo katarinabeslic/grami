@@ -11,19 +11,19 @@
                 <div class="specification-table" id="songTable">
                     <table>
                         <thead>
-                        <th>Order ID</th>
-                        <th>Date And Time</th>
-                        <th>Total Price</th>
-                        <th>Status</th>
-                        <th>User</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                            <th th:text="#{admin.orders.id}"></th>
+                            <th th:text="#{admin.orders.dateAndTime}"></th>
+                            <th th:text="#{admin.orders.totalPrice}"></th>
+                            <th th:text="#{admin.orders.status}"></th>
+                            <th th:text="#{admin.orders.user}"></th>
+                            <th style="width: 150px"><i class="fa fa-edit" style="font-size: 20px"></i></th>
+                            <th style="width: 150px"><i class="fa fa-trash" style="font-size: 20px"></i></th>
                         </thead>
                         <tbody th:each="order : ${orders}">
                         <tr>
-                            <td th:text="|ORD-${order.id}|"></td>
-                            <td th:text="${#dates.format(order.dateAndTime, 'dd-MMM-yyyy')}"></td>
-                            <td th:text="|${order.totalPrice} €|"></td>
+                            <td th:text="|#{myOrders.ord}${order.id}|"></td>
+                            <td th:text="${#dates.format(order.dateAndTime, 'dd.MM.yyyy. HH:mm')}"></td>
+                            <td th:text="${order.totalPrice + '€'}"></td>
                             <td><span th:classappend="${(order.orderStatus == 'Received' ? 'badge badge-secondary' : '') +
                                                         (order.orderStatus == 'Confirmed' ? 'badge badge-info' : '') +
                                                         (order.orderStatus == 'Cancelled' ? 'badge badge-danger' : '') +

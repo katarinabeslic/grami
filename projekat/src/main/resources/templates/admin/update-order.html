@@ -15,11 +15,11 @@
                         <table>
                             <thead>
                             <tr>
-                                <th th:text="|ORD - ${order.id}|" style="color: #e7ab3c; font-size: 20px"></th>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
+                                <th th:text="|#{myOrders.ord}${order.id}|" style="color: #e7ab3c; font-size: 20px"></th>
+                                <th th:text="#{cart.productName}"></th>
+                                <th th:text="#{cart.price}"></th>
+                                <th th:text="#{cart.quantity}"></th>
+                                <th th:text="#{cart.total}"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -28,7 +28,7 @@
                                 <td class="cart-title first-row">
                                     <h5 th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|"></h5>
                                 </td>
-                                <td class="p-price first-row itemPrice" th:text="|${cartItem.vinyl.price} ${order.currency}|"></td>
+                                <td class="p-price first-row itemPrice" th:text="${cartItem.vinyl.price + '€'}"></td>
                                 <td class="qua-col first-row" th:text="${cartItem.quantity}">
                                 </td>
                                 <td class="total-price first-row totalPrice" th:with="totalPrice = ${cartItem.vinyl.price * cartItem.quantity}"
@@ -43,27 +43,43 @@
                 <div class="col-lg-12" style="padding: 0px">
                     <div class="proceed-checkout">
                         <ul>
-                            <li class="subtotal">Customer: <span
-                                    th:text="|${order.user.firstName} ${order.user.lastName}|"></span></li>
-                            <li class="subtotal" style="padding-top: 10px">Address: <span
-                                    th:text="|${order.address.street}, ${order.address.city} ${order.address.zipCode}|"></span>
+                            <li class="subtotal">
+                                <label th:text="#{admin.update.customer}"></label>
+                                <span th:text="|${order.user.firstName} ${order.user.lastName}|"></span>
                             </li>
-                            <li class="subtotal" style="padding-top: 10px">Phone Number: <span
-                                    th:text="${order.user.phoneNumber}"></span></li>
-                            <li class="subtotal" style="padding-top: 10px">Price: <span
-                                    th:text="${order.totalPrice + '€'}"></span></li>
-                            <li class="subtotal" style="padding-top: 10px">Shipping Cost: <span>FREE</span></li>
-                            <li class="subtotal" style="padding-top: 10px">Order TOTAL: <span
-                                    th:text="${order.totalPrice + '€'}"></span></li>
-                            <li class="subtotal" style="padding-top: 10px">Order Placed: <span
-                                    th:text="${#dates.format(order.dateAndTime, 'dd.MM.yyyy. HH:mm')}"></span></li>
-                            <li class="subtotal" style="padding-top: 10px">Payment Method: <span
-                                    th:text="${order.paymentMethod}"></span></li>
+                            <li class="subtotal" style="padding-top: 10px">
+                                <label th:text="#{admin.update.address}"></label>
+                                <span th:text="|${order.address.street}, ${order.address.city} ${order.address.zipCode}|"></span>
+                            </li>
+                            <li class="subtotal" style="padding-top: 10px">
+                                <label th:text="#{admin.update.phoneNumber}"></label>
+                                <span th:text="${order.user.phoneNumber}"></span>
+                            </li>
+                            <li class="subtotal" style="padding-top: 10px">
+                                <label th:text="#{admin.update.price}"></label>
+                                <span th:text="${order.totalPrice + '€'}"></span>
+                            </li>
+                            <li class="subtotal" style="padding-top: 10px">
+                                <label th:text="#{admin.update.shipping}"></label>
+                                <span th:text="#{cart.free}"></span>
+                            </li>
+                            <li class="subtotal" style="padding-top: 10px">
+                                <label th:text="#{admin.update.total}"></label>
+                                <span th:text="${order.totalPrice + '€'}"></span>
+                            </li>
+                            <li class="subtotal" style="padding-top: 10px">
+                                <label th:text="#{admin.update.orderTime}"></label>
+                                <span th:text="${#dates.format(order.dateAndTime, 'dd.MM.yyyy. HH:mm')}"></span>
+                            </li>
+                            <li class="subtotal" style="padding-top: 10px">
+                                <label th:text="#{admin.update.payment}"></label>
+                                <span th:text="${order.paymentMethod}"></span>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <label style="padding-top: 40px">Order Status</label>
+            <label style="padding-top: 40px" th:text="#{admin.update.status}"></label>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="discount-coupon">
@@ -77,7 +93,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="discount-coupon" style="padding-top: 12px">
-                        <h6 style="text-align: center" th:text="|Current Status: ${order.orderStatus}|"></h6>
+                        <h6 style="text-align: center" th:text="|#{admin.update.currentStatus} ${order.orderStatus}|"></h6>
                     </div>
                 </div>
             </div>
@@ -86,10 +102,10 @@
                     <div class="checkout-form">
                         <div class="row">
                             <div class="col-lg-6">
-                                <input type="submit" class="new-vinyl-save" value="Save Changes">
+                                <input type="submit" class="new-vinyl-save" th:value="#{myPayment.saveBtn}">
                             </div>
                             <div class="col-lg-6">
-                                <input type="button" class="new-vinyl-save" value="Cancel" onclick="cancelOrderEditing()">
+                                <input type="button" class="new-vinyl-save" th:value="#{admin.vinyl.cancel}" onclick="cancelOrderEditing()">
                             </div>
                         </div>
                     </div>

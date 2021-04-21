@@ -10,30 +10,30 @@
 			<div class="row">
 				<div class="col-lg-6 offset-lg-3">
 					<div class="register-form">
-						<h2>Customer Registration Form</h2>
+						<h2 th:text="#{register.form}"></h2>
 						<form th:action="@{/register-user}" th:object="${user}" method="post" id="registration-form">
 							<div class="group-input">
-								<label>First name</label> <input type="text" th:field="*{firstName}" minlength="1" required>
+								<label th:text="#{register.firstName}"></label> <input type="text" th:field="*{firstName}" minlength="1" required>
 							</div>
 							<div class="group-input">
-								<label>Last name</label> <input type="text" th:field="*{lastName}" minlength="1" required>
+								<label th:text="#{register.lastName}"></label> <input type="text" th:field="*{lastName}" minlength="1" required>
 							</div>
 							<div class="group-input">
-								<label>Email address</label> <input type="email" th:field="*{email}" required>
+								<label th:text="#{register.email}"></label> <input type="email" th:field="*{email}" required>
 							</div>
 							<div class="group-input">
-								<label>Phone number</label> <input type="text" th:field="*{phoneNumber}" required>
+								<label th:text="#{register.phoneNumber}"></label> <input type="text" th:field="*{phoneNumber}" required>
 							</div>
 							<div class="group-input">
-								<label>Username</label> <input type="text" th:field="*{username}" minlength="2" required>
+								<label th:text="#{register.username}"></label> <input type="text" th:field="*{username}" minlength="2" required>
 							</div>
 							<div th:if="${usernameExists}">
-								<div class="alert alert-danger">Oops, looks like that username's been taken!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+								<div class="alert alert-danger" th:text="#{alert.usernameTaken}"><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
 							</div>
 							<div class="group-input">
-								<label>Password</label> <input type="password" th:field="*{password}" minlength="4" required>
+								<label th:text="#{register.password}"></label> <input type="password" th:field="*{password}" minlength="4" required>
 							</div>
-							<button type="submit" class="site-btn register-btn">REGISTER</button>
+							<button type="submit" class="site-btn register-btn" th:text="#{register.btn}"></button>
 						</form>
 					</div>
 				</div>

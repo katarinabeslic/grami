@@ -13,7 +13,7 @@
 				<input type="hidden" name="id" th:value="${vinyl.id}">
 				<div class="col-lg-12">
 					<div th:if="${notEnoughStock}">
-						<div class="alert alert-danger">Oops, looks like that vinyl's out of stock!</div>
+						<div class="alert alert-danger" th:text="#{shop.notEnoughStock}"></div>
 					</div>
 					<div class="row">
 						<div class="col-lg-5">
@@ -36,15 +36,14 @@
 								</div>
 								<div class="pd-size-choose" style="padding-top: 15px;">
 									<div class="sc-item" th:each="genre : ${vinyl.genres}">
-										<label th:utext="${genre}"
-											style="width: fit-content; padding-left: 10px; padding-right: 10px; height: fit-content;"></label>
+										<label th:utext="${genre}" style="width: fit-content; padding-left: 10px; padding-right: 10px; height: fit-content;"></label>
 									</div>
 								</div>
 								<div class="quantity">
 									<div class="pro-qty">
 										<input type="text" id="quantity" name="quantity" th:value="${quantity}">
 									</div>
-									<button type="submit" class="site-btn pd-cart">Add To Cart</button>
+									<button type="submit" class="site-btn pd-cart" th:text="#{vinyl.addToCart}"></button>
 								</div>
 								<ul class="pd-tags">
 									<li>Format: <span th:text="${vinyl.format.name}"></span></li>
@@ -59,10 +58,10 @@
 						<div class="tab-item">
 							<ul class="nav" role="tablist">
 								<li>
-									<a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+									<a class="active" data-toggle="tab" href="#tab-1" role="tab" th:text="#{vinyl.descTab}"></a>
 								</li>
 								<li>
-									<a data-toggle="tab" href="#tab-2" role="tab">TRACKLIST</a>
+									<a data-toggle="tab" href="#tab-2" role="tab" th:text="#{vinyl.tracklistTab}"></a>
 								</li>
 							</ul>
 						</div>
@@ -83,8 +82,8 @@
 											<div class="specification-table" id="songTable">
 												<table>
 													<thead>
-														<th>Song name</th>
-														<th>Duration</th>
+														<th th:text="#{vinyl.songName}"></th>
+														<th th:text="#{vinyl.songDuration}"></th>
 													</thead>
 													<tbody th:each="song : ${vinyl.songs}">
 														<td th:text="${song.songName}"></td>

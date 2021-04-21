@@ -24,10 +24,10 @@
                             <tr th:each="cartItem : ${order.cartItems}">
                                 <td class="cart-pic first-row"><img th:src="${cartItem.vinyl.imgUrl}" style="width: 220px; padding: 15px"></td>
                                 <td class="cart-title first-row">
-                                    <h5 th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|"></h5>
+                                    <h5 th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|" style="text-align: center"></h5>
                                 </td>
-                                <td class="p-price first-row itemPrice" th:text="|${cartItem.vinyl.price} ${order.currency}|"></td>
-                                <td class="qua-col first-row" th:text="${cartItem.quantity}">
+                                <td class="p-price first-row itemPrice" th:text="${cartItem.vinyl.price + '€'}"></td>
+                                <td class="qua-col first-row" th:text="${cartItem.quantity}" style="font-size: 16px; font-weight: inherit;" >
                                 </td>
                                 <td class="total-price first-row totalPrice" th:with="totalPrice = ${cartItem.vinyl.price * cartItem.quantity}"
                                     th:text="${totalPrice + '€'}" th:value="${totalPrice}"></td>

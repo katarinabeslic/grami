@@ -12,37 +12,21 @@
                 <div class="col-lg-12">
                     <div class="blog-details-inner">
                         <div class="blog-detail-title">
-                            <h2>The history of our store</h2>
-                            <p>vinyls <span>- Jan 9, 2009</span></p>
+                            <h2 th:text="#{aboutUs.history}"></h2>
+                            <p th:utext="#{aboutUs.vinyls}"><span th:utext="#{aboutUs.date}"></span></p>
                         </div>
                         <div class="blog-large-pic">
                             <img src="images/hero-3.jpg" alt="">
                         </div>
                         <div class="blog-detail-desc">
-                            <p>Our mission is help people explore, experience, and enjoy music on a deeper level. A tall
-                                order, maybe, but it's what gets us out of bed every morning with a thunderous shout. We
-                                do that both by sending you great music every month and by making sure you have a ton of
-                                fun each step of the way. Music is important, and so are you, and we work our asses off
-                                to make sure we do good by both.</p>
-
-                            <p>We believe in the power of the album as an art form. That music is a form of connection.
-                                That an album isn't just something you own, but something that becomes a part of you.
-                                And we offer a full sensory experience that encourages you to deeply connect with the
-                                music you're listening to. Vinyl is a tangible representation of the music you love, and
-                                brings with it a ritual you shouldn't live without. What you listen to and how you
-                                listen to it matters. It ends up being an essential part of who you are.</p>
+                            <p th:text="#{aboutUs.textPt1}"></p>
+                            <p th:text="#{aboutUs.textPt2}"></p>
                         </div>
                         <div class="blog-quote">
-                            <p>"It's like record store day with free shipping and no line"</p><p><span>- Cool Material</span>
+                            <p th:text="#{aboutUs.quote}"></p><p><span th:text="#{aboutUs.source}"></span>
                             </p>
                         </div>
-                        <p>Our team is made up of people just like you. Regular folks who think music is one of the most
-                            incredible things humanity has ever come up with. And we're committed to giving you the kind
-                            of experience that lives up to the records we're sending you. That's what this is all about
-                            after all. Discovering incredible records in incredible ways, month in and month out. And if
-                            that sounds like something you could get into, we'd love to have you join our growing
-                            worldwide family. If you need a little convincing first, go ahead and check out our archive.
-                            We'll be here when you get back.</p>
+                        <p th:text="#{aboutUs.textPt3}"></p>
                     </div>
                 </div>
             </div>

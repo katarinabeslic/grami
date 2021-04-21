@@ -14,20 +14,21 @@
                 <div class="col-lg-8">
                     <div class="row">
                         <section class="product-shop spad page-details">
+                            <div id="payment-alert"></div>
                             <div th:if="${user?.address == null && user?.cardInformation == null}">
-                                <div class="alert alert-danger">Please add your address and card information!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+                                <div class="alert alert-danger"><span th:text="#{checkout.addAddressAndCard}"></span><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
                             </div>
                             <div th:if="${user?.address == null && user?.cardInformation != null}">
-                                <div class="alert alert-danger">Please add your address!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+                                <div class="alert alert-danger"><span th:text="#{checkout.addAddress}"></span><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
                             </div>
                             <input type="hidden" id="isCardInfoNull" th:value="${user?.cardInformation == null}">
                             <input type="hidden" id="isAddressNull" th:value="${user?.address == null}">
                             <div class="product-tab">
                                 <div class="tab-item">
                                     <ul class="nav" role="tablist">
-                                        <li><a class="active" data-toggle="tab" href="#tab-1" role="tab">Personal info</a></li>
-                                        <li><a data-toggle="tab" href="#tab-2" role="tab">Address</a></li>
-                                        <li><a data-toggle="tab" href="#tab-3" role="tab">Payment Method</a></li>
+                                        <li><a class="active" data-toggle="tab" href="#tab-1" role="tab" th:text="#{checkout.personalInfo}"></a></li>
+                                        <li><a data-toggle="tab" href="#tab-2" role="tab" th:text="#{checkout.address}"></a></li>
+                                        <li><a data-toggle="tab" href="#tab-3" role="tab" th:text="#{checkout.paymentInfo}"></a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-item-content">
@@ -37,25 +38,25 @@
                                                 <input type="hidden" th:name="id" th:value="${user?.id}">
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <label>First Name <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.profile.firstName}"></span><span> *</span></label>
 														<input type="text" readonly th:name="firstName" th:value="${user?.firstName}">
                                                     </div>
                                                     <div class="col-lg-5">
-                                                        <label>Last Name <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.profile.lastName}"></span><span> *</span></label>
 														<input type="text" readonly th:name="lastName" th:value="${user?.lastName}">
                                                     </div>
                                                     <div class="col-lg-6">
-                                                        <label>Email <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.profile.email}"></span><span> *</span></label>
 														<input type="text" readonly th:name="email" th:value="${user?.email}">
                                                     </div>
                                                     <div class="col-lg-5">
-                                                        <label>Phone Number <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.profile.phoneNumber}"></span><span> *</span></label>
 														<input type="text" readonly th:name="phoneNumber" th:value="${user?.phoneNumber}">
                                                     </div>
                                                 </div>
 												<div class="row">
 													<div class="container" style="padding-top: 30px;">
-														<button type="button" class="site-btn profile-btn">Edit Profile</button>
+														<button type="button" class="site-btn profile-btn" th:text="#{checkout.profile.editBtn}"></button>
 													</div>
 												</div>
                                             </div>
@@ -64,25 +65,25 @@
                                             <div class="product-content">
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <label>Country <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.address.country}"></span><span> *</span></label>
 														<input type="text" readonly th:name="country" th:value="${user?.address?.country}">
                                                     </div>
                                                     <div class="col-lg-5">
-                                                        <label>City <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.address.city}"></span><span> *</span></label>
 														<input type="text" readonly th:name="city" th:value="${user?.address?.city}">
                                                     </div>
                                                     <div class="col-lg-6">
-                                                        <label>Street and Number <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.address.streetAndNumber}"></span><span> *</span></label>
                                                         <input type="text" readonly th:name="street" th:value="${user?.address?.street}">
                                                     </div>
                                                     <div class="col-lg-5">
-                                                        <label>Zip Code <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.address.zipCode}"></span><span> *</span></label>
 														<input type="text" readonly th:name="zipCode" th:value="${user?.address?.zipCode}">
                                                     </div>
                                                 </div>
 												<div class="row">
 													<div class="container" style="padding-top: 30px;">
-														<button type="button" class="site-btn address-btn">Edit Address</button>
+														<button type="button" class="site-btn address-btn" th:text="#{checkout.address.editBtn}"></button>
 													</div>
 												</div>
                                             </div>
@@ -91,18 +92,18 @@
                                             <div class="customer-review-option">
                                                 <div class="row">
                                                     <div class="col-lg-11">
-                                                        <label>Card Type <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.card.cardType}"></span><span> *</span></label>
 														<select class="form-control" th:name="type" id="cardType" style="height: 46px; margin-bottom: 20px;">
 															<option value="mastercard" th:selected="${(user?.cardInformation?.type == 'mastercard') ? true : false}">Mastercard</option>
 															<option value="visa" th:selected="${(user?.cardInformation?.type == 'visa') ? true : false}">Visa</option>
 														</select>
                                                     </div>
                                                     <div class="col-lg-6">
-                                                        <label>Card Holder Name <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.card.cardHolder}"></span><span> *</span></label>
                                                         <input type="text" readonly th:name="cardHolderName" th:value="${user.cardInformation?.cardHolderName}">
                                                     </div>
                                                     <div class="col-lg-5">
-                                                        <label>Card Number <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.card.cardNumber}"></span><span> *</span></label>
                                                         <input type="hidden" id="cardNumber" readonly th:name="cardNumber" th:value="${user.cardInformation?.cardNumber}">
                                                         <input type="text" id="cardNumberShow" readonly >
                                                         <script>
@@ -112,25 +113,25 @@
                                                         </script>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <label>Expiration Month <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.card.expirationMonth}"></span><span> *</span></label>
 														<select class="form-control" th:name="expirationMonth" style="height: 46px;">
 															<option disabled="disabled">-- Month --</option>
-															<option value="1" th:selected="${(user?.cardInformation?.expirationMonth == 1) ? true : false}">January (01)</option>
-															<option value="2" th:selected="${(user?.cardInformation?.expirationMonth == 2) ? true : false}">Febuary (02)</option>
-															<option value="3" th:selected="${(user?.cardInformation?.expirationMonth == 3) ? true : false}">March (03)</option>
-															<option value="4" th:selected="${(user?.cardInformation?.expirationMonth == 4) ? true : false}">April (04)</option>
-															<option value="5" th:selected="${(user?.cardInformation?.expirationMonth == 5) ? true : false}">May (05)</option>
-															<option value="6" th:selected="${(user?.cardInformation?.expirationMonth == 6) ? true : false}">June (06)</option>
-															<option value="7" th:selected="${(user?.cardInformation?.expirationMonth == 7) ? true : false}">July (07)</option>
-															<option value="8" th:selected="${(user?.cardInformation?.expirationMonth == 8) ? true : false}">August (08)</option>
-															<option value="9" th:selected="${(user?.cardInformation?.expirationMonth == 9) ? true : false}">September (09)</option>
-															<option value="10" th:selected="${(user?.cardInformation?.expirationMonth == 10) ? true : false}">October (10)</option>
-															<option value="11" th:selected="${(user?.cardInformation?.expirationMonth == 11) ? true : false}">November (11)</option>
-															<option value="12" th:selected="${(user?.cardInformation?.expirationMonth == 12) ? true : false}">December (12)</option>
+															<option value="1" th:selected="${(user?.cardInformation?.expirationMonth == 1) ? true : false}" th:text="#{myPayment.jan}"></option>
+															<option value="2" th:selected="${(user?.cardInformation?.expirationMonth == 2) ? true : false}" th:text="#{myPayment.feb}"></option>
+															<option value="3" th:selected="${(user?.cardInformation?.expirationMonth == 3) ? true : false}" th:text="#{myPayment.mar}"></option>
+															<option value="4" th:selected="${(user?.cardInformation?.expirationMonth == 4) ? true : false}" th:text="#{myPayment.apr}"></option>
+															<option value="5" th:selected="${(user?.cardInformation?.expirationMonth == 5) ? true : false}" th:text="#{myPayment.may}"></option>
+															<option value="6" th:selected="${(user?.cardInformation?.expirationMonth == 6) ? true : false}" th:text="#{myPayment.jun}"></option>
+															<option value="7" th:selected="${(user?.cardInformation?.expirationMonth == 7) ? true : false}" th:text="#{myPayment.jul}"></option>
+															<option value="8" th:selected="${(user?.cardInformation?.expirationMonth == 8) ? true : false}" th:text="#{myPayment.aug}"></option>
+															<option value="9" th:selected="${(user?.cardInformation?.expirationMonth == 9) ? true : false}" th:text="#{myPayment.sept}"></option>
+															<option value="10" th:selected="${(user?.cardInformation?.expirationMonth == 10) ? true : false}" th:text="#{myPayment.oct}"></option>
+															<option value="11" th:selected="${(user?.cardInformation?.expirationMonth == 11) ? true : false}" th:text="#{myPayment.nov}"></option>
+															<option value="12" th:selected="${(user?.cardInformation?.expirationMonth == 12) ? true : false}" th:text="#{myPayment.dec}"></option>
                                                     	</select>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <label>Expiration Year <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.card.expirationYear}"></span><span> *</span></label>
 														<select class="form-control" th:name="expirationYear" style="height: 46px;">
 															<option disabled="disabled">-- Year --</option>
 															<option value="2021" th:selected="${(user?.cardInformation?.expirationYear == 2021) ? true : false}">2021</option>
@@ -142,12 +143,12 @@
                                                     </select>
                                                     </div>
                                                     <div class="col-lg-3">
-                                                        <label>CVC: <span>*</span></label>
+                                                        <label><span style="color: #252525" th:text="#{checkout.card.cvc}"></span><span> *</span></label>
 														<input type="password" readonly th:name="cvc" th:value="${user.cardInformation?.cvc}">
                                                     </div>
 													<div class="row" style="align-content: center">
 														<div class="container" style="padding-top: 30px; padding-left: 30px">
-															<button type="button" class="site-btn card-btn">Edit Card Info</button>
+															<button type="button" class="site-btn card-btn" th:text="#{checkout.card.editBtn}"></button>
 														</div>
 													</div>
                                                 </div>
@@ -161,42 +162,28 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="place-order">
-                        <h4>Your Order</h4>
+                        <h4 th:text="#{checkout.order}"></h4>
                         <div class="order-total">
                             <ul class="order-table">
-                                <li>Product <span>Total</span></li>
+                                <li><span style="float: left" th:text="#{checkout.vinyl}"></span><span th:text="#{checkout.total}"></span></li>
                                 <li class="fw-normal" th:each="item : ${shoppingCart}"
                                     th:text="| ${item.vinyl.vinylName} - ${item.vinyl.artist.stageName} X ${item.quantity}|"></li>
-                                <li class="total-price">Total <span th:text="${shoppingCartTotal + '€'}"></span></li>
+                                <li class="total-price" style="padding-bottom: 23px"><h6 style="float: left" th:text="#{checkout.total}"></h6> <span th:text="${shoppingCartTotal + '€'}"></span></li>
                             </ul>
-                            <!--
-                            <div class="payment-check">
-                                <div class="pc-item">
-                                    <label for="pc-check"> Credit Card <input type="checkbox" id="pc-check"> <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="pc-item">
-                                    <label for="pc-paypal"> Paypal <input type="checkbox" id="pc-paypal"><span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                             -->
                             <input type="hidden" id="price" th:value="${shoppingCartTotal}">
                             <input type="hidden" id="currency" value="EUR">
                             <input type="hidden" id="method" value="paypal">
                             <input type="hidden" id="intent" value="sale">
                             <input type="hidden" id="description" value="customer buying from grami store">
-
                             <div class="order-btn">
-                                <button type="submit" id="place-order" class="site-btn place-btn">PAY WITH YOUR CARD</button>
-                                <p style="padding-top: 15px">Or with</p>
+                                <button type="submit" id="place-order" class="site-btn place-btn" th:text="#{checkout.payWithCard}"></button>
+                                <p style="padding-top: 15px" th:text="#{checkout.orWith}"></p>
                             </div>
-
                             <div class="order-btn" style="padding-bottom: 10px">
                                 <div id="paypal-payment-btn">
-                                    <button type="button" class="pp-btn" id="pp-btn">Pay with Paypal</button>
+                                    <button type="button" class="pp-btn" id="pp-btn" th:text="#{checkout.paypal}"></button>
                                 </div>
-                                <p style="padding-top: 30px">By placing an order you agree with the terms and conditions of the Grami store. </p>
+                                <p style="padding-top: 30px" th:text="#{checkout.warning}"></p>
                             </div>
                         </div>
                     </div>
@@ -208,10 +195,6 @@
 <!-- Shopping Cart Section End -->
 
 <div th:replace="help/fragments :: footer"></div>
-<!--
-<script src="https://www.paypal.com/sdk/js?client-id=AXtd_hQpord0ShJJZj6jiEntmvcuoxrZ70q04BHhpooK98aHArYY0PdvmfgcWJmGG9bmULS_OqXKE6MS&disable-funding=credit,card"></script>
-<script>paypal.Buttons().render('#paypal-payment-btn');</script>
--->
 </body>
 
 </html>

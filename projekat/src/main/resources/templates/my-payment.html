@@ -27,14 +27,14 @@
                             <div class="card-body text-center">
                                 <img src="/images/user.png" width="100" height="100" alt="User" class="rounded-circle mb-3">
                                 <h5 class="bold mb-0" th:text="${#strings.capitalize(user.username)}"></h5>
-								<small class="text-secondary" th:text="'Last seen '+${#dates.format(#dates.createNow(), 'MMM dd, yyyy')}"></small>       
+								<small class="text-secondary" th:text="'Last online '+${#dates.format(#dates.createNow(), 'dd.MM.yyyy')}"></small>
 							</div>
 							<div class="list-group list-group-flush">
-								<a th:href="@{/my-profile}" class="list-group-item list-group-item-action"><i class="ti-user mr-3"></i>Profile</a>
-								<a th:href="@{/my-address}" class="list-group-item list-group-item-action"><i class="ti-home mr-3"></i>Address</a>
-								<a th:href="@{/payment-method}" class="list-group-item list-group-item-action active"><i class="ti-credit-card mr-3"></i>Payment Information</a>
-								<a th:href="@{/my-orders}" class="list-group-item list-group-item-action"><i class="ti-shopping-cart mr-3"></i>My Orders</a>
-								<a th:href="@{/logout}" class="list-group-item list-group-item-action"><i class="ti-power-off mr-3"></i>Logout</a>
+								<a th:href="@{/my-profile}" class="list-group-item list-group-item-action"><i class="ti-user mr-3"></i><span th:utext="#{myProfile.profile}"></span></a>
+								<a th:href="@{/my-address}" class="list-group-item list-group-item-action"><i class="ti-home mr-3"></i><span th:utext="#{myProfile.address}"></span></a>
+								<a th:href="@{/payment-method}" class="list-group-item list-group-item-action active"><i class="ti-credit-card mr-3"></i><span th:utext="#{myProfile.payment}"></span></a>
+								<a th:href="@{/my-orders}" class="list-group-item list-group-item-action"><i class="ti-shopping-cart mr-3"></i><span th:utext="#{myProfile.orders}"></span></a>
+								<a th:href="@{/logout}" class="list-group-item list-group-item-action"><i class="ti-power-off mr-3"></i><span th:utext="#{myProfile.logout}"></span></a>
 							</div>
 						</div>
 					</div>
@@ -47,7 +47,7 @@
 								<i class="ti-credit-card"></i>
 							</div>
 							<div class="ci-text">
-								<span>Card Type:</span>
+								<span th:text="#{myPayment.cardType}"></span>
 								<select class="form-control" id="cardType" th:name="type" style="margin-top: 10px; width: 300%;">
 									<option value="mastercard" th:selected="${(user?.cardInformation?.type == 'mastercard') ? true : false}">Mastercard</option>
 									<option value="visa" th:selected="${(user?.cardInformation?.type == 'visa') ? true : false}">Visa</option>
@@ -59,7 +59,7 @@
 								<i class="ti-user"></i>
 							</div>
 							<div class="ci-text">
-								<span>Card Holder Name:</span>
+								<span th:text="#{myPayment.cardHolder}"></span>
 								<input class="form-control" type="text" th:name="cardHolderName" style="width: 140%;" th:value="${user?.cardInformation?.cardHolderName}">
 							</div>
 						</div>
@@ -68,7 +68,7 @@
 								<i class="ti-pencil"></i>
 							</div>
 							<div class="ci-text">
-								<span>Card Number:</span>
+								<span th:text="#{myPayment.cardNumber}"></span>
 								<input class="form-control" type="text" th:name="cardNumber" style="width: 140%;" required minlength="12" maxlength="12"
 								th:value="${user?.cardInformation?.cardNumber}">
 							</div>
@@ -76,25 +76,25 @@
 						<div class="cw-item">
 							<div class="row">
 							<div class="ci-text">
-								<span>Expiration Date:</span>
+								<span th:text="#{myPayment.expirationDate}"></span>
 							</div>
 								</div>
 								<div class="row">
 								<div class="ci-text">
 								<select class="form-control" style="margin-top: 10px; width: 130%;" th:name="expirationMonth">
 									<option disabled="disabled">-- Month --</option>
-									<option value="1" th:selected="${(user?.cardInformation?.expirationMonth == 1) ? true : false}">January (01)</option>
-									<option value="2" th:selected="${(user?.cardInformation?.expirationMonth == 2) ? true : false}">Febuary (02)</option>
-									<option value="3" th:selected="${(user?.cardInformation?.expirationMonth == 3) ? true : false}">March (03)</option>
-									<option value="4" th:selected="${(user?.cardInformation?.expirationMonth == 4) ? true : false}">April (04)</option>
-									<option value="5" th:selected="${(user?.cardInformation?.expirationMonth == 5) ? true : false}">May (05)</option>
-									<option value="6" th:selected="${(user?.cardInformation?.expirationMonth == 6) ? true : false}">June (06)</option>
-									<option value="7" th:selected="${(user?.cardInformation?.expirationMonth == 7) ? true : false}">July (07)</option>
-									<option value="8" th:selected="${(user?.cardInformation?.expirationMonth == 8) ? true : false}">August (08)</option>
-									<option value="9" th:selected="${(user?.cardInformation?.expirationMonth == 9) ? true : false}">September (09)</option>
-									<option value="10" th:selected="${(user?.cardInformation?.expirationMonth == 10) ? true : false}">October (10)</option>
-									<option value="11" th:selected="${(user?.cardInformation?.expirationMonth == 11) ? true : false}">November (11)</option>
-									<option value="12" th:selected="${(user?.cardInformation?.expirationMonth == 12) ? true : false}">December (12)</option>
+									<option value="1" th:selected="${(user?.cardInformation?.expirationMonth == 1) ? true : false}" th:text="#{myPayment.jan}"></option>
+									<option value="2" th:selected="${(user?.cardInformation?.expirationMonth == 2) ? true : false}" th:text="#{myPayment.feb}"></option>
+									<option value="3" th:selected="${(user?.cardInformation?.expirationMonth == 3) ? true : false}" th:text="#{myPayment.mar}"></option>
+									<option value="4" th:selected="${(user?.cardInformation?.expirationMonth == 4) ? true : false}" th:text="#{myPayment.apr}"></option>
+									<option value="5" th:selected="${(user?.cardInformation?.expirationMonth == 5) ? true : false}" th:text="#{myPayment.may}"></option>
+									<option value="6" th:selected="${(user?.cardInformation?.expirationMonth == 6) ? true : false}" th:text="#{myPayment.jun}"></option>
+									<option value="7" th:selected="${(user?.cardInformation?.expirationMonth == 7) ? true : false}" th:text="#{myPayment.jul}"></option>
+									<option value="8" th:selected="${(user?.cardInformation?.expirationMonth == 8) ? true : false}" th:text="#{myPayment.aug}"></option>
+									<option value="9" th:selected="${(user?.cardInformation?.expirationMonth == 9) ? true : false}" th:text="#{myPayment.sept}"></option>
+									<option value="10" th:selected="${(user?.cardInformation?.expirationMonth == 10) ? true : false}" th:text="#{myPayment.oct}"></option>
+									<option value="11" th:selected="${(user?.cardInformation?.expirationMonth == 11) ? true : false}" th:text="#{myPayment.nov}"></option>
+									<option value="12" th:selected="${(user?.cardInformation?.expirationMonth == 12) ? true : false}" th:text="#{myPayment.dec}"></option>
 								</select>
 								</div>
 								<div class="ci-text" style="float:right;">
@@ -115,14 +115,14 @@
 								<i class="ti-credit-card"></i>
 							</div>
 							<div class="ci-text">
-								<span>CVC:</span>
+								<span th:text="#{myPayment.cvc}"></span>
 								<input type="number" class="form-control" style="width: 150%;" th:name="cvc" required th:value="${user?.cardInformation?.cvc}">
 							</div>
 						</div>
 						</div>
 					<div class="row">
 						<div class="container" style="padding-top: 30px; width: 50%;">
-							<button type="submit" class="site-btn">Save Changes</button>
+							<button type="submit" class="site-btn" th:text="#{myPayment.saveBtn}"></button>
 						</div>
 					</div>
 					</form>

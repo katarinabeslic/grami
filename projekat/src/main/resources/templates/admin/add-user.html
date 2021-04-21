@@ -11,24 +11,30 @@
                 <div class="register-form">
                     <form th:action="@{/create-user}" th:object="${user}" method="post" id="registraion-form">
                         <div class="group-input">
-                            <label>First name</label> <input type="text" th:field="*{firstName}" minlength="1" required>
+                            <label th:text="#{admin.users.firstName}"></label>
+                            <input type="text" th:field="*{firstName}" minlength="1" required>
                         </div>
                         <div class="group-input">
-                            <label>Last name</label> <input type="text" th:field="*{lastName}" minlength="1" required>
+                            <label th:text="#{admin.users.lastName}"></label>
+                            <input type="text" th:field="*{lastName}" minlength="1" required>
                         </div>
                         <div class="group-input">
-                            <label>Email address</label> <input type="email" th:field="*{email}" required>
+                            <label th:text="#{admin.users.email}"></label>
+                            <input type="email" th:field="*{email}" required>
                         </div>
                         <div class="group-input">
-                            <label>Phone number</label> <input type="text" th:field="*{phoneNumber}" required>
+                            <label th:text="#{admin.users.phoneNumber}"></label>
+                            <input type="text" th:field="*{phoneNumber}" required>
                         </div>
                         <div class="group-input">
-                            <label>Username</label> <input type="text" th:field="*{username}" minlength="2" required>
+                            <label th:text="#{register.username}"></label>
+                            <input type="text" th:field="*{username}" minlength="2" required>
                         </div>
                         <div class="group-input">
-                            <label>Password</label> <input type="password" th:field="*{password}" minlength="4" required>
+                            <label th:text="#{register.password}"></label>
+                            <input type="password" th:field="*{password}" minlength="4" required>
                         </div>
-                        <button type="submit" class="site-btn register-btn">CREATE NEW USER</button>
+                        <button type="submit" class="site-btn register-btn" th:text="#{admin.user.createBtn}"></button>
                     </form>
                 </div>
             </div>

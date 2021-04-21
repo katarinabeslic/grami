@@ -12,24 +12,24 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="login-form">
-                        <h2>Login Form</h2>
+                        <h2 th:text="#{login.form}"></h2>
                         <form th:action="@{/login}" th:object="${user}" method="POST" id="login-form">
                             <div th:if="${emailExists}">
-                                <div class="alert alert-danger">Existing email, looks like you've already registered so please log in!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+                                <div class="alert alert-danger" th:text="#{alert.emailexists}"><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
                             </div>
                             <div class="group-input">
-                                <label for="username">Username</label>
+                                <label for="username" th:text="#{login.username}"></label>
                                 <input type="text" th:field="*{username}" id="username" required autofocus>
                             </div>
                             <div class="group-input">
-                                <label>Password</label>
+                                <label th:text="#{login.password}"></label>
                                 <input type="password" th:field="*{password}" id="password" required>
                             </div>
-                            <p th:if="${param.error}" class="alert alert-danger">Invalid username or password<a class="close" data-dismiss="alert" aria-label="close">×</a></p>
-                            <button type="submit" class="site-btn login-btn">Sign In</button>
+                            <p th:if="${param.error}" class="alert alert-danger" th:text="#{alert.invalidUorP}"><a class="close" data-dismiss="alert" aria-label="close">×</a></p>
+                            <button type="submit" class="site-btn login-btn" th:text="#{login.signin}"></button>
                         </form>
                         <div class="switch-login">
-                            <a th:href="@{/register}" class="or-login">Don't have an account? Click to register</a>
+                            <a th:href="@{/register}" class="or-login" th:text="#{login.gotoregister}"></a>
                         </div>
                     </div>
                 </div>

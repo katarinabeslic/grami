@@ -101,12 +101,13 @@ public class UserController {
 	}
 	
 	@PostMapping("/update-user")
-	public String updateUser(@ModelAttribute("user") User user, @RequestParam("newPassword") String newPassword, Model model, Principal principal, HttpServletRequest request) {
+	public String updateUser(@ModelAttribute("user") User user, @RequestParam("newPassword") String newPassword, Model model, Principal principal, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		String referer = request.getHeader("Referer");
 		User currentUser = userService.findByUsername(principal.getName());
 		if (newPassword.equals("no")) {
 			user.setPassword(currentUser.getPassword());
 			userService.save(user);
+			redirectAttributes.addFlashAttribute("updateSuccess", true);
 			return "redirect:" + referer;
 		}
 		if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals("")) {
@@ -118,6 +119,7 @@ public class UserController {
 				return "redirect:" + referer;
 			}
 		}
+		redirectAttributes.addFlashAttribute("updateSuccess", true);
 		return "redirect:" + referer;
 	}
 	

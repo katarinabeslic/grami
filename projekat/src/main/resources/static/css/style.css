@@ -1,36 +1,3 @@
-/******************************************************************
-  Template Name: Fashi
-  Description: Fashi eCommerce HTML Template
-  Author: Colorlib
-  Author URI: https://colorlib.com/
-  Version: 1.0
-  Created: Colorlib
-******************************************************************/
-
-/*------------------------------------------------------------------
-[Table of contents]
-
-1.  Template default CSS
-	1.1	Variables
-	1.2	Mixins
-	1.3	Flexbox
-	1.4	Reset
-2.  Helper Css
-3.  Header Section
-4.  Hero Section
-5.  Banner Section
-6.  Deal Of The Week
-7.  Latest Blog
-8.  Logo Carousel
-9.  Contact
-10.  Footer
-
--------------------------------------------------------------------*/
-
-/*----------------------------------------*/
-/* Template default CSS
-/*----------------------------------------*/
-
 html,
 body {
 	height: 100%;
@@ -2955,7 +2922,7 @@ ol {
 }
 
 .cart-table table tr th.p-name {
-	text-align: left;
+	text-align: center;
 }
 
 .cart-table table tr td {
@@ -3197,9 +3164,10 @@ ol {
 
 .checkout-form .new-vinyl-save {
 	width: 100%;
-	background-color: #FAC451;
+	background-color: #e7ab3c;
+	font-family: "Muli", sans-serif;
 	font-size: 18px;
-	font-weight: 600;
+	font-weight: 700;
 	color: #ffffff;
 	height: 50px;
 	margin-top: 50px;
@@ -3232,6 +3200,7 @@ ol {
 }
 
 .checkout-form input {
+	font-family: "Muli", sans-serif;
 	width: 100%;
 	height: 46px;
 	border: 2px solid #ebebeb;
@@ -3298,10 +3267,7 @@ ol {
 
 .checkout-form .place-order .order-total {
 	border: 2px solid #ebebeb;
-	padding-left: 40px;
-	padding-right: 40px;
-	padding-top: 22px;
-	padding-bottom: 35px;
+	padding: 22px 40px 35px;
 }
 
 .checkout-form .place-order .order-total .order-table {
@@ -3952,7 +3918,6 @@ ol {
 	background-color: #e7ab3c !important;
 	border-color: #e7ab3c;
 }
-
 
 .contact-widget .cw-item {
 	background: #ffffff;

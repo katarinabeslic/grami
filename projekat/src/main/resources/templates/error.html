@@ -11,11 +11,11 @@
         <div class="container">
             <div class="col-lg-6 text-center">
                 <div class="section-title">
-                    <h2>Oh no, there's been an error :(</h2>
-                    <p>Oops, we don't know what happened. Click on the button below to go back to the home page.</p>
+                    <h2 th:text="#{error.h2}"></h2>
+                    <p th:text="#{error.p}"></p>
                 </div>
                 
-                <a th:href="@{/}" class="primary-btn">Go Back</a>
+                <a th:href="@{/}" class="primary-btn" th:text="#{error.gohome}"></a>
             </div>
         </div>
     </section>

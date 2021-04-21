@@ -3,8 +3,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head">
-    <meta charset="UTF-8">
-    <title>Grami | Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title th:text="#{title}"></title>
     <link rel="icon" th:href="@{/images/icon.png}">
     <!-- Google Font -->
     <link th:href="@{https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap}"
@@ -34,24 +34,22 @@
                     <div class="ht-left">
                         <div class="mail-service">
                             <a class="user-icon" sec:authorize="isAnonymous()" th:href="@{/login}">
-                                <i class=" fa fa-user"></i><span>Login</span>
+                                <i class=" fa fa-user"></i><span th:text="#{login}"></span>
                             </a>
                             <a class="user-icon" sec:authorize="isAuthenticated()" th:href="@{/my-profile}">
-                                <i class=" fa fa-user"></i><span>My profile</span>
+                                <i class=" fa fa-user"></i><span th:text="#{myProfile}"></span>
                             </a>
                         </div>
                     </div>
 
                     <div class="ht-right">
-                        <a class="login-panel" sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" style="font-weight: 700;">ADMIN PORTAL</a>
-                        <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="login-panel" style="padding-right: 20px;"><i
-                                class="ti-power-off"></i>Logout</a>
+                        <a class="login-panel" sec:authorize="hasRole('ADMIN')" th:href="@{/admin}" style="font-weight: 700;" th:text="#{adminPage}"></a>
+                        <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="login-panel" style="padding-right: 20px;"><i class="ti-power-off"></i><span th:text="#{logout}"></span></a>
                         <div class="lan-selector">
-                            <select class="language_drop" name="countries" id="countries" style="width: 300px;">
-                                <option value="yt" data-image="/images/flag-english.jpg" data-imagecss="flag yt"
-                                    data-title="English">English</option>
-                                <option value="yu" data-image="/images/flag-serbian.jpg" data-imagecss="flag yu"
-                                    data-title="Serbian">Serbian</option>
+                            <input type="hidden" id="jezik" th:value="${jezik}">
+                            <select class="language_drop" name="countries" id="locales" style="width: 300px;">
+                                <option value="en" data-image="/images/flag-english.jpg" th:text="#{language.en}" th:selected="${(jezik == 'en') ? true : false}"></option>
+                                <option value="sr" data-image="/images/flag-serbian.jpg" th:text="#{language.sr}" th:selected="${(jezik == 'sr') ? true : false}"></option>
                             </select>
                         </div>
                         <div class="top-social">
@@ -75,9 +73,9 @@
                         <div class="col-lg-7 col-md-7">
                             <form th:action="@{/shop}" method="get">
                             <div class="advanced-search">
-                                <button type="button" class="category-btn">All Categories</button>
+                                <button type="button" class="category-btn" th:text="#{allCategories}"></button>
                                 <div class="input-group">
-                                    <input type="text" placeholder="Search for vinyls..." th:name="search">
+                                    <input type="text" th:placeholder="#{searchVinyls}" th:name="search">
                                     <button type="submit" style="padding: 12px 16px 35px;">
                                         <i class="ti-search"></i>
                                     </button>
@@ -110,12 +108,12 @@
                                         </table>
                                     </div>
                                     <div class="select-total">
-                                        <span>total:</span>
+                                        <span th:text="#{cartTotal}"></span>
                                         <h5 th:text="${#numbers.formatDecimal(shoppingCartTotal, 0, 2) + '€'}"></h5>
                                     </div>
                                     <div class="select-button">
-                                        <a th:href="@{/cart}" class="primary-btn view-card">VIEW CART</a>
-                                        <a th:href="@{/checkout}" class="primary-btn checkout-btn">CHECK OUT</a>
+                                        <a th:href="@{/cart}" class="primary-btn view-card" th:text="#{viewCart}"></a>
+                                        <a th:href="@{/checkout}" class="primary-btn checkout-btn" th:text="#{checkout}"></a>
                                     </div>
                                 </div>
                                 </li>
@@ -131,11 +129,11 @@
                 <div class="container">
                     <nav class="nav-menu mobile-menu">
                         <ul>
-                            <li th:classappend="${#request.requestURI == '/' ? 'active':''}"><a th:href="@{/}">Home</a></li>
-                            <li th:classappend="${#request.requestURI == '/shop' ? 'active':''}"><a th:href="@{/shop}">Shop</a></li>
-                            <li th:classappend="${#request.requestURI == '/about-us' ? 'active':''}"><a th:href="@{/about-us}">About Us</a></li>
-                            <li th:classappend="${#request.requestURI == '/contact-faq' ? 'active':''}"><a th:href="@{/contact-faq}">Contact & FAQ</a></li>
-                            <li th:classappend="${#request.requestURI == '/cart' ? 'active':''}"><a th:href="@{/cart}"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li th:classappend="${#request.requestURI == '/' ? 'active':''}"><a th:href="@{/}" th:text="#{nav.home}"></a></li>
+                            <li th:classappend="${#request.requestURI == '/shop' ? 'active':''}"><a th:href="@{/shop}" th:text="#{nav.shop}"></a></li>
+                            <li th:classappend="${#request.requestURI == '/about-us' ? 'active':''}"><a th:href="@{/about-us}" th:text="#{nav.about-us}"></a></li>
+                            <li th:classappend="${#request.requestURI == '/contact-faq' ? 'active':''}"><a th:href="@{/contact-faq}" th:text="#{nav.contact}"></a></li>
+                            <li th:classappend="${#request.requestURI == '/cart' ? 'active':''}"><a th:href="@{/cart}"><i class="fa fa-shopping-cart"></i><span style="padding-left: 5px" th:utext="#{nav.cart}"></span></a></li>
                         </ul>
                     </nav>
                     <div id="mobile-menu-wrap"></div>
@@ -165,19 +163,19 @@
                     </div>
                     <div class="col-lg-3 offset-lg-1">
                         <div class="footer-widget">
-                            <h5>Information</h5>
+                            <h5 th:text="#{foot.info}"></h5>
                             <ul>
-                                <li><a th:href="@{/about-us}">About Us</a></li>
-                                <li><a th:href="@{/contact-faq}">Contact</a></li>
+                                <li><a th:href="@{/about-us}" th:text="#{nav.about-us}"></a></li>
+                                <li><a th:href="@{/contact-faq}" th:text="#{nav.contact}"></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="footer-widget">
-                            <h5>My Account</h5>
+                            <h5 th:text="#{myProfile}"></h5>
                             <ul>
-                                <li><a th:href="@{/user}">My Account</a></li>
-                                <li><a th:href="@{/checkout}">Checkout</a></li>
+                                <li><a th:href="@{/user}" th:text="#{myProfile}"></a></li>
+                                <li><a th:href="@{/checkout}" th:text="#{checkout}"></a></li>
                             </ul>
                         </div>
                     </div>

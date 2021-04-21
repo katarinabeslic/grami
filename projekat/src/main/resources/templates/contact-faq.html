@@ -15,89 +15,56 @@
 						<div class="accordion" id="accordionExample">
 							<div class="card">
 								<div class="card-heading">
-									<a class="active" data-toggle="collapse" data-target="#collapseOne">
-										When should I replace my needle/stylus?
+									<a class="active" data-toggle="collapse" data-target="#collapseOne" th:text="#{contact.q1}">
 									</a>
 								</div>
 								<div id="collapseOne" class="collapse show" data-parent="#accordionExample">
 									<div class="card-body">
-										<p>There's a lot of active discussion and opinions on this topic, but the short
-											answer is, it depends. Asking how long a record stylus will last is much
-											like asking how long a set of strings will last on a guitar. There are many
-											factors that influence the life of a stylus, from the condition of your
-											records to the quality and material of the stylus, and much more. Either
-											way, a worn stylus will damage records, so you definitely want to maintain
-											it well and replace it regularly.</p>
+										<p th:text="#{contact.a1}"></p>
 									</div>
 								</div>
 							</div>
 							<div class="card">
 								<div class="card-heading">
-									<a data-toggle="collapse" data-target="#collapseTwo">
-										What is a turntable pre-amp and why do I need one?
+									<a data-toggle="collapse" data-target="#collapseTwo" th:text="#{contact.q2}">
 									</a>
 								</div>
 								<div id="collapseTwo" class="collapse" data-parent="#accordionExample">
 									<div class="card-body">
-										<p>Records are recorded with the bass frequencies reduced, and the high
-											frequencies boosted to keep groove dimensions small. A phono pre-amp boosts
-											bass frequencies and reduces high frequencies in an attempt to restore - as
-											close as possible - the frequency response of the master recording.</p>
+										<p th:text="#{contact.a2}"></p>
 									</div>
 								</div>
 							</div>
 							<div class="card">
 								<div class="card-heading">
-									<a data-toggle="collapse" data-target="#collapseThree">
-										How can dust affect records?
+									<a data-toggle="collapse" data-target="#collapseThree" th:text="#{contact.q3}">
 									</a>
 								</div>
 								<div id="collapseThree" class="collapse" data-parent="#accordionExample">
 									<div class="card-body">
-										<p>Needless to say, dust is a fact of life when it comes to vinyl records. A few
-											basic vinyl maintenance principles are usually enough to keep things under
-											control, however, left unchecked, dust can cause real damage to both your
-											stylus and records. Not only does it contribute to pops and crackles, but it
-											can also lead to the needle jumping, and even stylus and record wear.</p>
+										<p th:text="#{contact.a3}"></p>
 									</div>
 								</div>
 							</div>
 							<div class="card">
 								<div class="card-heading">
-									<a data-toggle="collapse" data-target="#collapseFour">
-										So what's all the fuss about 180g?
+									<a data-toggle="collapse" data-target="#collapseFour" th:text="#{contact.q4}">
 									</a>
 								</div>
 								<div id="collapseFour" class="collapse" data-parent="#accordionExample">
 									<div class="card-body">
-										<p>The benefit of thicker weight vinyl are mostly twofold: 1) They're more
-											satisfying to handle - more substantial, and 2) They're more resilient to
-											damage over time, including breakage and warping. In addition, many argue
-											heavier grade vinyl provides a more stable platform for your stylus and
-											cantilever whilst also better isolating the stylus from unwanted vibration.
-										</p>
+										<p th:text="#{contact.a4}"></p>
 									</div>
 								</div>
 							</div>
 							<div class="card">
 								<div class="card-heading">
-									<a data-toggle="collapse" data-target="#collapseFive">
-										Are vinyl records better when sourced from the original master tapes?
+									<a data-toggle="collapse" data-target="#collapseFive" th:text="#{contact.q5}">
 									</a>
 								</div>
 								<div id="collapseFive" class="collapse" data-parent="#accordionExample">
 									<div class="card-body">
-										<p>This is a BIG question. But in essence, it's the mastering process and the
-											quality of source material that matters most. The deficiencies attributed to
-											digital may have had some relevance in the early days, but not now. Almost
-											everything these days is recorded and mixed digitally, and so long as
-											digital files are handled with care, there is no reason why digital source
-											files pressed to vinyl can't shine through. There is, however, a lot of
-											valid criticism in vinyl records cut from heavily compressed digital
-											masters, which just sound diminished on vinyl rather than open, dynamic and
-											loud. Our conversations with well-known industry mastering engineers appear
-											to back this theory up.
-										</p>
+										<p th:text="#{contact.a5}"></p>
 									</div>
 								</div>
 							</div>
@@ -130,7 +97,7 @@
 			<div class="row">
 				<div class="col-lg-5">
 					<div class="contact-title">
-						<h4>Contacts Us</h4>
+						<h4 th:text="#{contact.us}"></h4>
 					</div>
 					<div class="contact-widget">
 						<div class="cw-item">
@@ -138,8 +105,8 @@
 								<i class="ti-location-pin"></i>
 							</div>
 							<div class="ci-text">
-								<span>Address:</span>
-								<p>Jove Ilica 154, Beograd 11000</p>
+								<span th:text="#{contact.address}"></span>
+								<p>Jove Ilića 154, Beograd 11000</p>
 							</div>
 						</div>
 						<div class="cw-item">
@@ -147,7 +114,7 @@
 								<i class="ti-mobile"></i>
 							</div>
 							<div class="ci-text">
-								<span>Phone:</span>
+								<span th:text="#{contact.phoneNumber}"></span>
 								<p>+381113950800</p>
 							</div>
 						</div>
@@ -156,7 +123,7 @@
 								<i class="ti-world"></i>
 							</div>
 							<div class="ci-text">
-								<span>Website:</span>
+								<span th:text="#{contact.website}"></span>
 								<p>http://www.fon.bg.ac.rs/</p>
 							</div>
 						</div>
@@ -165,18 +132,18 @@
 				<div class="col-lg-6 offset-lg-1">
 					<div class="contact-form">
 						<div class="leave-comment">
-							<h4>Leave A Comment Or A Question</h4>
+							<h4 th:text="#{contact.leaveComment}"></h4>
 							<form action="#" class="comment-form">
 								<div class="row">
 									<div class="col-lg-6">
-										<input type="text" placeholder="Your name">
+										<input type="text" th:placeholder="#{contact.name}">
 									</div>
 									<div class="col-lg-6">
-										<input type="text" placeholder="Your email">
+										<input type="text" th:placeholder="#{contact.email}">
 									</div>
 									<div class="col-lg-12">
-										<textarea placeholder="Your message"></textarea>
-										<button type="submit" class="site-btn">Send message</button>
+										<textarea th:placeholder="#{contact.message}"></textarea>
+										<button type="submit" class="site-btn" th:text="#{contact.send}"></button>
 									</div>
 								</div>
 							</form>

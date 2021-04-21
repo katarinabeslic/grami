@@ -25,33 +25,32 @@
 							</div>
 						</div>
 						<div class="col-lg-7">
-							<label for="name">Vinyl Name</label> <input type="text" th:value="${vinyl.vinylName}"
-								id="name">
+							<label for="name" th:text="#{admin.vinyl.name}"></label> <input type="text" th:value="${vinyl.vinylName}" id="name">
 							<div id="vinyl-name-alert" class="alert-class"></div>
-							<label for="name">Artist</label>
+							<label for="name" th:text="#{admin.artist.name}"></label>
 							<input type="text" id="artistName" name="artistName" th:value="${vinyl.artist.stageName}">
-							<input type="button" value="Find" onclick="findOrCreateArtist()">
+							<input type="button" th:value="#{admin.artist.findOrCreate}" onclick="findOrCreateArtist()">
 							<div id="artist-response"></div>
-							<label for="price">Price (€)</label>
+							<label for="price" th:text="#{admin.vinyl.price}"></label>
 							<input type="number" id="price" step=".01" th:value="${vinyl.price}">
 							<div id="price-alert" class="alert-class"></div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-10">
-							<label for="description">Description</label>
+							<label for="description" th:text="#{admin.vinyl.description}"></label>
 							<textarea id="description" th:inline="text">[[${vinyl.description}]]</textarea>
 							<div id="description-alert" class="alert-class"></div>
 						</div>
 						<div class="col-lg-5 admin-img">
 							<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
-								<label>Image</label>
+								<label th:text="#{admin.vinyl.image}"></label>
 								<input id="imgUrl" type="file" name="file" accept="image/png, image/jpeg">
 							</form>
 							<div id="image-alert" class="alert-class"></div>
 						</div>
 						<div class="col-lg-5">
-							<label>Stock</label>
+							<label th:text="#{admin.vinyl.stock}"></label>
 							<div>
 								<input id="stock" type="number" th:value="${vinyl.stock}">
 							</div>
@@ -66,7 +65,7 @@
 							<input class="format-chosen" readonly type="text" th:value="${vinyl.format.name}">
 						</div>
 						<div class="col-lg-5">
-							<label>Select A Different One</label>
+							<label th:text="#{admin.vinyl.edit.selectDifferent}"></label>
 							<div class="select-format">
 								<select id="selected-format">
 									<option th:each="f: ${formats}" th:value="${f.id}" th:text="${f.name}"></option>
@@ -77,18 +76,16 @@
 					<hr>
 					<div class="row">
 						<div class="col-lg-8">
-							<label>Record Label</label>
-							<input class="rl-chosen" readonly type="text"
-								th:value="${vinyl.recordLabel.name + ', ' + vinyl.recordLabel.year + '.'}">
+							<label th:text="#{admin.vinyl.edit.rl}"></label>
+							<input class="rl-chosen" readonly type="text" th:value="${vinyl.recordLabel.name + ', ' + vinyl.recordLabel.year + '.'}">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-lg-8">
-							<label>Select A Different One</label>
+							<label th:text="#{admin.vinyl.edit.changeRL}"></label>
 							<div class="select-recordlbl">
 								<select class="recordlbl" id="rl-select">
-									<option th:each="r: ${recordLabels}" th:value="${r.id}"
-										th:text="${r.name +', '+ r.year+'.'}"></option>
+									<option th:each="r: ${recordLabels}" th:value="${r.id}" th:text="${r.name +', '+ r.year+'.'}"></option>
 								</select>
 							</div>
 						</div>
@@ -96,16 +93,16 @@
 					<br>
 					<div class="row">
 						<div class="col-lg-10">
-							<label>Or Create New Record Label</label>
+							<label th:text="#{admin.vinyl.edit.createRL}"></label>
 						</div>
 						<div class="col-lg-5">
-							<input type="text" placeholder="Record Label Name" id="rl-name">
+							<input type="text" th:placeholder="#{admin.rl.name}" id="rl-name">
 						</div>
 						<div class="col-lg-2">
-							<input type="text" placeholder="Year" id="rl-year">
+							<input type="text" th:placeholder="#{admin.rl.year}" id="rl-year">
 						</div>
 						<div class="col-lg-2">
-							<input type="button" onclick="createRecordLabel()" value="Create">
+							<input type="button" onclick="createRecordLabel()" th:value="#{admin.rl.createBtn}">
 						</div>
 						<div class="col-lg-10" id="rl-response"></div>
 					</div>
@@ -113,18 +110,18 @@
 					<hr>
 					<div class="row">
 						<div class="col-lg-10">
-							<label>Create New Genre</label>
+							<label th:text="#{admin.vinyl.edit.createGenre}"></label>
 						</div>
 						<div class="col-lg-5">
-							<input type="text" placeholder="New Genre" id="genreName">
+							<input type="text" th:placeholder="#{admin.genre.name}" id="genreName">
 						</div>
 						<div class="col-lg-3">
-							<input type="button" id="btn-prob" onclick="createNewGenre()" value="Create">
+							<input type="button" id="btn-prob" onclick="createNewGenre()" th:value="#{admin.genre.createBtn}">
 						</div>
 						<div class="col-lg-8" id="genre-response">
 						</div>
 						<div class="col-lg-10">
-							<label>Genres</label>
+							<label th:text="#{admin.vinyl.tab4}"></label>
 						</div>
 						<div class="col-lg-7">
 							<div class="select-recordlbl genre_list">
@@ -135,16 +132,14 @@
 							</div>
 						</div>
 						<div class="col-lg-2">
-							<input type="button" onclick="addToListOfGenres()" value="Add">
+							<input type="button" onclick="addToListOfGenres()" th:value="#{admin.genre.add}">
 						</div>
 					</div>
 					<br>
 					<div class="row">
 						<div class="col-lg-8">
-							<label style="padding-top: 20px;">Genre(s)</label>
-							<input type="button"
-								style="width: fit-content; float: right; padding-left: 40px; padding-right: 40px;"
-								class="reset-genres" value="Reset Genre(s)">
+							<label style="padding-top: 20px;" th:text="#{admin.vinyl.tab4}"></label>
+							<input type="button" style="width: fit-content; float: right; padding-left: 40px; padding-right: 40px;" class="reset-genres" th:value="#{admin.genre.reset}">
 						</div>
 						<div class="col-lg-8">
 							<div class="filter-widget">
@@ -162,33 +157,31 @@
 				<hr>
 				<div class="row">
 					<div class="col-lg-12">
-						<label style="padding-top: 20px;">Add New Song</label>
+						<label style="padding-top: 20px;" th:text="#{admin.addSong}"></label>
 					</div>
 					<div class="col-lg-6">
-						<input type="text" placeholder="Song Name" id="songName" name="songName">
+						<input type="text" th:placeholder="#{admin.songName}" id="songName" name="songName">
 					</div>
 					<div class="col-lg-2">
-						<input type="text" placeholder="Duration (0:00)" id="songDuration" name="songDuration">
+						<input type="text" th:placeholder="#{admin.songDuration}" id="songDuration" name="songDuration">
 					</div>
 					<div class="col-lg-3">
-						<input type="button" class="add-song" id="addSong" onclick="songToTable()" value="Add">
+						<input type="button" class="add-song" id="addSong" onclick="songToTable()" th:value="#{admin.addToTable}">
 					</div>
 					<div class="col-lg-8" id="song-response"></div>
 					<div class="col-lg-12">
 						<div class="specification-table" id="songTable">
 							<table>
 								<thead>
-									<th>Song name</th>
-									<th>Duration</th>
-									<th>Delete</th>
+									<th th:text="#{admin.songTable.name}"></th>
+									<th th:text="#{admin.songTable.duration}"></th>
+									<th style="width: 150px"><i class="fa fa-trash" style="font-size: 20px"></i></th>
 								</thead>
 								<tbody id="songTableData">
 									<tr data-th-each="song: ${vinyl.songs}">
 										<td contenteditable="true" class="songName" th:text="${song.songName}"></td>
 										<td contenteditable="true" class="songDuration" th:text="${song.duration}"></td>
-										<td><i class="fa fa-trash-o" onclick="deleteSong(this)"
-												style="font-size:26px" />
-										</td>
+										<td><i class="fa fa-trash-o" onclick="deleteSong(this)" style="font-size:26px" /></td>
 										<td style="visibility: hidden;" id="songId" th:text="${song.id}"></td>
 									</tr>
 								</tbody>
@@ -200,13 +193,11 @@
 				<div class="row">
 					<div class="col-lg-1"></div>
 					<div class="col-lg-5">
-						<input type="button" class="new-vinyl-save" id="update-vinyl"
-							th:href="@{/admin/update(id=${vinyl.id})}" value="Save All Changes"
-							onclick="confirmDialogSaveChanges('Are you sure you want to save the changes?')">
+						<input type="button" class="new-vinyl-save" id="update-vinyl" th:href="@{/admin/update(id=${vinyl.id})}"
+							   th:value="#{admin.vinyl.edit.saveChanges}" onclick="confirmDialogSaveChanges('Are you sure you want to save the changes?')">
 					</div>
 					<div class="col-lg-5">
-						<input type="button" class="new-vinyl-save" value="Cancel"
-							onclick="confirmDialogCancel('Are you sure you want to cancel?')">
+						<input type="button" class="new-vinyl-save" th:value="#{admin.vinyl.cancel}" onclick="confirmDialogCancel('Are you sure you want to cancel?')">
 					</div>
 					<div class="col-lg-1"></div>
 					<div id="vinyl-response" class="col-lg-10">
@@ -219,5 +210,4 @@
 
 	<div th:replace="admin/help/fragments :: scripts"></div>
 </body>
-
 </html>

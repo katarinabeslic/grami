@@ -234,12 +234,13 @@
 	proQty.on('click', '.qtybtn', function () {
         let $button = $(this);
         let oldValue = $button.parent().find('input').val();
+        let newVal = 0;
 		if ($button.hasClass('inc')) {
-            let newVal = parseFloat(oldValue) + 1;
+            newVal = parseFloat(oldValue) + 1;
 		} else {
 			// Don't allow decrementing below zero
 			if (oldValue > 1) {
-                let newVal = parseFloat(oldValue) - 1;
+                newVal = parseFloat(oldValue) - 1;
 			} else {
 				newVal = 1;
 			}

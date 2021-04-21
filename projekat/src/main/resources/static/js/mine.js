@@ -1,3 +1,15 @@
+let href = window.location.pathname;
+if (href == '/') {
+
+}
+
+$('#locales').change(function () {
+    let selectedOption = $('#locales').val();
+    if (selectedOption != '') {
+        window.location.replace('?lang=' + selectedOption);
+    }
+});
+
 $('#selected-format').on('change', function () {
     let selectedFormat = $('#selected-format').find(':selected').html();
     $('.format-chosen').val(selectedFormat);

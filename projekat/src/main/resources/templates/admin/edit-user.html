@@ -12,34 +12,35 @@
                     <form th:action="@{/admin/edit-user}" th:object="${user}" method="post">
                         <input id="user-id" type="hidden" th:name="id" th:value="*{id}">
                         <div class="group-input">
-                            <label>First name</label>
+                            <label th:text="#{admin.users.firstName}"></label>
                             <input id="first-name" type="text" th:field="*{firstName}" readonly>
                         </div>
                         <div class="group-input">
-                            <label>Last name</label>
+                            <label th:text="#{admin.users.lastName}"></label>
                             <input id="last-name" type="text" th:field="*{lastName}" readonly>
                         </div>
                         <div class="group-input">
-                            <label>Email address</label>
+                            <label th:text="#{admin.users.email}"></label>
                             <input id="email" type="email" th:field="*{email}" readonly>
                         </div>
                         <div class="group-input">
-                            <label>Phone number</label>
+                            <label th:text="#{admin.users.phoneNumber}"></label>
                             <input id="phone" type="text" th:field="*{phoneNumber}" readonly>
                         </div>
                         <div class="group-input">
-                            <label>Username</label>
+                            <label th:text="#{register.username}"></label>
                             <input id="username" type="text" th:field="*{username}" readonly>
                         </div>
                         <div class="group-input">
-                            <label>Role</label>
+                            <label th:text="#{admin.editUser.role}"></label>
                             <select class="form-control" id="role-add">
                                 <option th:each="role: ${roles}" th:value="${role.name}" th:text="${role.name}">
                                 </option>
                             </select>
                         </div>
                         <div class="group-input" id="role-part">
-                            <label>Current Role(s)<span style="float: right">
+                            <label><span th:text="#{admin.editUser.currentRoles}"></span>
+                                <span style="float: right">
                                 <i class="fa fa-trash" aria-hidden="true" style="font-size: 20px; cursor: pointer;" onclick="removeRoles()"></i></span></label>
                             <ul id="current-roles" style="list-style-type: none">
                                 <li th:each="userRole : *{userRoles}" th:value="${userRole.role.name}">
@@ -51,7 +52,7 @@
                         </div>
                         <div class="user-edited-response"></div>
                         <div id="role-alert"></div>
-                        <button type="button" th:href="@{/admin/edit-user(id=${user.id})}" class="site-btn register-btn update-user-btn" style="margin-top: 20px">Update User Info
+                        <button type="button" th:href="@{/admin/edit-user(id=${user.id})}" class="site-btn register-btn update-user-btn" style="margin-top: 20px" th:text="#{admin.editUser.updateBtn}">
                         </button>
                     </form>
                 </div>

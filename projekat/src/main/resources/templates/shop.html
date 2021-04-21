@@ -12,11 +12,11 @@
 			<div class="container">
 				<div class="row" style="padding-top: 40px;">
 					<div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter" >
-						<p style="padding-bottom: 20px;"><span th:text="${totalItems}"></span> Product(s)</p>
+						<p style="padding-bottom: 20px;"><span th:text="${totalItems}"></span> <span th:text="#{shop.products}"></span></p>
 						<div class="filter-widget">
-							<h4 class="fw-title">Formats</h4>
+							<h4 class="fw-title" th:text="#{shop.formats}"></h4>
 							<ul class="filter-catagories">
-								<li><a class="the-format" th:href="@{/shop}">All Formats</a></li>
+								<li><a class="the-format" th:href="@{/shop}" th:text="#{shop.allFormats}"></a></li>
 								<div th:each="format: ${formats}">
 									<li><a class="the-format" th:value="${format.name}"
 											th:href="@{/shop/format(id=${format.id})}" th:utext="${format.name}"></a>
@@ -26,7 +26,7 @@
 						</div>
 						<input id="format-selected" type="hidden" name="format" th:value="${filters.format}">
 						<div class="filter-widget">
-							<h4 class="fw-title">Genres</h4>
+							<h4 class="fw-title" th:text="#{shop.genres}"></h4>
 							<div class="fw-brand-check">
 								<div class="bc-item" th:each="genre : ${genres}">
 									<label>
@@ -40,7 +40,7 @@
 							</div>
 						</div>
 						<div class="filter-widget">
-							<button type="submit" form="filter-form" class="site-btn">Filter</button>
+							<button type="submit" form="filter-form" class="site-btn" th:text="#{shop.filter}"></button>
 						</div>
 					</div>
 					<div class="col-lg-9 order-1 order-lg-2">
@@ -58,18 +58,18 @@
 											</th:block>
 										</div>
 										<select class="sorting" id="opt-sel">
-											<option class="option-sort" value="newest">Newest</option>
-											<option class="option-sort" value="price-asc">Price Low-To-High </option>
-											<option class="option-sort" value="price-desc">Price High-To-Low </option>
-											<option class="option-sort" value="alph-asc">A - Z Order</option>
-											<option class="option-sort" value="alph-desc">Z - A Order</option>
+											<option class="option-sort" value="newest" th:text="#{shop.recommended}"></option>
+											<option class="option-sort" value="price-asc" th:text="#{shop.priceAsc}"></option>
+											<option class="option-sort" value="price-desc" th:text="#{shop.priceDesc}"></option>
+											<option class="option-sort" value="alph-asc" th:text="#{shop.alphAsc}"></option>
+											<option class="option-sort" value="alph-desc" th:text="#{shop.alphDesc}"></option>
 										</select>
 										<input id="input-sort" type="hidden" name="sort" th:value="${filters.sort}">
 										<input id="itemsPerPage" type="hidden" name="itemsPerPage" th:value="${filters.itemsPerPage}">
 										<select class="p-show" id="opt-ipp">
-											<option value="9" >Show: 9</option>
-											<option value="18">Show: 18</option>
-											<option value="30">Show: 30</option>
+											<option value="9" th:text="#{shop.show9}"></option>
+											<option value="18" th:text="#{shop.show18}"></option>
+											<option value="30" th:text="#{shop.show30}"></option>
 										</select>
 										<script>
 											let selectedValSort = document.getElementById("input-sort").value;
@@ -86,8 +86,7 @@
 								<div class="col-lg-2"></div>
 								<div class="col-lg-4 col-md-4">
 									<div class="advanced-search input-group">
-										<input type="text" placeholder="Search for vinyls..." th:name="search"
-											th:value="${filters.search}">
+										<input type="text" th:placeholder="#{searchVinyls}" th:name="search"  th:value="${filters.search}">
 										<button type="submit"><i class="ti-search"></i></button>
 									</div>
 								</div>
@@ -105,10 +104,10 @@
 						</div>
 						<div class="product-list" id="replace-div">
 							<div th:if="${notEnoughStock}">
-								<div class="alert alert-danger">Oops, looks like that vinyl's out of stock!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+								<div class="alert alert-danger"><span th:text="#{shop.notEnoughStock}"></span><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
 							</div>
 							<div th:if="${cartEmpty}">
-								<div class="alert alert-danger">Your cart is empty!<a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+								<div class="alert alert-danger"><span th:text="#{shop.cartEmpty}"></span><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-sm-6" th:each="vinyl: ${vinyls}">
@@ -117,9 +116,8 @@
 										<div class="pi-pic">
 											<img th:src="${vinyl.imgUrl}" alt="">
 											<ul>
-												<li class="quick-view"><a th:href="@{/shop/vinyl(id=${vinyl.id})}">View Vinyl</a></li>
-												<li class="w-icon active"><a th:href="@{/shop/add-to-cart(id=${vinyl.id})}"><i
-															class="fa fa-shopping-cart"></i></a></li>
+												<li class="quick-view"><a th:href="@{/shop/vinyl(id=${vinyl.id})}" th:text="#{shop.viewVinyl}"></a></li>
+												<li class="w-icon active"><a th:href="@{/shop/add-to-cart(id=${vinyl.id})}"><i class="fa fa-shopping-cart"></i></a></li>
 											</ul>
 										</div>
 										<div class="pi-text">

@@ -12,17 +12,17 @@
                 <div class="specification-table" id="songTable">
                     <table>
                         <thead>
-                            <th>User ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
+                            <th th:text="#{admin.users.id}"></th>
+                            <th th:text="#{admin.users.firstName}"></th>
+                            <th th:text="#{admin.users.lastName}"></th>
+                            <th th:text="#{admin.users.email}"></th>
+                            <th th:text="#{admin.users.phoneNumber}"></th>
+                            <th style="width: 150px"><i class="fa fa-edit" style="font-size: 20px"></i></th>
+                            <th style="width: 150px"><i class="fa fa-trash" style="font-size: 20px"></i></th>
                         </thead>
                         <tbody th:each="user : ${users}">
                         <tr>
-                            <td th:text="|USR-${user.id}|"></td>
+                            <td th:text="|#{admin.users.cust}${user.id}|"></td>
                             <td th:text="${user.firstName}"></td>
                             <td th:text="${user.lastName}"></td>
                             <td th:text="${user.email}"></td>

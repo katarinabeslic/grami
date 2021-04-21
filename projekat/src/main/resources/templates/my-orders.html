@@ -23,15 +23,14 @@
                             <img src="/images/user.png" width="100" height="100" alt="User"
                                  class="rounded-circle mb-3">
                             <h5 class="bold mb-0" th:text="${#strings.capitalize(user.username)}"></h5>
-                            <small class="text-secondary"
-                                   th:text="'Last seen '+${#dates.format(#dates.createNow(), 'MMM dd, yyyy')}"></small>
+                            <small class="text-secondary" th:text="'Last online '+${#dates.format(#dates.createNow(), 'dd.MM.yyyy')}"></small>
                         </div>
                         <div class="list-group list-group-flush">
-                            <a th:href="@{/my-profile}" class="list-group-item list-group-item-action"><i class="ti-user mr-3"></i>Profile</a>
-                            <a th:href="@{/my-address}" class="list-group-item list-group-item-action"><i class="ti-home mr-3"></i>Address</a>
-                            <a th:href="@{/payment-method}" class="list-group-item list-group-item-action"><i class="ti-credit-card mr-3"></i>Payment Information</a>
-                            <a th:href="@{/my-orders}" class="list-group-item list-group-item-action active"><i class="ti-shopping-cart mr-3"></i>My Orders</a>
-                            <a th:href="@{/logout}" class="list-group-item list-group-item-action"><i class="ti-power-off mr-3"></i>Logout</a>
+                            <a th:href="@{/my-profile}" class="list-group-item list-group-item-action"><i class="ti-user mr-3"></i><span th:utext="#{myProfile.profile}"></span></a>
+                            <a th:href="@{/my-address}" class="list-group-item list-group-item-action"><i class="ti-home mr-3"></i><span th:utext="#{myProfile.address}"></span></a>
+                            <a th:href="@{/payment-method}" class="list-group-item list-group-item-action"><i class="ti-credit-card mr-3"></i><span th:utext="#{myProfile.payment}"></span></a>
+                            <a th:href="@{/my-orders}" class="list-group-item list-group-item-action active"><i class="ti-shopping-cart mr-3"></i><span th:utext="#{myProfile.orders}"></span></a>
+                            <a th:href="@{/logout}" class="list-group-item list-group-item-action"><i class="ti-power-off mr-3"></i><span th:utext="#{myProfile.logout}"></span></a>
                         </div>
                     </div>
                 </div>
@@ -40,15 +39,15 @@
                 <div th:if="${orders!=null and !orders.isEmpty()}" class="specification-table" style="padding-top: 0px">
                         <table>
                             <thead>
-                                <th>Order ID</th>
-                                <th>Date</th>
-                                <th>Total</th>
-                                <th>Status</th>
+                                <th th:text="#{myOrders.id}"></th>
+                                <th th:text="#{myOrders.date}"></th>
+                                <th th:text="#{myOrders.total}">Total</th>
+                                <th th:text="#{myOrders.status}"></th>
                             </thead>
                             <tbody th:each="order : ${orders}">
-                                <td scope="row"><a th:href="@{/order-detail(id=${order.id})}" style="color: #e7ab3c">ORD-<span
+                                <td scope="row"><a th:href="@{/order-detail(id=${order.id})}" style="color: #e7ab3c"><span th:text="#{myOrders.ord}"></span><span
                                         th:text="${order.id}"></span></a></td>
-                                <td th:text="${#dates.format(order.dateAndTime, 'dd-MMM-yyyy')}"></td>
+                                <td th:text="${#dates.format(order.dateAndTime, 'dd.MM.yyyy')}"></td>
                                 <td><span th:text="${order.totalPrice}"></span> €</td>
                                 <td><span th:classappend="${(order.orderStatus == 'Received' ? 'badge badge-secondary' : '') +
                                     (order.orderStatus == 'Confirmed' ? 'badge badge-info' : '') +
@@ -59,7 +58,7 @@
                         </table>
                     </div>
                     <div th:if="${orders==null or orders.isEmpty()}">
-                        <h3>Looks like haven't made any orders yet  ☹</h3>
+                        <h3 th:text="#{myOrders.empty}"></h3>
                     </div>
                 </div>
             </div>
