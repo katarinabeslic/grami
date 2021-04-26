@@ -175,4 +175,5 @@ public class UserController {
 		model.addAttribute("order", order);
 		return "order-detail";
 	}
+
 }

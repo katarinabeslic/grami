@@ -21,7 +21,7 @@ public class GenreServiceImpl implements GenreService {
 
 	@Override
 	public List<Genre> findAll() {
-		return genreRepository.findAll();
+		return genreRepository.findAllByOrderByName();
 	}
 
 	@Override

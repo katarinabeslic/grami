@@ -2,9 +2,9 @@ let listOfSongs = new Array;
 let listOfGenres = new Array;
 let listOfRoles = new Array;
 
-function validation_alert(element, message, alerttype) {
+function validation_alert(element, message, alertType) {
     element.append(
-        '<div id="alertdiv" class="alert ' + alerttype + '">' +
+        '<div id="alertdiv" class="alert ' + alertType + '">' +
         '<a class="close" data-dismiss="alert" aria-label="close" >×</a>' +
         '<span>' + message + '</span>' +
         '</div>');
@@ -14,37 +14,23 @@ function songToTable() {
     let songName = $("input[name = 'songName']").val();
     let songDuration = $("input[name = 'songDuration']").val();
     let songObj = { "songName": songName, "duration": songDuration };
-
     if (songName == '' || songDuration == '') {
         $('#alertdiv').remove();
-        validation_alert($('#song-response'), "Song name or duration can't be empty fields!", 'alert-danger');
+        let songNotEmpty = $('#song-not-empty').val();
+        validation_alert($('#song-response'), songNotEmpty, 'alert-danger');
         return;
     } else if (songDuration != '') {
         $('#alertdiv').remove();
         let regex = /^[0-9]{1}:[0-5]{1}[0-9]{1}$/;
         if (regex.test(songDuration) == false) {
-            validation_alert($('#song-response'), "Invalid format for song duration!", 'alert-danger');
+            let songDurationInvalid = $('#song-duration-invalid').val();
+            validation_alert($('#song-response'), songDurationInvalid, 'alert-danger');
             return;
         }
-    } else {
-        $('#alertdiv').remove();
-        for (let i=0; listOfSongs.length; i++) {
-            let song = listOfSongs[i];
-            console.log(song);
-            console.log(listOfSongs)
-            if (songObj == song) {
-                console.log("AHA")
-            }
-        }
-        validation_alert($('#song-response'), "The song was already added!", 'alert-danger');
-        return;
     }
-
-
     listOfSongs.push(songObj);
-
     $('#songTable tbody').append(`<tr> <td>${songName}</td> <td>${songDuration}</td> 
-					<td><i class="fa fa-trash-o" onclick="deleteSong(this)" style="font-size:26px"/></td> </tr>`);
+					<td><i class="fa fa-trash-o" onclick="deleteSong(this)" style="font-size:20px"/></td> </tr>`);
     $("input[name= 'songName']").val("");
     $("input[name= 'songDuration']").val("");
 }
@@ -53,25 +39,20 @@ function deleteSong(el) {
     let row = el.parentNode.parentNode;
     let tdSongName = row.getElementsByTagName("td")[0].innerHTML;
     let tdDuration = row.getElementsByTagName("td")[1].innerHTML;
-
     let songObj = {
         "songName": tdSongName,
         "duration": tdDuration
     };
-
     for (let i = listOfSongs.length; i >= 0; --i) {
         if (JSON.stringify(listOfSongs[i]) == JSON.stringify(songObj)) {
             listOfSongs.splice(i, 1);
         }
     }
-
     el.parentNode.parentNode.parentNode.removeChild(el.parentNode.parentNode);
 }
 
 function findOrCreateArtist() {
     let artistName = $('#artistName').val();
-    console.log(artistName);
-
     $.ajax({
         type: "POST",
         url: "/admin/find-create-artist",
@@ -80,14 +61,12 @@ function findOrCreateArtist() {
         },
         success: function (response) {
             if (response == "saved") {
-                validation_alert($('#artist-response'), "The artist was saved to the database!", 'alert-success');
+                let artistSaved = $('#artist-saved').val();
+                validation_alert($('#artist-response'), artistSaved, 'alert-success');
             } else {
-                validation_alert($('#artist-response'), "The artist already exists in the database! ", 'alert-success');
+                let artistExists = $('#artist-exists').val();
+                validation_alert($('#artist-response'), artistExists, 'alert-info');
             }
-        },
-        error: function (xhr, status, error) {
-            let err = eval("(" + xhr.responseText + ")");
-            console.log(err.Message);
         }
     });
 }
@@ -100,11 +79,13 @@ function createRecordLabel() {
     let regEx = /^(19|20)\d{2}$/;
 
     if (rlName == '' || rlYear == '') {
-        validation_alert($('#rl-response'), "Name and year both have to be filled!", 'alert-danger');
+        let rlEmpty = $('#rl-empty').val();
+        validation_alert($('#rl-response'), rlEmpty, 'alert-danger');
         return;
     } else if (regEx.test(rlYear) == false) {
         $('#alertdiv').remove();
-        validation_alert($('#rl-response'), "Year format not valid!", 'alert-danger');
+        let rlYearInvalid = $('#rl-year-invalid').val();
+        validation_alert($('#rl-response'), rlYearInvalid, 'alert-danger');
         return;
     } else {
         $('#alertdiv').remove();
@@ -114,19 +95,16 @@ function createRecordLabel() {
         "name": rlName,
         "year": rlYear
     };
-    console.log(rlObj);
-
     $.ajax({
         type: "POST",
         url: "/admin/create-record-label",
         contentType: 'application/json',
         data: JSON.stringify(rlObj),
         success: function (data) {
-            console.log(data);
             if (data != '') {
                 $('#alertdiv').remove();
-                validation_alert($('#rl-response'), "The record label was successfully saved to the database!", 'alert-success');
-                console.log(data[data.length - 1]);
+                let rlSaved = $('#rl-saved').val();
+                validation_alert($('#rl-response'), rlSaved, 'alert-success');
                 $('#rl-select').empty();
                 for (let i = 0; i < data.length; i++) {
                     let rl = data[i];
@@ -135,7 +113,8 @@ function createRecordLabel() {
                 $('#rl-name').val('');
                 $('#rl-year').val('');
             } else {
-                validation_alert($('#rl-response'), "The record label already exists in the database!", 'alert-warning');
+                let rlExists = $('#rl-exists').val();
+                validation_alert($('#rl-response'), rlExists, 'alert-warning');
             }
         }
     });
@@ -145,7 +124,8 @@ function createNewGenre() {
     let genreName = $('#genreName').val();
 
     if (genreName == '') {
-        validation_alert($('#genre-response'), "The genre name has to be filled!", 'alert-danger');
+        let genreEmpty = $('#genre-empty').val();
+        validation_alert($('#genre-response'), genreEmpty, 'alert-danger');
         return;
     } else {
         $('#alertdiv').remove();
@@ -154,13 +134,12 @@ function createNewGenre() {
     $.ajax({
         type: "POST",
         url: "/admin/create-genre",
-        data: {
-            "genreName": genreName
-        },
+        data: { "genreName": genreName },
         success: function (data) {
             if (data != '') {
                 $('#alertdiv').remove();
-                validation_alert($('#genre-response'), "The new genre was successfully saved to the database!", 'alert-success');
+                let genreCreated = $('#genre-created').val();
+                validation_alert($('#genre-response'), genreCreated, 'alert-success');
                 $('#genre-select').empty();
                 for (let i = 0; i < data.length; i++) {
                     let genre = data[i];
@@ -170,10 +149,6 @@ function createNewGenre() {
             } else {
                 validation_alert($('#genre-response'), "The genre already exists in the database!", 'alert-danger');
             }
-        },
-        error: function (xhr, status, error) {
-            let err = eval("(" + xhr.responseText + ")");
-            console.log(err.Message);
         }
     });
 }
@@ -190,7 +165,6 @@ function saveNewVinyl() {
     };
     let stageName = $('#artistName').val();
     let selectedRL = $('#rl-select').find(':selected');
-
 
     let rlResult = selectedRL.html().split(',');
     let year = rlResult[1].split('.');
@@ -221,9 +195,6 @@ function saveNewVinyl() {
     if (!valid) {
         return;
     }
-
-    console.log(vinylData);
-
     $.ajax({
         type: "POST",
         url: "/admin/save-vinyl",
@@ -235,14 +206,17 @@ function saveNewVinyl() {
         success: function (response) {
             if (response == "success") {
                 $('#alertdiv').remove();
-                validation_alert($('#vinyl-response'), "The vinyl was successfully saved to the database!", 'alert-success');
+                let vinylSaved = $('#vinyl-saved').val();
+                validation_alert($('#vinyl-response'), vinylSaved, 'alert-success');
                 clear_vinyl_form();
             } else if (response == "vinylExists") {
                 $('#alertdiv').remove();
-                validation_alert($('#vinyl-response'), "Oh no! The vinyl with that title and artist already exists :(", 'alert-danger');
+                let vinylExists = $('#vinyl-exists').val();
+                validation_alert($('#vinyl-response'), vinylExists, 'alert-danger');
             } else {
                 $('#alertdiv').remove();
-                validation_alert($('#vinyl-response'), "Oh no! The vinyl wasn't saved :(", 'alert-danger');
+                let vinylNotSaved = $('#vinyl-not-saved').val();
+                validation_alert($('#vinyl-response'), vinylNotSaved, 'alert-danger');
             }
         }
     });
@@ -260,24 +234,19 @@ function updateVinyl(href) {
     let format = $('.format-chosen').val();
     listOfGenres = JSON.parse(JSON.stringify(getListOfGenres()));
     listOfSongs = JSON.parse(JSON.stringify(getListOfSongs()));
-
     let id = "";
-
     for (let i = 0; i < href.length; i++) {
         if ($.isNumeric(href[i])) {
             id = id + href[i];
         }
     }
-
     let imgUrl = '';
     let form = $('#fileUploadForm')[0];
     let data = new FormData(form);
     if ($('#imgUrl').get(0).files.length === 0) {
         imgUrl = $('.existingImg img').attr('src');
     }
-
     let formatId = $('#selected-format').find(':selected').val();
-
     let editedVinylJSON = {
         'id': id,
         'vinylName': $('#name').val(),
@@ -440,41 +409,50 @@ $("#artistName").focusout(function () {
 
 function final_validation(name, description, price, stock, stageName, fileCheck, listOfSongs, listOfGenres) {
     let valid = true;
-    if (name == '') {
-        validation_alert($('#vinyl-name-alert'), "The vinyl name can't be empty!", 'alert-danger');
+    if (name === '') {
+        let vinylNameEmpty = $('#vinyl-name-empty').val();
+        validation_alert($('#vinyl-name-alert'), vinylNameEmpty, 'alert-danger');
         valid = false;
     }
-    if (description == '') {
-        validation_alert($('#description-alert'), "The description can't be empty!", 'alert-danger');
+    if (description === '') {
+        let descriptionEmpty = $('#description-empty').val();
+        validation_alert($('#description-alert'), descriptionEmpty, 'alert-danger');
         $('#description-alert').show();
         valid = false;
     }
     if (!fileCheck) {
-        validation_alert($('#image-alert'), "You have to select an image for the vinyl!", 'alert-danger');
+        let pictureEmpty = $('#picture-empty').val();
+        validation_alert($('#image-alert'), pictureEmpty, 'alert-danger');
         valid = false;
     }
-    if (price == '') {
-        validation_alert($('#price-alert'), "Price can't be empty!", 'alert-danger');
+    if (price === '') {
+        let priceEmpty = $('#price-empty').val();
+        validation_alert($('#price-alert'), priceEmpty, 'alert-danger');
         valid = false;
     }
     if (price != '' && !$.isNumeric($('#price').val())) {
-        validation_alert($('#price-alert'), "Price has to be a number!", 'alert-danger');
+        let priceNumber = $('#price-not-number').val();
+        validation_alert($('#price-alert'), priceNumber, 'alert-danger');
         valid = false;
     }
-    if (stock == '') {
-        validation_alert($('#quantity-alert'), "Stock can't be empty!", 'alert-danger');
+    if (stock === '') {
+        let stockEmpty = $('#stock-empty').val();
+        validation_alert($('#quantity-alert'), stockEmpty, 'alert-danger');
         valid = false;
     }
-    if (stageName == '') {
-        validation_alert($('#artist-response'), "Artist can't be empty!", 'alert-danger');
+    if (stageName === '') {
+        let artistEmpty = $('#artist-empty').val();
+        validation_alert($('#artist-response'), artistEmpty, 'alert-danger');
         valid = false;
     }
-    if (listOfSongs.length == 0) {
-        validation_alert($('#song-response'), "Tracklist can't be empty!", 'alert-danger');
+    if (listOfSongs.length === 0) {
+        let tracklistEmpty = $('#tracklist-empty').val();
+        validation_alert($('#song-response'), tracklistEmpty, 'alert-danger');
         valid = false;
     }
-    if (listOfGenres.length == 0) {
-        validation_alert($('#genre-contains'), "Vinyl has to have at least one genre!", 'alert-danger');
+    if (listOfGenres.length === 0) {
+        let genresEmpty = $('#genres-empty').val();
+        validation_alert($('#genre-contains'), genresEmpty, 'alert-danger');
         valid = false;
     }
     return valid;
@@ -485,16 +463,17 @@ function final_validation(name, description, price, stock, stageName, fileCheck,
 $('.deleteVinyl').on('click', function (event) {
     event.preventDefault();
     let href = $(this).attr('href');
-    console.log(href);
-    confirmDialogDelete('Are you sure you want to delete this vinyl?', href, 'http://localhost:8080/admin/catalogue');
+    let deleteVinyl = $('#delete-vinyl-question').val();
+    confirmDialogDelete(deleteVinyl, href, 'http://localhost:8080/admin/catalogue');
 });
 
 function confirmDialogCancel(message) {
+    let justChecking = $('#just-checking').val();
     $('<div id="confirm-dialog"></div>').appendTo('body')
         .html('<div><h5>' + message + '</h5></div>')
         .dialog({
             modal: true,
-            title: 'Just Checking:',
+            title: justChecking,
             zIndex: 10000,
             autoOpen: true,
             width: 'auto',
@@ -515,11 +494,12 @@ function confirmDialogCancel(message) {
 }
 
 function confirmDialogDelete(message, $href, addressToGoTo) {
+    let justChecking = $('#just-checking').val();
     $('<div id="confirm-dialog"></div>').appendTo('body')
         .html('<div><h5>' + message + '</h5></div>')
         .dialog({
             modal: true,
-            title: 'Just Checking:',
+            title: justChecking,
             zIndex: 10000,
             autoOpen: true,
             width: 'auto',
@@ -546,11 +526,12 @@ function confirmDialogDelete(message, $href, addressToGoTo) {
 }
 
 function confirmDialogSaveChanges(message) {
+    let justChecking = $('#just-checking').val();
     $('<div id="confirm-dialog"></div>').appendTo('body')
         .html('<div><h5>' + message + '</h5></div>')
         .dialog({
             modal: true,
-            title: 'Just Checking:',
+            title: justChecking,
             zIndex: 10000,
             autoOpen: true,
             width: 'auto',
@@ -584,51 +565,6 @@ $('#rl-select').on('change', function () {
     $('.rl-chosen').val(selectedRL);
 });
 
-$('#selected-format').on('change', function () {
-    let selectedFormat = $('#selected-format').find(':selected').html();
-    $('.format-chosen').val(selectedFormat);
-})
-
-$('.the-format').on('click', function (event) {
-    event.preventDefault();
-    let value = $(this).attr('value');
-    console.log(value);
-    $('#format-selected').val(value);
-    $('#filter-form').submit();
-});
-
-$('.sorting').on('change', function () {
-    let selected = $(this).val();
-    $('#input-sort').val(selected);
-    $('#filter-form').submit();
-});
-
-$('.p-show').change(
-    function () {
-        let selected = $(this).val();
-        $('#itemsPerPage').val(selected);
-        $('#filter-form').submit();
-    }
-);
-
-$(function () {
-    $('#light-pagination').pagination({
-        items: $('#totalItems').val(),
-        itemsOnPage: $('#itemsPerPage').val(),
-        currentPage: $('#page').val(),
-        cssStyle: 'light-theme',
-        useAnchors: false,
-        prevText: "<<",
-        nextText: ">>",
-        displayedPages: 1,
-        edges: 1,
-        onPageClick: function (pageNumber) {
-            $('#page').val(pageNumber)
-            $('#filter-form').submit()
-        }
-    });
-});
-
 $('.href-icon').css('cursor', 'pointer');
 
 $('.remove-order').click(
@@ -636,8 +572,8 @@ $('.remove-order').click(
         event.preventDefault();
         let $row = $(this).closest("td");
         let $href = $row.find("a").attr('href');
-        console.log($href);
-        confirmDialogDelete("Are you sure you want to remove the order?", $href, 'http://localhost:8080/admin/orders');
+        let deleteOrder = $('#remove-order').val();
+        confirmDialogDelete(deleteOrder, $href, 'http://localhost:8080/admin/orders');
     }
 );
 
@@ -661,11 +597,12 @@ function cancelOrderEditing() {
 }
 
 function confirmDialogDeleteUser(el, message, $href, addressToGoTo) {
+    let justChecking = $('#just-checking').val();
     $('<div id="confirm-dialog"></div>').appendTo('body')
         .html('<div><h5>' + message + '</h5></div>')
         .dialog({
             modal: true,
-            title: 'Just Checking:',
+            title: justChecking,
             zIndex: 10000,
             autoOpen: true,
             width: 'auto',
@@ -677,11 +614,13 @@ function confirmDialogDeleteUser(el, message, $href, addressToGoTo) {
                         url: $href,
                         success: function (data) {
                             if (data == "success") {
-                                validation_alert($('.user-delete-response'), "The selected user was successfully deleted!", "alert-success");
+                                let userDeleted = $('#user-deleted').val();
+                                validation_alert($('.user-delete-response'), userDeleted, "alert-success");
                                 el.parentNode.parentNode.parentNode.removeChild(el.parentNode.parentNode);
                             }
                             if (data == "fail") {
-                                validation_alert($('.user-delete-response'), "The selected user made orders in the Grami store so he can't be deleted!", "alert-danger");
+                                let userNotDeleted = $('#user-not-deleted').val();
+                                validation_alert($('.user-delete-response'), userNotDeleted, "alert-danger");
                             }
                         }
                     });
@@ -705,7 +644,8 @@ $('.remove-user').click(
         event.preventDefault();
         let $row = $(this).closest("td");
         let $href = $row.find("a").attr('href');
-        confirmDialogDeleteUser(this, "Are you sure you want to remove the user?", $href, 'http://localhost:8080/admin/users');
+        let deleteUser = $('#user-question').val();
+        confirmDialogDeleteUser(this, deleteUser, $href, 'http://localhost:8080/admin/users');
     }
 );
 
@@ -719,7 +659,6 @@ function getListOfRoles() {
 }
 
 function removeRoles() {
-    console.log("ahaaa");
     $('#current-roles').empty();
 }
 
@@ -731,7 +670,8 @@ $('#role-add').change(
         if (getListOfRoles().length < 2) {
             let selectedRole = $('#role-add').find(':selected').val();
             if (getListOfRoles().some(e => e.name === selectedRole)) {
-                validation_alert($('#role-alert'), "The user already has the selected role!", 'alert-danger');
+                let userHasRole = $('#user-has-role').val();
+                validation_alert($('#role-alert'), userHasRole, 'alert-danger');
                 return;
             } else {
                 let roleObj = {"name": selectedRole};
@@ -743,10 +683,10 @@ $('#role-add').change(
                     classToAppend = 'badge-danger';
                 }
                 $("#role-part ul").append('<li style="padding-top: 10px"><span style="padding: 10px" class="badge ' + classToAppend + '">' + selectedRole + '</span></li>');
-                console.log(listOfRoles)
             }
         } else {
-            validation_alert($('#role-alert'), "There's no more roles to add!", 'alert-danger');
+            let noMoreRoles = $('#no-more-roles').val();
+            validation_alert($('#role-alert'), noMoreRoles, 'alert-danger');
             return;
         }
     }
@@ -769,9 +709,11 @@ $('.update-user-btn').click(
                     $('#alertdiv').remove();
                 }
                 if (data == "success") {
-                    validation_alert($('.user-edited-response'), "The user was successfully updated!", "alert-success");
+                    let userUpdated = $('#user-updated').val();
+                    validation_alert($('.user-edited-response'), userUpdated, "alert-success");
                 } else {
-                    validation_alert($('.user-edited-response'), "No changes were made!", "alert-info");
+                    let userNotUpdated = $('#user-not-updated').val();
+                    validation_alert($('.user-edited-response'), userNotUpdated, "alert-info");
                 }
             }
         });

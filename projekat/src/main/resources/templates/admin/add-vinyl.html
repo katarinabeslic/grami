@@ -14,19 +14,24 @@
             <div class="row">
                 <div class="col-lg-12">
                     <label for="name" th:text="#{admin.vinyl.name}"></label><input type="text" id="name">
+                    <input type="hidden" th:value="#{admin.vinylNameEmpty}" id="vinyl-name-empty">
                     <div id="vinyl-name-alert" class="alert-class"></div>
                 </div>
                 <div class="col-lg-12">
                     <label for="description" th:text="#{admin.vinyl.description}"></label>
                     <textarea id="description"></textarea>
+                    <input type="hidden" th:value="#{admin.descriptionEmpty}" id="description-empty">
                     <div id="description-alert" class="alert-class"></div>
                 </div>
                 <div class="col-lg-6">
-                    <label for="price" th:text="#{admin.vinyl.price}"></label> <input type="number" step=".01" id="price">
+                    <label for="price" th:text="#{admin.vinyl.price}"></label><input type="number" step=".01" id="price">
+                    <input type="hidden" th:value="#{admin.priceEmpty}" id="price-empty">
+                    <input type="hidden" th:value="#{admin.priceNotNumber}" id="price-not-number">
                     <div id="price-alert" class="alert-class"></div>
                 </div>
                 <div class="col-lg-6">
                     <label for="stock" th:text="#{admin.vinyl.stock}"></label> <input type="number" id="stock">
+                    <input type="hidden" th:value="#{admin.stockEmpty}" id="stock-empty">
                     <div id="quantity-alert" class="alert-class"></div>
                 </div>
                 <div class="col-lg-6 admin-img">
@@ -34,6 +39,7 @@
                         <label for="imgUrl" th:text="#{admin.vinyl.image}"></label>
                         <input id="imgUrl" type="file" name="file" accept="image/png, image/jpeg">
                     </form>
+                    <input type="hidden" th:value="#{admin.noPicture}" id="picture-empty">
                     <div id="image-alert" class="alert-class"></div>
                 </div>
                 <div class="col-lg-6">
@@ -71,8 +77,10 @@
                                 <div class="col-lg-3">
                                     <input type="button" th:value="#{admin.artist.findOrCreate}" onclick="findOrCreateArtist()">
                                 </div>
-                                <div class="col-lg-10" id="artist-response">
-                                </div>
+                                <input type="hidden" th:value="#{admin.artistSaved}" id="artist-saved">
+                                <input type="hidden" th:value="#{admin.artistExists}" id="artist-exists">
+                                <input type="hidden" th:value="#{admin.artistEmpty}" id="artist-empty">
+                                <div class="col-lg-10" id="artist-response"></div>
                             </div>
                         </div>
 
@@ -90,6 +98,9 @@
                                     <div class="col-lg-2">
                                         <input type="button" class="add-song" id="addSong" onclick="songToTable()" th:value="#{admin.addToTable}">
                                     </div>
+                                    <input type="hidden" th:value="#{admin.songNotEmpty}" id="song-not-empty">
+                                    <input type="hidden" th:value="#{admin.songDurationInvalid}" id="song-duration-invalid">
+                                    <input type="hidden" th:value="#{admin.tracklistEmpty}" id="tracklist-empty">
                                     <div class="col-lg-10" id="song-response"></div>
                                 </div>
                                 <div class="col-lg-10" style="padding: 0px">
@@ -130,8 +141,11 @@
                                 <div class="col-lg-2">
                                     <input type="button" onclick="createRecordLabel()" th:value="#{admin.rl.createBtn}">
                                 </div>
-                                <div class="col-lg-8" id="rl-response">
-                                </div>
+                                <input type="hidden" th:value="#{admin.recordLabelEmpty}" id="rl-empty">
+                                <input type="hidden" th:value="#{admin.recordLabelYearInvalid}" id="rl-year-invalid">
+                                <input type="hidden" th:value="#{admin.recordLabelSaved}" id="rl-saved">
+                                <input type="hidden" th:value="#{admin.recordLabelExists}" id="rl-exists">
+                                <div class="col-lg-8" id="rl-response"></div>
                             </div>
                         </div>
 
@@ -145,8 +159,10 @@
                                 <div class="col-lg-4">
                                     <input type="button" id="btn-prob" onclick="createNewGenre()" th:value="#{admin.genre.createBtn}">
                                 </div>
-                                <div class="col-lg-10" id="genre-response">
-                                </div>
+                                <input type="hidden" th:value="#{admin.genreCreated}" id="genre-created">
+                                <input type="hidden" th:value="#{admin.genreEmpty}" id="genre-empty">
+                                <input type="hidden" th:value="#{admin.noGenres}" id="genres-empty">
+                                <div class="col-lg-10" id="genre-response"></div>
                             </div>
                             <label style="padding-top: 20px" th:text="#{admin.genre.choose}"></label>
                             <div class="row">
@@ -188,7 +204,11 @@
                 <div class="col-lg-5">
                     <input type="button" class="new-vinyl-save" th:value="#{admin.vinyl.cancel}" onclick="confirmDialogCancel('')">
                 </div>
+                <input type="hidden" th:value="#{admin.vinylSaved}" id="vinyl-saved">
+                <input type="hidden" th:value="#{admin.vinylExists}" id="vinyl-exists">
+                <input type="hidden" th:value="#{admin.vinylNotSaved}" id="vinyl-not-saved">
                 <div id="vinyl-response" class="col-lg-12"></div>
+
             </div>
         </div>
     </div>

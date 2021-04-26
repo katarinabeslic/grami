@@ -111,6 +111,7 @@
 												<li class="quick-view">
 													<a th:href="@{/admin/edit(id=${vinyl.id})}" th:text="#{admin.editItem}"></a>
 												</li>
+												<input type="hidden" th:value="#{admin.deleteVinyl}" id="delete-vinyl-question">
 												<li class="w-icon active">
 													<a class="deleteVinyl" th:href="@{/admin/remove(id=${vinyl.id})}"><i class="fa fa-trash"></i></a>
 												</li>

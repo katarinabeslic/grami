@@ -8,6 +8,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                <input type="hidden" th:value="#{admin.justChecking}" id="just-checking">
+                <input type="hidden" th:value="#{admin.deleteUser}" id="user-question">
+                <input type="hidden" th:value="#{admin.userDeleted}" id="user-deleted">
+                <input type="hidden" th:value="#{admin.userNotDeleted}" id="user-not-deleted">
+
                 <div class="user-delete-response"></div>
                 <div class="specification-table" id="songTable">
                     <table>

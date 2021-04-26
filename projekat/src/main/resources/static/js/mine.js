@@ -1,14 +1,17 @@
-let href = window.location.pathname;
-if (href == '/') {
-
-}
-
 $('#locales').change(function () {
     let selectedOption = $('#locales').val();
     if (selectedOption != '') {
         window.location.replace('?lang=' + selectedOption);
     }
 });
+
+let currentLocale = $('#current-locale').val();
+
+if (currentLocale == 'en') {
+    $('#locales option[value=en]').attr('selected', 'selected');
+} else {
+    $('#locales option[value=sr]').attr('selected', 'selected');
+}
 
 $('#selected-format').on('change', function () {
     let selectedFormat = $('#selected-format').find(':selected').html();
@@ -18,7 +21,6 @@ $('#selected-format').on('change', function () {
 $('.the-format').on('click', function (event) {
     event.preventDefault();
     let value = $(this).attr('value');
-    console.log(value);
     $('#format-selected').val(value);
     $('#filter-form').submit();
 });
@@ -86,13 +88,11 @@ $('#update-user').click(function () {
 
 $('#pp-btn').click(function () {
     let addressNull = $('#isAddressNull').val();
-    console.log(addressNull)
     if (addressNull) {
         $('#pp-btn').attr('disabled', true);
     } else {
         $('#pp-btn').attr('disabled', false);
     }
-
     let orderObject = {
         "price": $('#price').val(),
         "currency": $('#currency').val(),
@@ -100,7 +100,6 @@ $('#pp-btn').click(function () {
         "intent" : $('#intent').val(),
         "description" : $('#description').val()
     };
-    console.log(orderObject);
     $.ajax({
         type: "POST",
         url: "/paypal-pay",
@@ -123,11 +122,12 @@ if (cardInfoNull) {
 }
 
 function confirmDialogDelete(message, href) {
+    let justChecking = $('#just-checking').val();
     $('<div id="confirm-dialog"></div>').appendTo('body')
         .html('<div><h5>' + message + '</h5></div>')
         .dialog({
             modal: true,
-            title: 'Just Checking:',
+            title: justChecking,
             zIndex: 10000,
             autoOpen: true,
             width: 'auto',
@@ -156,7 +156,8 @@ function confirmDialogDelete(message, href) {
 $('.remove-cart-item').click(function () {
         event.preventDefault();
         let href = $('.item-href').attr('href');
-        confirmDialogDelete("Are you sure you want to remove the selected item from cart?", href);
+        let removeFromCart = $('#remove-from-cart').val();
+        confirmDialogDelete(removeFromCart, href);
     }
 );
 
@@ -224,10 +225,24 @@ $('.qty-inc').click(
                 if (response == "success") {
                     $(location).attr('href', 'http://localhost:8080/cart');
                 } else {
-                    console.log("OH NOOO")
+                    console.log("stock not incremented")
                 }
             },
 
         });
     }
 );
+
+$('.print-rec').css('cursor', 'pointer');
+
+function downloadReceipt() {
+    const receipt = document.getElementById('user-receipt');
+    let opt = {
+      margin: 0.5,
+      filename: 'receipt.pdf',
+      image: {type: 'jpeg', quality: 0.98},
+      html2canvas: {scale: 2},
+      jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
+    };
+    html2pdf().from(receipt).set(opt).save();
+}

@@ -50,7 +50,11 @@
                                 </li>
                             </ul>
                         </div>
+                        <input type="hidden" th:value="#{admin.userUpdated}" id="user-updated">
+                        <input type="hidden" th:value="#{admin.userNotUpdated}" id="user-not-updated">
                         <div class="user-edited-response"></div>
+                        <input type="hidden" th:value="#{admin.userHasRole}" id="user-has-role">
+                        <input type="hidden" th:value="#{admin.canNotAddMoreRoles}" id="no-more-roles">
                         <div id="role-alert"></div>
                         <button type="button" th:href="@{/admin/edit-user(id=${user.id})}" class="site-btn register-btn update-user-btn" style="margin-top: 20px" th:text="#{admin.editUser.updateBtn}">
                         </button>

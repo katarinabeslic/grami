@@ -3,6 +3,7 @@ package com.njt.projekat.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.njt.projekat.dao.RecordLabelRepository;
@@ -22,7 +23,7 @@ public class RecordLabelServiceImpl implements RecordLabelService {
 
 	@Override
 	public List<RecordLabel> findAll() {
-		return recordLabelRepository.findAll();
+		return recordLabelRepository.findAllByOrderByNameAsc(Sort.by(Sort.Direction.DESC, "year"));
 	}
 
 	@Override
