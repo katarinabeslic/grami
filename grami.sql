@@ -1,6 +1,6 @@
 /*
 SQLyog Community v13.1.5  (64 bit)
-MySQL - 10.4.11-MariaDB : Database - njt_projekat
+MySQL - 10.4.11-MariaDB : Database - grami
 *********************************************************************
 */
 
@@ -12,9 +12,9 @@ MySQL - 10.4.11-MariaDB : Database - njt_projekat
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`njt_projekat` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`grami` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `njt_projekat`;
+USE `grami`;
 
 /*Table structure for table `address` */
 
@@ -30,7 +30,7 @@ CREATE TABLE `address` (
   PRIMARY KEY (`id`),
   KEY `FKda8tuywtf0gb6sedwk7la1pgi` (`user_id`),
   CONSTRAINT `FKda8tuywtf0gb6sedwk7la1pgi` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `address` */
 
@@ -39,7 +39,8 @@ insert  into `address`(`id`,`country`,`city`,`street`,`zip_code`,`user_id`) valu
 (3,'Serbia','Belgrade','Milutina Milankovića 25/5','11000',5),
 (5,'Serbia','Belgrade','Rada Končara 19/2','11080',9),
 (6,'Serbia','Kragujevac','Kneza Miloša 117a','34000',10),
-(7,'Germany','Beograd','Zagorska 38/19','11080',11);
+(7,'Serbia','Beograd','Rada Končara 19/2','11080',11),
+(8,'Serbia','Belgrade','Zagorska 38/19','11080',1);
 
 /*Table structure for table `artist` */
 
@@ -49,7 +50,7 @@ CREATE TABLE `artist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stage_name` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `artist` */
 
@@ -78,7 +79,11 @@ insert  into `artist`(`id`,`stage_name`) values
 (22,'Nelly'),
 (23,'Alicia Keys'),
 (24,'The Black Keys'),
-(25,'Johnny Cash');
+(25,'Johnny Cash'),
+(26,'Mac DeMarco'),
+(27,'The Weeknd'),
+(28,'DMX'),
+(29,'Dua Lipa');
 
 /*Table structure for table `card_info` */
 
@@ -121,7 +126,7 @@ CREATE TABLE `cart_item` (
   CONSTRAINT `FKen9v41ihsnhcr0i7ivsd7i84c` FOREIGN KEY (`order_id`) REFERENCES `user_order` (`id`),
   CONSTRAINT `FKjnaj4sjyqjkr4ivemf9gb25w` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FKl9go12626glx5ehe0eo8qo5qp` FOREIGN KEY (`vinyl_id`) REFERENCES `vinyl` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `cart_item` */
 
@@ -131,7 +136,6 @@ insert  into `cart_item`(`id`,`quantity`,`vinyl_id`,`user_id`,`order_id`) values
 (11,1,15,6,17),
 (12,1,19,6,18),
 (13,1,14,6,19),
-(14,1,21,6,20),
 (15,1,20,6,21),
 (67,1,17,5,26),
 (68,1,6,5,27),
@@ -150,7 +154,8 @@ insert  into `cart_item`(`id`,`quantity`,`vinyl_id`,`user_id`,`order_id`) values
 (89,1,7,10,39),
 (90,1,2,9,40),
 (91,1,3,9,41),
-(92,3,10,11,42);
+(92,3,10,11,42),
+(94,1,2,9,NULL);
 
 /*Table structure for table `format` */
 
@@ -178,7 +183,7 @@ CREATE TABLE `genre` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `genre` */
 
@@ -202,7 +207,8 @@ insert  into `genre`(`id`,`name`) values
 (21,'Garage'),
 (22,'Symphonic Metal'),
 (23,'Folk'),
-(24,'Country');
+(24,'Country'),
+(25,'Indie Rock');
 
 /*Table structure for table `record_label` */
 
@@ -213,7 +219,7 @@ CREATE TABLE `record_label` (
   `name` varchar(150) DEFAULT NULL,
   `year` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `record_label` */
 
@@ -244,7 +250,11 @@ insert  into `record_label`(`id`,`name`,`year`) values
 (24,'Nonesuch Records','2010'),
 (25,'Blackened','2020'),
 (26,'Mercury Nashville','2020'),
-(27,'Def Jam Recordings','2021');
+(27,'Def Jam Recordings','2021'),
+(28,'Mac\'s Record Label','2019'),
+(29,'Republic Records','2020'),
+(30,'Ear Music Classic','2003'),
+(31,'Warner Records','2020');
 
 /*Table structure for table `role` */
 
@@ -274,7 +284,7 @@ CREATE TABLE `song` (
   PRIMARY KEY (`id`),
   KEY `vinyl_id` (`vinyl_id`),
   CONSTRAINT `song_ibfk_1` FOREIGN KEY (`vinyl_id`) REFERENCES `vinyl` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=577 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=623 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `song` */
 
@@ -650,7 +660,53 @@ insert  into `song`(`id`,`song_name`,`duration`,`vinyl_id`) values
 (573,'Dedication','1:00',20),
 (574,'I Did It','3:24',20),
 (575,'In da Spot (Feat. Milani the Artist)','2:54',20),
-(576,'Outtakes','3:32',20);
+(576,'Outtakes','3:32',20),
+(577,'Here Comes The Cowboy','3:00',29),
+(578,'Nobody','3:32',29),
+(579,'Finally Alone','2:25',29),
+(580,'Little Dogs March','2:29',29),
+(581,'Preoccupied','4:00',29),
+(582,'Choo Choo','2:39',29),
+(583,'K','3:33',29),
+(584,'Heart To Heart','3:31',29),
+(585,'Hey Cowgirl','2:16',29),
+(586,'On The Square','3:29',29),
+(587,'All Of Our Yesterdays','4:04',29),
+(588,'Skyless Moon','4:05',29),
+(589,'Baby Bye Bye','7:29',29),
+(590,'Alone Again','4:10',30),
+(591,'Too Late','3:59',30),
+(592,'Hardest To Love','3:31',30),
+(593,'Scared To Live','3:11',30),
+(594,'Snowchild','4:07',30),
+(595,'Escape From LA','5:55',30),
+(596,'Heartless','3:21',30),
+(597,'Faith','4:43',30),
+(598,'Blinding Lights','3:21',30),
+(599,'In Your Eyes','3:57',30),
+(600,'Save Your Tears','3:35',30),
+(601,'Repeat After Me (Interlude)','3:15',30),
+(602,'After Hours','6:01',30),
+(603,'Until I Bleed Out','3:12',30),
+(604,'We Right Here','3:23',31),
+(605,'Who We Be','2:55',31),
+(606,'The Rain','3:11',31),
+(607,'Where The Hood At','4:49',31),
+(608,'Party Up (Up In Here)','3:47',31),
+(609,'A\'Yo Kato','5:59',31),
+(610,'Slippin\'','3:03',31),
+(611,'The Prayer IV','3:17',31),
+(612,'Future Nostalgia','3:04',32),
+(613,'Don’t Start Now','3:03',32),
+(614,'Cool','2:29',32),
+(615,'Physical','3:13',32),
+(616,'Levitating','3:23',32),
+(617,'Pretty Please','3:14',32),
+(618,'Hallucinate','3:28',32),
+(619,'Love Again','4:18',32),
+(620,'Break My Heart','3:41',32),
+(621,'Good In Bed','3:38',32),
+(622,'Boys Will Be Boys','2:56',32);
 
 /*Table structure for table `user` */
 
@@ -665,7 +721,7 @@ CREATE TABLE `user` (
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `user` */
 
@@ -676,7 +732,8 @@ insert  into `user`(`id`,`first_name`,`last_name`,`email`,`phone_number`,`userna
 (7,'Jacob','Daniels','jacob@gmail.com','+4512059968','jacob','$2a$10$9bYxkAOVN4FTE9IrooMiYeyzBGuXKgYM/KhyhRM8RGy8s7fcz8ZTG'),
 (9,'Lidija','Simić','lidija@gmail.com','+381651212799','lidija','$2a$10$g..ZAARJjrDG1aKT5R3S9OF0Qw1vKJxFMpaOHahFkqSr56T6vrX.K'),
 (10,'David','Jovanović','david@gmail.com','+381621346988','david','$2a$10$MXRByeDf4mJPH4ByEQNkqe1n.jViSL.QmEFlc8UDuN5SDelKPM3z6'),
-(11,'Ilija','Antovic','ilija@gmail.com','+381654545112','ilija','$2a$10$aThbTv0AZHmI6Mnr2E7VLOCjAGoerrjtKUVe4.ysvqRRMUWo.n.2.');
+(11,'Ilija','Antovic','ilija@gmail.com','+381654545112','ilija','$2a$10$aThbTv0AZHmI6Mnr2E7VLOCjAGoerrjtKUVe4.ysvqRRMUWo.n.2.'),
+(12,'Ognjen','Jakovljev','ogi@gmail.com','+381624646599','ogi','$2a$10$R1D6lZ4ZwPUPT4wlUbBN9Ovg4dlOxKr4BGl2MjoKb/ICpTK1lHx4e');
 
 /*Table structure for table `user_order` */
 
@@ -709,7 +766,6 @@ insert  into `user_order`(`id`,`currency`,`date_time`,`order_status`,`payment_me
 (17,'EUR','2021-03-26 12:24:00','Confirmed','card',28.99,2,1,6),
 (18,'EUR','2021-03-26 12:25:15','Delivered','card',29.99,2,1,6),
 (19,'EUR','2021-03-26 12:26:14','Received','card',28.99,2,1,6),
-(20,'EUR','2021-03-26 12:27:21','Received','card',28.99,2,1,6),
 (21,'EUR','2021-03-26 12:31:12','Cancelled','card',31.99,2,1,6),
 (26,'EUR','2021-04-05 23:17:26','Received','card',39.99,3,8,5),
 (27,'EUR','2021-04-05 23:19:21','Cancelled','card',24.99,3,8,5),
@@ -725,7 +781,7 @@ insert  into `user_order`(`id`,`currency`,`date_time`,`order_status`,`payment_me
 (39,'EUR','2021-04-15 16:31:15','Confirmed','paypal',68.98,6,NULL,10),
 (40,'EUR','2021-04-16 13:04:10','Received','paypal',25.99,5,NULL,9),
 (41,'EUR','2021-04-16 13:22:43','Received','card',29.99,5,NULL,9),
-(42,'EUR','2021-04-17 15:48:24','Confirmed','paypal',119.97,7,NULL,11);
+(42,'EUR','2021-04-17 15:48:24','Delivered','paypal',119.97,7,NULL,11);
 
 /*Table structure for table `user_role` */
 
@@ -740,7 +796,7 @@ CREATE TABLE `user_role` (
   KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`),
   CONSTRAINT `FK859n2jvi8ivhui0rl0esws6o` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `user_role` */
 
@@ -752,7 +808,8 @@ insert  into `user_role`(`id`,`role_id`,`user_id`) values
 (26,1,7),
 (27,2,9),
 (28,2,10),
-(29,2,11);
+(29,2,11),
+(35,NULL,12);
 
 /*Table structure for table `vinyl` */
 
@@ -775,7 +832,7 @@ CREATE TABLE `vinyl` (
   CONSTRAINT `vinyl_ibfk_1` FOREIGN KEY (`artist_id`) REFERENCES `artist` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `vinyl_ibfk_2` FOREIGN KEY (`record_label_id`) REFERENCES `record_label` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `vinyl_ibfk_3` FOREIGN KEY (`format_id`) REFERENCES `format` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `vinyl` */
 
@@ -799,13 +856,17 @@ insert  into `vinyl`(`id`,`vinyl_name`,`description`,`img_url`,`price`,`stock`,`
 (18,'Madvillainy','Madvillainy is the only studio album by American hip hop duo Madvillain, comprising MC MF Doom and producer Madlib. It was released on March 23, 2004, on Stones Throw Records.\nThe album was recorded between 2002 and 2004. Madlib created most of the instrumentals during a trip to Brazil in his hotel room using minimal amounts of equipment: a Boss SP-303 sampler, a turntable, and a tape deck.[1] Fourteen months before the album was released, an unfinished demo version was stolen and leaked onto the internet. Frustrated, the duo stopped working on the album and returned to it only after they had released other solo projects.','/images/vinyl/mf-doom_madvillainy.jpg',33.99,20,16,17,1),
 (19,'Live from Planet X','Live from Planet X is a live album by British-American rapper/producer MF Doom. It was released via Nature Sounds on March 5, 2005. It was recorded live in San Francisco, California on January 22, 2004. Originally titled Live at the DNA Lounge, the album was initially given away with Special Herbs, Vols. 5 & 6. It includes tracks from Operation: Doomsday, Take Me to Your Leader, and Madvillainy.','/images/vinyl/mf-doom_live-from-planet-x.jpg',29.99,24,25,1,1),
 (20,'MA Doom: Son of Yvonne','MA Doom: Son of Yvonne is the fourth solo studio album by American rapper Masta Ace. The beats on the album are sourced from the Special Herbs series of instrumental mixtapes by MF Doom; Doom did not directly collaborate with Masta Ace in the production of this album outside of giving Ace his blessing to use the beats. DOOM, however, makes a vocal appearance on the song \"Think I Am\", alongside fellow guest star Big Daddy Kane. Other guests on the album include Pav Bundy, Reggie B and Milani the Artist. The album was released on July 17, 2012, via M3 Records and Fat Beats Records.','/images/vinyl/mf-doom_son-of-yvonne.jpg',31.99,9,25,19,1),
-(21,'The Mouse & The Mask','Back in 2005, super producer Danger Mouse and masked hip hop supervillain DOOM came together for “The Mouse And The Mask”, a collaborative album released under the name Dangerdoom. Among DOOM’s most successful projects both critically and commercially, the album was inspired by Cartoon Network’s late-night Adult Swim programming slate, and includes appearances from several Adult Swim characters, including Aqua Teen Hunger Force, Space Ghost, Harvey Birdman, and more.\n“The Mouse And The Mask” also features guest spots from Talib Kweli, Ghostface Killah, and Cee Lo Green. This deluxe 3xLP vinyl reissue courtesy of DOOM’s own label Metalface Records also contains several bonus cuts not on the original album. The full 7-track 2006 Dangerdoom EP “Occult Hymn” is included, as well as two previously unreleased tracks, making this the definitive Dangerdoom collection.','/images/vinyl/mf-doom_the-mouse-and-the-mask.jpg',28.99,19,25,20,1),
+(21,'The Mouse & The Mask','Back in 2005, super producer Danger Mouse and masked hip hop supervillain DOOM came together for “The Mouse And The Mask”, a collaborative album released under the name Dangerdoom. Among DOOM’s most successful projects both critically and commercially, the album was inspired by Cartoon Network’s late-night Adult Swim programming slate, and includes appearances from several Adult Swim characters, including Aqua Teen Hunger Force, Space Ghost, Harvey Birdman, and more.\n“The Mouse And The Mask” also features guest spots from Talib Kweli, Ghostface Killah, and Cee Lo Green. This deluxe 3xLP vinyl reissue courtesy of DOOM’s own label Metalface Records also contains several bonus cuts not on the original album. The full 7-track 2006 Dangerdoom EP “Occult Hymn” is included, as well as two previously unreleased tracks, making this the definitive Dangerdoom collection.','/images/vinyl/mf-doom_the-mouse-and-the-mask.jpg',28.99,20,25,20,1),
 (22,'Bookhead EP','Bookhead EP is a collaborative EP by alternative hip hop artists Jneiro Jarel and MF Doom under the moniker JJ Doom. It was released on Lex Records on February 17, 2014. It features 9 tracks from the 2013 Butter Edition re-release of Key to the Kuffs. The EP was re-released on Vinyl by Lex Records on May 22, 2017.','/images/vinyl/mf-doom_bookhead.jpg',15.99,19,25,21,1),
 (23,'Country Grammar','Country Grammar is the debut studio album by American rapper Nelly. It was released on June 27, 2000, by Universal Records. The production on the album was handled by Jason \"Jay E\" Epperson, with additional production by C-Love, Kevin Law, City Spud, Steve \"Blast\" Wills and Basement Beats. Nelly contributed to all lyrics on the album, with Epperson and City Spud also contributing. The album introduced a unique St. Louis, Midwestern sound, and introduces Nelly\'s vocal style of pop-rap singalongs and Midwestern, Missouri twang. It was supported four successful singles: \"Country Grammar (Hot Shit)\", \"E.I.\", \"Ride wit Me\" and \"Batter Up\". Its lead single, \"Country Grammar (Hot Shit)\", peaked at number 7 on the Billboard Hot 100 and UK Singles Chart. \"E.I.\" charted at number 16, number 12 and number 11 on the Hot 100, UK Singles Chart and ARIA Singles Chart, respectively. \"Ride wit Me\" peaked within the top five on the Hot 100, ARIA Singles Chart, Irish Singles Chart and UK Singles Chart. The album\'s fourth and final single, \"Batter Up\" featuring Murphy Lee and Ali, achieved moderate chart success.\n\nCountry Grammar received positive reviews, with critics praising Nelly\'s vocal style and the album\'s production. It topped the US Billboard 200 chart for five consecutive weeks, and the US Top R&B/Hip-Hop Albums chart for six consecutive weeks. It peaked in the top five on the New Zealand Albums Chart and Australian Albums Chart, as well as the top ten on the Canadian Albums Chart and Dutch Albums Chart. The album was certified three times platinum by the Recording Industry Association of New Zealand (RIANZ) and Music Canada (MC), denoting shipments of 45,000 and 300,000 copies, respectively.\n\nIn 2016, Country Grammar became the ninth hip hop album to be certified Diamond by the Recording Industry Association of America (RIAA),[2] denoting shipment of 10 million copies in the US. Its commercial success secured Nelly\'s status as one of the most successful hip hop acts of the 2000s decade. On Billboard\'s decade-end chart, Nelly ranked as the third most successful act of the 2000s decade, due largely to the success of Country Grammar and his follow-up album Nellyville (2002).','/images/vinyl/nelly_country-grammar.jpg',37.99,30,25,22,1),
 (24,'Alicia','Alicia is the seventh studio album by American singer-songwriter Alicia Keys. It was primarily recorded at Oven Studios and Jungle City Studios, both in New York, during 2017 to 2019 and released by RCA Records on September 18, 2020. Written and produced largely by Keys, the album also features songwriting and production contributions from Swizz Beatz, Ludwig Göransson, Rob Knox, Ed Sheeran, and The-Dream, among others. Keys collaborated with more artists on the recording than in her previous albums, enlisting vocalists such as Sampha, Tierra Whack, Diamond Platnumz, Snoh Aalegra, and Jill Scott for certain tracks.\n\nAlicia\'s mostly low-tempo and subtly melodic music reconciles the experimental direction of Keys\' previous album Here (2016) with her earlier work\'s bass drum-driven R&B and piano-based balladry. Throughout, individual songs incorporate sounds from a wide range of other genres, including orchestral pop, progressive soul, funk, ambient, country, and Caribbean music. Thematically, they explore identity as a multifaceted concept, sociopolitical concerns, and forms of love within the framework of impressionistic lyrics and personal narratives. The album has been described by Keys as therapeutic and reflective of greater introspection in herself, expressing ideas and feelings of hope, frustration, despair, ambivalence, and equanimity shared in her memoir More Myself (2020), which was written during Alicia\'s recording.\n\nThe album was originally scheduled to be released on March 20, 2020, then May 15, before being delayed indefinitely in response to the COVID-19 pandemic. It was marketed with an extended traditional rollout campaign that featured various media appearances by Keys and the release of seven singles, including the Miguel duet \"Show Me Love\", \"Time Machine\", \"Underdog\", and \"So Done\" (with Khalid). After a surprise announcement of its impending release in September, Alicia debuted at number four on the Billboard 200 in its first week and became Keys\' eighth top-10 record in the US, while charting in the top 10 in several other countries. However, it fell off the US chart a few weeks later.\n\nA critical success, Alicia received praise for Keys\' nuanced vocal performances and the music\'s accessibility, while her thematic messages were considered balanced, healing, and timely against the backdrop of unfolding world events. The singles \"Good Job\" and \"Perfect Way to Die\" resonated especially with the importance of essential workers during the pandemic and with the 2020–2021 racial unrest over police brutality in the US, respectively. In further support of the album, Keys will perform in concert from June to September 2021 on Alicia – The World Tour, which was postponed from the previous year due to the pandemic.','/images/vinyl/alicia-keys_alicia.jpg',41.99,148,25,23,1),
 (25,'Brothers','Brothers (printed as This is an album by The Black Keys. The name of this album is Brothers. on the front cover) is the sixth studio album by American rock duo The Black Keys. Co-produced by the group, Mark Neill, and Danger Mouse, it was released on May 18, 2010 on Nonesuch Records. Brothers was the band\'s commercial breakthrough, as it sold over 73,000 copies in the United States in its first week and peaked at number three on the Billboard 200, their best performance on the chart to that point.\n\nThe album\'s lead single, \"Tighten Up\", the only track from the album produced by Danger Mouse, became their most successful single to that point, spending 10 weeks at number one on the Alternative Songs chart and becoming the group\'s first single on the Billboard Hot 100, peaking at number 87 and was later certified gold. The second single, \"Howlin\' for You\", went gold as well. In April 2012, the album was certified platinum in the US by the RIAA for shipping over one million copies. It also went double-platinum in Canada and gold in the UK. In 2011, it won three Grammy Awards, including honors for Best Alternative Music Album.','/images/vinyl/the-black-keys_brothers.jpg',34.99,19,25,24,1),
 (26,'S&M2','S&M2 (stylized as S&M2) is a live album by American heavy metal band Metallica and the San Francisco Symphony. The album is a follow-up to S&M, a live collaborative album released in 1999. Like S&M, the album was recorded during a live performance in San Francisco at the Chase Center in 2019. The performance was also filmed and released theatrically on October 9, 2019.\nAt Metacritic, which assigns a normalized rating out of 100 to reviews from mainstream publications, the album received an average score of 78 based on seven reviews, indicating \"generally favorable reviews\".[16]\n\nCritics generally praised the album as a worthy successor of S&M. Paul Brannigan of Kerrang! gave the performance a perfect rating, writing that the album \"stands as a tribute both to Metallica’s growing confidence as players and composers, and an absolute vindication of their decision to revisit one of their most inspired creative outings.\"\nIn a mixed review, Andy Cush of Pitchfork felt that the album had the same issues that S&M did. Cush wrote that the songs are not suited to an orchestral accompaniment, writing \"Metallica’s best songs, intricate and ambitious though they may be, are not actually well suited for the additional orchestrating they get here, precisely because they are plenty symphonic already.\" Cush was also critical of the song selection for S&M2, noting that \"Of the 20 pieces of music here, more than half appeared in a similar form more than two decades ago on the first S&M.\"','/images/vinyl/metallica-s&m2.jpg',109.99,10,25,25,1),
-(27,'Complete Mercury Albums 1986-1991','Freddie Mercury (born Farrokh Bulsara; 5 September 1946 – 24 November 1991) was a British singer, songwriter, record producer, and lead vocalist of the rock band Queen. Regarded as one of the greatest singers in the history of rock music, he was known for his flamboyant stage persona and four-octave vocal range. Mercury defied the conventions of a rock frontman, with his highly theatrical style influencing the artistic direction of Queen.\n\nBorn in 1946 in Zanzibar to Parsi-Indian parents, he attended English-style boarding schools in India from the age of eight and returned to Zanzibar after secondary school. In 1964, his family fled the Zanzibar Revolution, moving to Middlesex, England. Having studied and written music for years, he formed Queen in 1970 with guitarist Brian May and drummer Roger Taylor. Mercury wrote numerous hits for Queen, including \"Killer Queen\", \"Bohemian Rhapsody\", \"Somebody to Love\", \"We Are the Champions\", \"Don\'t Stop Me Now\", and \"Crazy Little Thing Called Love\". His charismatic stage performances often saw him interact with the audience, as displayed at the 1985 Live Aid concert. He also led a solo career and served as a producer and guest musician for other artists.\n\nMercury died in 1991 at age 45 due to complications from AIDS. He confirmed the day before his death that he had contracted the disease, having been diagnosed in 1987. Mercury had continued to record with Queen following his diagnosis, and he was posthumously featured on the band’s final album, Made in Heaven (1995). In 1992, his tribute concert was held at Wembley Stadium. His career with Queen was dramatised in the 2018 biopic Bohemian Rhapsody.\n\nAs a member of Queen, Mercury was posthumously inducted into the Rock and Roll Hall of Fame in 2001, the Songwriters Hall of Fame in 2003, and the UK Music Hall of Fame in 2004. In 1990, he and the other Queen members were awarded the Brit Award for Outstanding Contribution to British Music, and one year after his death Mercury was awarded it individually. In 2005, Queen were awarded an Ivor Novello Award for Outstanding Song Collection from the British Academy of Songwriters, Composers, and Authors. In 2002, Mercury ranked number 58 in the BBC\'s poll of the 100 Greatest Britons.','/images/vinyl/johnny-cash_complete-mercury-albums.jpg',179.99,5,25,26,1);
+(27,'Complete Mercury Albums 1986-1991','Freddie Mercury (born Farrokh Bulsara; 5 September 1946 – 24 November 1991) was a British singer, songwriter, record producer, and lead vocalist of the rock band Queen. Regarded as one of the greatest singers in the history of rock music, he was known for his flamboyant stage persona and four-octave vocal range. Mercury defied the conventions of a rock frontman, with his highly theatrical style influencing the artistic direction of Queen.\n\nBorn in 1946 in Zanzibar to Parsi-Indian parents, he attended English-style boarding schools in India from the age of eight and returned to Zanzibar after secondary school. In 1964, his family fled the Zanzibar Revolution, moving to Middlesex, England. Having studied and written music for years, he formed Queen in 1970 with guitarist Brian May and drummer Roger Taylor. Mercury wrote numerous hits for Queen, including \"Killer Queen\", \"Bohemian Rhapsody\", \"Somebody to Love\", \"We Are the Champions\", \"Don\'t Stop Me Now\", and \"Crazy Little Thing Called Love\". His charismatic stage performances often saw him interact with the audience, as displayed at the 1985 Live Aid concert. He also led a solo career and served as a producer and guest musician for other artists.\n\nMercury died in 1991 at age 45 due to complications from AIDS. He confirmed the day before his death that he had contracted the disease, having been diagnosed in 1987. Mercury had continued to record with Queen following his diagnosis, and he was posthumously featured on the band’s final album, Made in Heaven (1995). In 1992, his tribute concert was held at Wembley Stadium. His career with Queen was dramatised in the 2018 biopic Bohemian Rhapsody.\n\nAs a member of Queen, Mercury was posthumously inducted into the Rock and Roll Hall of Fame in 2001, the Songwriters Hall of Fame in 2003, and the UK Music Hall of Fame in 2004. In 1990, he and the other Queen members were awarded the Brit Award for Outstanding Contribution to British Music, and one year after his death Mercury was awarded it individually. In 2005, Queen were awarded an Ivor Novello Award for Outstanding Song Collection from the British Academy of Songwriters, Composers, and Authors. In 2002, Mercury ranked number 58 in the BBC\'s poll of the 100 Greatest Britons.','/images/vinyl/johnny-cash_complete-mercury-albums.jpg',179.99,5,25,26,1),
+(29,'Here Comes The Cowboy','Here Comes the Cowboy received polarizing reviews upon release from critics and fans. While some critics noted a musical maturity for DeMarco and the minimalist production, most critics were divided on the album\'s slower pace and lack of focus. Thomas Hobbs of NME said of the album, \"Here Comes the Cowboy suggests Mac DeMarco is ready to explore more mature themes and grow beyond the slacker image he has helped turn into a pop culture staple. This record\'s slower pace won\'t be for everybody, just as unassuming This Old Dog wasn\'t, but, should you let it, this record will transport you somewhere calm and reflective. At a time of great chaos, that sure sounds good to me.\" Rolling Stone\'s Joe Levy called the songs \"stark, meditative, lonely, and stubbornly isolated, like spending 45 minutes petting a cat. A static search for comfort.\"\n\nIn a generally mixed review, Timothy Monger of AllMusic said of the album, \"With its camera phone happy-face button cover and minimalist production, Here Comes the Cowboy is a mixed bag of a record beset by an overall aimlessness where some crafty low-key gems have to share the bus with a few inane clunkers that probably should have stayed in the vault.\" Rachel Aroesti of The Guardian noted that Here Comes the Cowboy may retain some of the disarming simplicity and emotional universality that has become DeMarco\'s trademark, but it is ultimately an album that fails to welcome the listener warmly into its world.\"','/images/vinyl/mac-demarco_here-comes-the-cowboy.jpg',24.99,35,26,28,1),
+(30,'After Hours','After Hours is the fourth studio album by Canadian singer the Weeknd, released on March 20, 2020, by XO and Republic Records. Primarily produced by the Weeknd, it features a variety of producers, including DaHeala, Illangelo, Max Martin, Metro Boomin, and OPN, most of whom the Weeknd had worked with previously. The standard edition of the album has no features, although the remixes edition contains guest appearances from Chromatics and Lil Uzi Vert. Thematically, After Hours explores promiscuity, overindulgence, and self-loathing.\n\nPrior to the album\'s release, the Weeknd confirmed that After Hours would face stylistic differences to its predecessor, Starboy (2016). Music journalists have noted the album as an artistic reinvention for the Weeknd, with the introduction of new wave and dream pop influences. The artwork and aesthetic for its promotional material has been described as psychedelic and being inspired by various films, such as Casino (1995), Fear and Loathing in Las Vegas (1998), Joker, and Uncut Gems (both 2019), while its title is borrowed from the 1985 film directed by Martin Scorsese.\n\nAfter Hours was supported by four singles: \"Heartless\", \"Blinding Lights\", \"In Your Eyes\", and \"Save Your Tears\", with the first two topping the US Billboard Hot 100. Three singles reached the top five on the chart and received a platinum certification. The album\'s title track was released as a promotional single. In March 2020, After Hours broke the record for the most global pre-adds in Apple Music history, with over 1.02 million users. The album received generally positive reviews from music critics, with some naming it the Weeknd\'s best work. It debuted atop the Billboard 200, earning 444,000 album-equivalent units of which 275,000 were pure sales, marking the Weeknd\'s fourth number-one album in the US, and stayed atop the chart for four consecutive weeks. It also reached the top spot in 20 other countries, including Canada and the United Kingdom. After Hours will be promoted with the After Hours Tour, which is set to span Europe and North America.','/images/vinyl/the-weeknd_after-hours.jpg',28.99,500,27,29,2),
+(31,'THE SMOKE OUT FESTIVAL PRESENTS (LTD COLOURED 180G LP)','Earl Simmons (December 18, 1970 – April 9, 2021), known by his stage name DMX (\"Dark Man X\"), was an American rapper, songwriter, and actor. He began rapping in the early 1990s and released his debut album It\'s Dark and Hell Is Hot in 1998, to both critical acclaim and commercial success, selling 251,000 copies within its first week of release.[3][4] DMX released his best-selling album, ... And Then There Was X, in 1999, which included the hit single \"Party Up (Up in Here)\". His 2003 singles \"Where the Hood At?\" and \"X Gon\' Give It to Ya\" were also commercially successful. He was the first artist to debut an album at No. 1 five times in a row on the Billboard 200 charts. Overall, DMX has sold over 74 million records worldwide.\n\nDMX was featured in films such as Belly, Romeo Must Die, Exit Wounds, Cradle 2 the Grave, and Last Hour. In 2006, he starred in the reality television series DMX: Soul of a Man, which was primarily aired on the BET cable television network. In 2003, he published a book of his memoirs entitled, E.A.R.L.: The Autobiography of DMX.','/images/vinyl/dmx-smokeout.jpg',21.99,5,28,30,2),
+(32,'Future Nostalgia','Future Nostalgia is the second studio album by English singer Dua Lipa, released on 27 March 2020 by Warner Records. Lipa enlisted writers and producers such as Jeff Bhasker, Ian Kirkpatrick, Stuart Price, The Monsters & Strangerz, and Koz in order to create a \"nostalgic\" pop and disco record with influences from dance-pop and electronic music, inspired by the music that Lipa enjoyed during her childhood.\n\nThe album spawned five singles, along with the title track as a promotional single. \"Don\'t Start Now\" was released on 31 October 2019, as the album\'s lead single, attaining both critical and commercial success. The song became her first top-three entry on the Billboard Hot 100 chart. \"Physical\" and \"Break My Heart\" were released as the second and third singles, respectively, both reaching the top 10 on the UK Singles Chart. \"Hallucinate\" and a remix of \"Levitating\" featuring DaBaby were released as the fourth and fifth singles on 17 July and 1 October 2020, respectively; the latter earned the album its second top-five single on the Hot 100 and the third top-ten of Lipa\'s career, following \"New Rules\" (2017). The album was originally scheduled to be released on 3 April 2020, but was moved forward after leaking in its entirety two weeks earlier. To promote the album, Lipa is slated to embark on the Future Nostalgia Tour, commencing in September 2021.\n\nUpon its release, Future Nostalgia received widespread acclaim from music critics, many of whom praised the production and its cohesion. Commercially, the album topped the charts in thirteen countries and reached the top ten in thirty-one countries. In the United Kingdom, it peaked atop the UK Albums Chart for four non-consecutive weeks, becoming her first album to do so as well as garnering her first ever nomination for the Mercury Prize. At the 63rd Annual Grammy Awards, Future Nostalgia was nominated for Album of the Year and won Best Pop Vocal Album, whilst \"Don\'t Start Now\" was nominated for Record of the Year, Song of the Year and Best Pop Solo Performance.\n\nFuture Nostalgia was succeeded by its remix album, Club Future Nostalgia, released on 28 August 2020. A French edition of Future Nostalgia was released on 27 November 2020, which yielded the single \"Fever\". A reissue of the album, subtitled The Moonlight Edition, was released through Warner on 11 February 2021, along with its lead single, \"We\'re Good\".','/images/vinyl/dua-lipa_future-nostalgia.png',27.99,300,29,31,2);
 
 /*Table structure for table `vinyl_genre` */
 
@@ -881,7 +942,17 @@ insert  into `vinyl_genre`(`vinyl_id`,`genre_id`) values
 (19,1),
 (19,2),
 (20,1),
-(20,2);
+(20,2),
+(29,3),
+(29,10),
+(29,25),
+(30,4),
+(30,3),
+(30,1),
+(31,1),
+(31,2),
+(32,3),
+(32,6);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
