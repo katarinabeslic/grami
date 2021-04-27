@@ -33,7 +33,6 @@
             <nav class="nav-menu mobile-menu">
                 <ul>
                     <li><a th:href="@{/}"><img th:src="@{../images/logo-footer.png}" alt="" style="height: 22px;"></a></li>
-                    <li th:classappend="${#request.requestURI == '/admin' ? 'active':''}"><a th:href="@{/admin}" th:text="#{admin.home}"></a></li>
                     <li th:classappend="${(#request.requestURI == '/admin/catalogue' ? 'active':'') +
                             (#request.requestURI == '/admin/add' ? 'active':'')}"><a th:text="#{admin.vinyls}"></a>
                         <ul class="dropdown">

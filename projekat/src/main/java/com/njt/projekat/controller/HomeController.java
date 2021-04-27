@@ -22,7 +22,7 @@ public class HomeController {
 	
 	@GetMapping("/admin")
 	public String showAdminPage() {
-		return "admin/index";
+		return "redirect:/admin/catalogue";
 	}
 	
 	@GetMapping("/contact-faq")
