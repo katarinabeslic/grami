@@ -265,7 +265,7 @@ ol {
 
 .ht-right .lan-selector .ddcommon .ddTitle .ddArrow:before {
 	content: "3";
-	font-family: "ElegantIcons";
+	font-family: "ElegantIcons", sans-serif;
 	font-size: 14px;
 	color: #636363;
 	float: right;
@@ -289,7 +289,7 @@ ol {
 
 .ht-right .lan-selector .ddcommon .ddChild ul li {
 	line-height: 23px;
-	padding: 0px 10px;
+	padding: 0 10px;
 	list-style: none;
 }
 
@@ -437,7 +437,7 @@ ol {
 	right: 11px;
 	top: 10px;
 	content: "3";
-	font-family: "ElegantIcons";
+	font-family: "ElegantIcons", sans-serif;
 	font-size: 16px;
 	color: #b2b2b2;
 }
@@ -713,7 +713,7 @@ ol {
 	right: 20px;
 	top: 13px;
 	content: "ď„‡";
-	font-family: FontAwesome;
+	font-family: FontAwesome, sans-serif;
 	font-size: 18px;
 }
 
@@ -1741,7 +1741,7 @@ ol {
 .breadcrumb-text a:after {
 	position: absolute;
 	right: -18px;
-	top: 0px;
+	top: 0;
 	content: "ď„…";
 	font-family: "FontAwesome";
 	font-size: 16px;
@@ -1819,7 +1819,7 @@ ol {
 	width: 10px;
 	height: 8px;
 	border: solid white;
-	border-width: 3px 3px 0px 0px;
+	border-width: 3px 3px 0 0;
 	-webkit-transform: rotate(127deg);
 	-ms-transform: rotate(127deg);
 	transform: rotate(127deg);
@@ -2218,8 +2218,8 @@ ol {
 	line-height: 30px;
 	border-radius: 50%;
 	font-size: 20px;
-	-webkit-box-shadow: 0px 6px 10px -1px #e9e9e9;
-	box-shadow: 0px 6px 10px -1px #e9e9e9;
+	-webkit-box-shadow: 0 6px 10px -1px #e9e9e9;
+	box-shadow: 0 6px 10px -1px #e9e9e9;
 	position: absolute;
 	left: -16px;
 	top: 50%;
@@ -2462,114 +2462,6 @@ ol {
 	line-height: 40px;
 	float: left;
 }
-
-/*
-.product-details .quantity {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	margin-bottom: 33px;
-}
-
-.product-details .quantity .pro-qty {
-	width: 123px;
-	height: 46px;
-	border: 2px solid #ebebeb;
-	padding: 0 15px;
-	float: left;
-	margin-right: 14px;
-}
-
-.product-details .quantity .pro-qty .qtybtn {
-	font-size: 24px;
-	color: #b2b2b2;
-	float: left;
-	line-height: 38px;
-	cursor: pointer;
-	width: 18px;
-}
-
-.product-details .quantity .pro-qty .qtybtn.dec {
-	font-size: 30px;
-}
-
-.product-details .quantity .pro-qty input {
-	text-align: center;
-	width: 52px;
-	font-size: 14px;
-	font-weight: 700;
-	border: none;
-	color: #4c4c4c;
-	line-height: 40px;
-	float: left;
-}
-
-.product-details .quantity .pro-qty {
-	width: 123px;
-	height: 46px;
-	border: 2px solid #ebebeb;
-	padding: 0 15px;
-	float: left;
-	margin-right: 14px;
-}
-
-.product-details .quantity .pro-qty .qtybtn {
-	font-size: 24px;
-	color: #b2b2b2;
-	float: left;
-	line-height: 38px;
-	cursor: pointer;
-	width: 18px;
-}
-
-.product-details .quantity .pro-qty .qtybtn.dec {
-	font-size: 30px;
-}
-
-.product-details .quantity .pro-qty input {
-	text-align: center;
-	width: 52px;
-	font-size: 14px;
-	font-weight: 700;
-	border: none;
-	color: #4c4c4c;
-	line-height: 40px;
-	float: left;
-}
-
-.quantity .pro-qty {
-    width: 190px;
-    height: 46px;
-    border: 3px solid #ebebeb;
-    padding: 0 15px;
-	margin-left: 50px;
-}
-
- .quantity .pro-qty .qtybtn {
-	font-size: 24px;
-	color: #b2b2b2;
-	float: right;
-	line-height: 38px;
-	cursor: pointer;
-	width: 18px;
-}
-
-
- .quantity .pro-qty .qtybtn.dec {
-	font-size: 30px;
-	float: left;
-}
-
- .quantity .pro-qty input {
-	text-align: center;
-	width: 70px;
-	font-size: 16px;
-	font-weight: 700;
-	border: none;
-	color: #4c4c4c;
-	line-height: 40px;
-	margin-left: 10px;
-} */
 
 .product-details .pd-tags {
 	margin-bottom: 27px;
@@ -3164,7 +3056,7 @@ ol {
 
 .checkout-form .new-vinyl-save {
 	width: 100%;
-	background-color: #e7ab3c;
+	background-color: #FAC451;
 	font-family: "Muli", sans-serif;
 	font-size: 18px;
 	font-weight: 700;
@@ -3259,7 +3151,7 @@ ol {
 	width: 9px;
 	height: 6px;
 	border: solid #ffffff;
-	border-width: 2px 2px 0px 0px;
+	border-width: 2px 2px 0 0;
 	-webkit-transform: rotate(127deg);
 	-ms-transform: rotate(127deg);
 	transform: rotate(127deg);
@@ -3347,7 +3239,7 @@ ol {
 	width: 9px;
 	height: 6px;
 	border: solid #ffffff;
-	border-width: 2px 2px 0px 0px;
+	border-width: 2px 2px 0 0;
 	-webkit-transform: rotate(127deg);
 	-ms-transform: rotate(127deg);
 	transform: rotate(127deg);
@@ -3922,8 +3814,8 @@ ol {
 .contact-widget .cw-item {
 	background: #ffffff;
 	margin-bottom: 11px;
-	-webkit-box-shadow: 0px 8px 35px 10px #E8E8E8;
-	box-shadow: 0px 8px 35px 10px #E8E8E8;
+	-webkit-box-shadow: 0 8px 35px 10px #E8E8E8;
+	box-shadow: 0 8px 35px 10px #E8E8E8;
 	padding-left: 25px;
 	padding-top: 15px;
 	padding-bottom: 15px;
@@ -4189,7 +4081,7 @@ ol {
 	width: 13px;
 	height: 6px;
 	border: solid #ffffff;
-	border-width: 2px 2px 0px 0px;
+	border-width: 2px 2px 0 0;
 	-webkit-transform: rotate(127deg);
 	-ms-transform: rotate(127deg);
 	transform: rotate(127deg);

@@ -1,6 +1,6 @@
-let listOfSongs = new Array;
-let listOfGenres = new Array;
-let listOfRoles = new Array;
+let listOfSongs = [];
+let listOfGenres = [];
+let listOfRoles = getListOfRoles();
 
 function validation_alert(element, message, alertType) {
     element.append(
@@ -14,15 +14,15 @@ function songToTable() {
     let songName = $("input[name = 'songName']").val();
     let songDuration = $("input[name = 'songDuration']").val();
     let songObj = { "songName": songName, "duration": songDuration };
-    if (songName == '' || songDuration == '') {
+    if (songName === '' || songDuration === '') {
         $('#alertdiv').remove();
         let songNotEmpty = $('#song-not-empty').val();
         validation_alert($('#song-response'), songNotEmpty, 'alert-danger');
         return;
-    } else if (songDuration != '') {
+    } else if (songDuration !== '') {
         $('#alertdiv').remove();
         let regex = /^[0-9]{1}:[0-5]{1}[0-9]{1}$/;
-        if (regex.test(songDuration) == false) {
+        if (regex.test(songDuration) === false) {
             let songDurationInvalid = $('#song-duration-invalid').val();
             validation_alert($('#song-response'), songDurationInvalid, 'alert-danger');
             return;
@@ -44,7 +44,7 @@ function deleteSong(el) {
         "duration": tdDuration
     };
     for (let i = listOfSongs.length; i >= 0; --i) {
-        if (JSON.stringify(listOfSongs[i]) == JSON.stringify(songObj)) {
+        if (JSON.stringify(listOfSongs[i]) === JSON.stringify(songObj)) {
             listOfSongs.splice(i, 1);
         }
     }
@@ -60,7 +60,7 @@ function findOrCreateArtist() {
             "artistName": artistName
         },
         success: function (response) {
-            if (response == "saved") {
+            if (response === "saved") {
                 let artistSaved = $('#artist-saved').val();
                 validation_alert($('#artist-response'), artistSaved, 'alert-success');
             } else {
@@ -78,11 +78,11 @@ function createRecordLabel() {
     // 1900 -2099
     let regEx = /^(19|20)\d{2}$/;
 
-    if (rlName == '' || rlYear == '') {
+    if (rlName === '' || rlYear === '') {
         let rlEmpty = $('#rl-empty').val();
         validation_alert($('#rl-response'), rlEmpty, 'alert-danger');
         return;
-    } else if (regEx.test(rlYear) == false) {
+    } else if (regEx.test(rlYear) === false) {
         $('#alertdiv').remove();
         let rlYearInvalid = $('#rl-year-invalid').val();
         validation_alert($('#rl-response'), rlYearInvalid, 'alert-danger');
@@ -101,7 +101,7 @@ function createRecordLabel() {
         contentType: 'application/json',
         data: JSON.stringify(rlObj),
         success: function (data) {
-            if (data != '') {
+            if (data !== '') {
                 $('#alertdiv').remove();
                 let rlSaved = $('#rl-saved').val();
                 validation_alert($('#rl-response'), rlSaved, 'alert-success');
@@ -123,7 +123,7 @@ function createRecordLabel() {
 function createNewGenre() {
     let genreName = $('#genreName').val();
 
-    if (genreName == '') {
+    if (genreName === '') {
         let genreEmpty = $('#genre-empty').val();
         validation_alert($('#genre-response'), genreEmpty, 'alert-danger');
         return;
@@ -136,7 +136,7 @@ function createNewGenre() {
         url: "/admin/create-genre",
         data: { "genreName": genreName },
         success: function (data) {
-            if (data != '') {
+            if (data !== '') {
                 $('#alertdiv').remove();
                 let genreCreated = $('#genre-created').val();
                 validation_alert($('#genre-response'), genreCreated, 'alert-success');
@@ -204,12 +204,12 @@ function saveNewVinyl() {
         contentType: false,
         cache: false,
         success: function (response) {
-            if (response == "success") {
+            if (response === "success") {
                 $('#alertdiv').remove();
                 let vinylSaved = $('#vinyl-saved').val();
                 validation_alert($('#vinyl-response'), vinylSaved, 'alert-success');
                 clear_vinyl_form();
-            } else if (response == "vinylExists") {
+            } else if (response === "vinylExists") {
                 $('#alertdiv').remove();
                 let vinylExists = $('#vinyl-exists').val();
                 validation_alert($('#vinyl-response'), vinylExists, 'alert-danger');
@@ -284,7 +284,7 @@ function updateVinyl(href) {
         contentType: false,
         cache: false,
         success: function (response) {
-            if (response == "success") {
+            if (response === "success") {
                 $('#alertdiv').remove();
                 validation_alert($('#vinyl-response'), "The vinyl was successfully updated!", 'alert-success');
             } else {
@@ -314,10 +314,10 @@ function addToListOfGenres() {
 
 function getListOfSongs() {
     let songs = [];
-    $('#songTable tr').each(function (index, tr) {
+    $('#songTable tr').each(function () {
         let cols = [];
         $(this).find('td').each(function (colIndex, c) {
-            if (c.textContent != '') {
+            if (c.textContent !== '') {
                 let el = c.textContent;
                 cols.push(el);
             }
@@ -325,7 +325,7 @@ function getListOfSongs() {
         songs.push(cols);
     });
 
-    let songsJSON = new Array;
+    let songsJSON = [];
     for (let i = 1; i < songs.length; i++) {
         let songName = songs[i][0];
         let duration = songs[i][1];
@@ -342,7 +342,7 @@ function getListOfSongs() {
 }
 
 function getListOfGenres() {
-    listOfGenres = new Array;
+    listOfGenres = [];
     $('#genres-ul li').each(function (index, li) {
         let genre = { "name": li.textContent };
         listOfGenres.push(genre);
@@ -363,8 +363,8 @@ function clear_vinyl_form() {
     $('#genres-ul li').remove();
     $('#genre-select').val($("#genre-select option:first").val());
 
-    listOfSongs = new Array;
-    listOfGenres = new Array;
+    listOfSongs = [];
+    listOfGenres = [];
 }
 
 /* ======================= VALIDATIONS ======================== */
@@ -372,21 +372,21 @@ function clear_vinyl_form() {
 
 $("#name").focusout(function () {
     $('#alertdiv').remove();
-    if ($('#name').val() == '') {
+    if ($('#name').val() === '') {
         validation_alert($('#vinyl-name-alert'), "The vinyl name can't be empty!", 'alert-danger');
     }
 });
 
 $("#description").focusout(function () {
     $('#alertdiv').remove();
-    if ($('#description').val() == '') {
+    if ($('#description').val() === '') {
         validation_alert($('#description-alert'), "The description can't be empty!", 'alert-danger');
     }
 });
 
 $("#price").focusout(function () {
     $('#alertdiv').remove();
-    if ($('#price').val() == '') {
+    if ($('#price').val() === '') {
         validation_alert($('#price-alert'), "Price can't be empty!", 'alert-danger');
     } else if (!$.isNumeric($('#price').val())) {
         validation_alert($('#price-alert'), "Price has to be a number!", 'alert-danger');
@@ -395,14 +395,14 @@ $("#price").focusout(function () {
 
 $("#stock").focusout(function () {
     $('#alertdiv').remove();
-    if ($('#stock').val() == '') {
+    if ($('#stock').val() === '') {
         validation_alert($('#quantity-alert'), "Stock can't be empty!", 'alert-danger');
     }
 });
 
 $("#artistName").focusout(function () {
     $('#alertdiv').remove();
-    if ($('#artistName').val() == '') {
+    if ($('#artistName').val() === '') {
         validation_alert($('#artist-response'), "Artist can't be empty!", 'alert-danger');
     }
 });
@@ -430,7 +430,7 @@ function final_validation(name, description, price, stock, stageName, fileCheck,
         validation_alert($('#price-alert'), priceEmpty, 'alert-danger');
         valid = false;
     }
-    if (price != '' && !$.isNumeric($('#price').val())) {
+    if (price !== '' && !$.isNumeric($('#price').val())) {
         let priceNumber = $('#price-not-number').val();
         validation_alert($('#price-alert'), priceNumber, 'alert-danger');
         valid = false;
@@ -487,7 +487,7 @@ function confirmDialogCancel(message) {
                     $(this).dialog("close");
                 }
             },
-            close: function (event, ui) {
+            close: function () {
                 $(this).remove();
             }
         });
@@ -519,7 +519,7 @@ function confirmDialogDelete(message, $href, addressToGoTo) {
                     $(this).dialog("close");
                 }
             },
-            close: function (event, ui) {
+            close: function () {
                 $(this).remove();
             }
         });
@@ -546,7 +546,7 @@ function confirmDialogSaveChanges(message) {
                     $(this).dialog("close");
                 }
             },
-            close: function (event, ui) {
+            close: function () {
                 $(this).remove();
             }
         });
@@ -585,7 +585,7 @@ $('.edit-order').click(
         $.ajax({
             type: "GET",
             url: $href,
-            success: function (data) {
+            success: function () {
                 $(location).attr('href', $href);
             }
         });
@@ -613,12 +613,12 @@ function confirmDialogDeleteUser(el, message, $href, addressToGoTo) {
                         type: "GET",
                         url: $href,
                         success: function (data) {
-                            if (data == "success") {
+                            if (data === "success") {
                                 let userDeleted = $('#user-deleted').val();
                                 validation_alert($('.user-delete-response'), userDeleted, "alert-success");
                                 el.parentNode.parentNode.parentNode.removeChild(el.parentNode.parentNode);
                             }
-                            if (data == "fail") {
+                            if (data === "fail") {
                                 let userNotDeleted = $('#user-not-deleted').val();
                                 validation_alert($('.user-delete-response'), userNotDeleted, "alert-danger");
                             }
@@ -630,7 +630,7 @@ function confirmDialogDeleteUser(el, message, $href, addressToGoTo) {
                     $(this).dialog("close");
                 }
             },
-            close: function (event, ui) {
+            close: function () {
                 $(this).remove();
             }
         });
@@ -650,15 +650,16 @@ $('.remove-user').click(
 );
 
 function getListOfRoles() {
-    listOfRoles = new Array;
-    $('#current-roles li').each(function (index, li) {
+    let roles = [];
+    $('#current-roles li').each(function () {
         let role = {"name": $(this).attr('value')};
-        listOfRoles.push(role);
+        roles.push(role);
     });
-    return listOfRoles;
+    return roles;
 }
 
 function removeRoles() {
+    listOfRoles = [];
     $('#current-roles').empty();
 }
 
@@ -667,12 +668,11 @@ $('#role-add').change(
         if (document.getElementById("alertdiv") !== null) {
             $('#alertdiv').remove();
         }
-        if (getListOfRoles().length < 2) {
+        if (listOfRoles.length < 2) {
             let selectedRole = $('#role-add').find(':selected').val();
-            if (getListOfRoles().some(e => e.name === selectedRole)) {
+            if (listOfRoles.some(e => e.name === selectedRole)) {
                 let userHasRole = $('#user-has-role').val();
                 validation_alert($('#role-alert'), userHasRole, 'alert-danger');
-                return;
             } else {
                 let roleObj = {"name": selectedRole};
                 listOfRoles.push(roleObj);
@@ -687,7 +687,6 @@ $('#role-add').change(
         } else {
             let noMoreRoles = $('#no-more-roles').val();
             validation_alert($('#role-alert'), noMoreRoles, 'alert-danger');
-            return;
         }
     }
 );
@@ -695,6 +694,11 @@ $('#role-add').change(
 $('.update-user-btn').click(
     function () {
         event.preventDefault();
+        if (listOfRoles.length === 0) {
+            let noRoles = $('#no-roles').val();
+            validation_alert($('#role-alert'), noRoles, 'alert-danger');
+            return;
+        }
         let user = {
             "id": $('#user-id').val(),
             "userRoles": listOfRoles,
@@ -708,7 +712,7 @@ $('.update-user-btn').click(
                 if (document.getElementById("alertdiv") !== null) {
                     $('#alertdiv').remove();
                 }
-                if (data == "success") {
+                if (data === "success") {
                     let userUpdated = $('#user-updated').val();
                     validation_alert($('.user-edited-response'), userUpdated, "alert-success");
                 } else {

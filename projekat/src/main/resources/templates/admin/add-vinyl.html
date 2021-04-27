@@ -202,7 +202,8 @@
                     <input type="button" class="new-vinyl-save" th:value="#{admin.vinyl.save}" onclick="saveNewVinyl()">
                 </div>
                 <div class="col-lg-5">
-                    <input type="button" class="new-vinyl-save" th:value="#{admin.vinyl.cancel}" onclick="confirmDialogCancel('')">
+                    <input type="hidden" id="cancelOrNo" th:value="#{admin.vinyl.cancelOrNo}">
+                    <input type="button" class="new-vinyl-save" th:value="#{admin.vinyl.cancel}" onclick="confirmDialogCancel()">
                 </div>
                 <input type="hidden" th:value="#{admin.vinylSaved}" id="vinyl-saved">
                 <input type="hidden" th:value="#{admin.vinylExists}" id="vinyl-exists">

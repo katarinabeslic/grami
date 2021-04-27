@@ -25,6 +25,9 @@
 							</div>
 						</div>
 						<div class="col-lg-7">
+							<input type="hidden" th:value="#{admin.artistSaved}" id="artist-saved">
+							<input type="hidden" th:value="#{admin.artistExists}" id="artist-exists">
+							<input type="hidden" th:value="#{admin.artistEmpty}" id="artist-empty">
 							<label for="name" th:text="#{admin.vinyl.name}"></label> <input type="text" th:value="${vinyl.vinylName}" id="name">
 							<div id="vinyl-name-alert" class="alert-class"></div>
 							<label for="name" th:text="#{admin.artist.name}"></label>

@@ -118,7 +118,7 @@ public class MyRestController {
         JSONArray gJ = o.getJSONArray("genres");
         List<Genre> gs = gson.fromJson(gJ.toString(), new TypeToken<List<Genre>>() {
         }.getType());
-        Genre g = null;
+        Genre g;
         vinyl.getGenres().clear();
         for (Genre genre : gs) {
             g = genreService.findByName(genre.getName());
@@ -156,7 +156,7 @@ public class MyRestController {
         Gson gson = new Gson();
         JSONArray gJ = o.getJSONArray("genres");
         List<Genre> gs = gson.fromJson(gJ.toString(), new TypeToken<List<Genre>>() {}.getType());
-        Genre g = null;
+        Genre g;
         vinyl.getGenres().clear();
         for (Genre genre : gs) {
             g = genreService.findByName(genre.getName());
@@ -179,8 +179,7 @@ public class MyRestController {
     private String getWorkingPath(String path) {
         String[] parts = path.split(Pattern.quote(File.separator));
         // need parts[4] - parts[6]
-        String imgUrl = "/" + parts[4] + "/" + parts[5] + "/" + parts[6];
-        return imgUrl;
+        return "/" + parts[4] + "/" + parts[5] + "/" + parts[6];
     }
 
     private String saveFile(MultipartFile file) throws IOException {
@@ -196,7 +195,7 @@ public class MyRestController {
     @GetMapping("/admin/remove-order")
     public String removeOrder(@RequestParam("id") int id, Model model) {
         orderService.deleteById(id);
-        return "redirect:/admin/orders";
+        return "success";
     }
 
     @GetMapping("/cart/remove-item")
@@ -250,13 +249,13 @@ public class MyRestController {
     @PostMapping("/admin/edit-user")
     public String editUser(@RequestBody String data) {
         JSONObject jsonObject = new JSONObject(data);
-        int id = Integer.valueOf(jsonObject.getString("id"));
+        int id = Integer.parseInt(jsonObject.getString("id"));
         User user = userService.findById(id);
         Gson gson = new Gson();
         JSONArray jur = jsonObject.getJSONArray("userRoles");
         List<Role> roles = gson.fromJson(jur.toString(), new TypeToken<List<Role>>() {}.getType());
         Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = null;
+        UserRole userRole;
         for (Role r : roles) {
             r = roleService.findByName(r.getName());
             userRole = new UserRole(user, r);
