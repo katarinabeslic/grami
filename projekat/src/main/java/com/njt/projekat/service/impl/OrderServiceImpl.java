@@ -67,7 +67,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteById(int id) {
         Order order = orderRepository.findById(id);
-        System.out.println(order);
+        System.out.println(order.getId());
+        //System.out.println(order);
         List<CartItem> boughtItems = order.getCartItems();
         for (CartItem item : boughtItems) {
             if (!order.getOrderStatus().equals("Cancelled")) {

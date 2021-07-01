@@ -12,6 +12,9 @@
 					<div class="register-form">
 						<h2 th:text="#{register.form}"></h2>
 						<form th:action="@{/register-user}" th:object="${user}" method="post" id="registration-form">
+							<div th:if="${usernameExists}">
+								<div class="alert alert-danger"><a class="close" data-dismiss="alert" aria-label="close">×</a><span th:text="#{alert.usernameTaken}"></span></div>
+							</div>
 							<div class="group-input">
 								<label th:text="#{register.firstName}"></label> <input type="text" th:field="*{firstName}" minlength="1" required>
 							</div>
@@ -26,9 +29,6 @@
 							</div>
 							<div class="group-input">
 								<label th:text="#{register.username}"></label> <input type="text" th:field="*{username}" minlength="2" required>
-							</div>
-							<div th:if="${usernameExists}">
-								<div class="alert alert-danger" th:text="#{alert.usernameTaken}"><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
 							</div>
 							<div class="group-input">
 								<label th:text="#{register.password}"></label> <input type="password" th:field="*{password}" minlength="4" required>

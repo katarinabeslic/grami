@@ -15,7 +15,7 @@ public interface VinylService {
 
 	public Vinyl findById(int id);
 
-	public void deleteById(int id);
+	public boolean deleteById(int id);
 
 	public List<Vinyl> findAllOrderByPriceDesc();
 

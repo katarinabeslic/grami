@@ -245,6 +245,8 @@ function updateVinyl(href) {
     let data = new FormData(form);
     if ($('#imgUrl').get(0).files.length === 0) {
         imgUrl = $('.existingImg img').attr('src');
+    } else {
+        imgUrl = $('#imgUrl').val();
     }
     let formatId = $('#selected-format').find(':selected').val();
     let editedVinylJSON = {
@@ -286,10 +288,12 @@ function updateVinyl(href) {
         success: function (response) {
             if (response === "success") {
                 $('#alertdiv').remove();
-                validation_alert($('#vinyl-response'), "The vinyl was successfully updated!", 'alert-success');
+                let vinulUpdated = $('#vinyl-updated').val();
+                validation_alert($('#vinyl-response'), vinulUpdated, 'alert-success');
             } else {
                 $('#alertdiv').remove();
-                validation_alert($('#vinyl-response'), "Oh no! The vinyl wasn't updated :(", 'alert-danger');
+                let vinulNotUpdated = $('#vinyl-not-updated').val();
+                validation_alert($('#vinyl-response'), vinulNotUpdated, 'alert-danger');
             }
         }
     });
@@ -463,9 +467,26 @@ function final_validation(name, description, price, stock, stageName, fileCheck,
 $('.deleteVinyl').on('click', function (event) {
     event.preventDefault();
     let href = $(this).attr('href');
+    console.log(href);
     let deleteVinyl = $('#delete-vinyl-question').val();
     confirmDialogDelete(deleteVinyl, href, 'http://localhost:8080/admin/catalogue');
 });
+
+$('#update-vinyl').click(
+    function () {
+        event.preventDefault();
+        let saveChanges = $('#save-changes').val();
+        confirmDialogSaveChanges(saveChanges);
+    }
+);
+
+$('#cancel-change').click(
+    function () {
+        event.preventDefault();
+        let cancel = $('#cancelOrNo').val();
+        confirmDialogCancel(cancel);
+    }
+);
 
 function confirmDialogCancel(message) {
     let justChecking = $('#just-checking').val();
@@ -510,7 +531,8 @@ function confirmDialogDelete(message, $href, addressToGoTo) {
                         type: "GET",
                         url: $href,
                         success: function (data) {
-                            $(location).attr('href', addressToGoTo);
+                            if (data == 'success')
+                                $(location).attr('href', addressToGoTo);
                         }
                     });
                     $(this).dialog("close");
@@ -567,15 +589,49 @@ $('#rl-select').on('change', function () {
 
 $('.href-icon').css('cursor', 'pointer');
 
-$('.remove-order').click(
+$('.remove-order-href').click(
     function () {
         event.preventDefault();
         let $row = $(this).closest("td");
         let $href = $row.find("a").attr('href');
+        console.log($href)
         let deleteOrder = $('#remove-order').val();
-        confirmDialogDelete(deleteOrder, $href, 'http://localhost:8080/admin/orders');
+        confirmDialogDeleteOrder(deleteOrder, $href);
     }
 );
+
+function confirmDialogDeleteOrder(message, $href) {
+    let justChecking = $('#just-checking').val();
+    $('<div id="confirm-dialog"></div>').appendTo('body')
+        .html('<div><h5>' + message + '</h5></div>')
+        .dialog({
+            modal: true,
+            title: justChecking,
+            zIndex: 10000,
+            autoOpen: true,
+            width: 'auto',
+            resizable: false,
+            buttons: {
+                Yes: function () {
+                    $.ajax({
+                        type: "GET",
+                        url: $href,
+                        success: function (data) {
+                            if (data == 'success')
+                                $(location).attr('href', 'http://localhost:8080/admin/orders');
+                        }
+                    });
+                    $(this).dialog("close");
+                },
+                No: function () {
+                    $(this).dialog("close");
+                }
+            },
+            close: function () {
+                $(this).remove();
+            }
+        });
+}
 
 $('.edit-order').click(
     function () {
@@ -636,12 +692,12 @@ function confirmDialogDeleteUser(el, message, $href, addressToGoTo) {
         });
 }
 
-$('.remove-user').click(
+$('.remove-user-href').click(
     function () {
+        event.preventDefault();
         if (document.getElementById("alertdiv") !== null) {
             $('#alertdiv').remove();
         }
-        event.preventDefault();
         let $row = $(this).closest("td");
         let $href = $row.find("a").attr('href');
         let deleteUser = $('#user-question').val();

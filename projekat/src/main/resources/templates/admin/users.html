@@ -27,13 +27,13 @@
                         </thead>
                         <tbody th:each="user : ${users}">
                         <tr>
-                            <td th:text="|#{admin.users.cust}${user.id}|"></td>
+                            <td th:text="|#{admin.users.cust}${user.id}|" style="color: #e7ab3c"></td>
                             <td th:text="${user.firstName}"></td>
                             <td th:text="${user.lastName}"></td>
                             <td th:text="${user.email}"></td>
                             <td th:text="${user.phoneNumber}"></td>
                             <td class="href-icon"><a class="edit-order-href" th:href="@{/admin/edit-user(id=${user.id})}"></a><i class="edit-order fa fa-edit" style="font-size:26px"/></td>
-                            <td class="href-icon"><a class="remove-order-href" th:href="@{/admin/remove-user(id=${user.id})}"></a><i class="remove-user fa fa-trash-o" style="font-size:26px"/></td>
+                            <td class="href-icon"><a class="remove-user-href" th:href="@{/admin/remove-user(id=${user.id})}" style="text-decoration: none; color: #2d292f"><i class="remove-user fa fa-trash-o" style="font-size:26px"/></a></td>
                         </tr>
                         </tbody>
                     </table>

@@ -192,19 +192,26 @@ public class MyRestController {
         return getWorkingPath(path);
     }
 
+
+    @GetMapping("/admin/remove")
+    public String redirectAdminToCatalogue(@RequestParam("id") int id, Model model) {
+        vinylService.deleteById(id);
+        model.addAttribute("vinylDeleted", true);
+        return "success";
+    }
+
     @GetMapping("/admin/remove-order")
     public String removeOrder(@RequestParam("id") int id, Model model) {
+        System.out.println("removing order with id: " + id);
         orderService.deleteById(id);
         return "success";
     }
 
     @GetMapping("/cart/remove-item")
-    private String removeItemFromCart(@RequestParam("id") int id, HttpServletRequest request) {
-        String referer = request.getHeader("Referer");
+    private String removeItemFromCart(@RequestParam("id") int id) {
         shoppingCartService.removeCartItemById(id);
-        return referer;
+        return "success";
     }
-
 
     @GetMapping("/admin/remove-user")
     public String removeUser(@RequestParam("id") int id) {

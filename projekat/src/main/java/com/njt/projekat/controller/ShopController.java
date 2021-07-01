@@ -72,7 +72,13 @@ public class ShopController {
         classActiveSort = classActiveSort.replaceAll("\\s+", "");
         classActiveSort = classActiveSort.replaceAll("&", "");
 
+        boolean noResults = false;
+        if (pageResult.getTotalElements() == 0) {
+            noResults = true;
+        }
+
         model.addAttribute(classActiveSort, true);
+        model.addAttribute("searchResultEmpty", noResults);
         model.addAttribute("vinyls", pageResult.getContent());
         model.addAttribute("formats", formatService.findAll());
         model.addAttribute("genres", genreService.findAll());

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.njt.projekat.form.VinylFilterForm;
 import com.njt.projekat.util.SortFilter;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class AdminController {
 
@@ -67,7 +69,13 @@ public class AdminController {
 		classActiveSort = classActiveSort.replaceAll("\\s+", "");
 		classActiveSort = classActiveSort.replaceAll("&", "");
 
+		boolean noResults = false;
+		if (pageResult.getTotalElements() == 0) {
+			noResults = true;
+		}
+
 		model.addAttribute(classActiveSort, true);
+		model.addAttribute("searchResultEmpty", noResults);
 		model.addAttribute("vinyls", pageResult.getContent());
 		model.addAttribute("formats", formatService.findAll());
 		model.addAttribute("genres", genreService.findAll());
@@ -97,15 +105,6 @@ public class AdminController {
 		model.addAttribute("genres", genreService.findAll());
 		model.addAttribute("formats", formatService.findAll());
 		return "admin/edit-vinyl";
-	}
-
-	@GetMapping("/admin/remove")
-	public String redirectAdminToCatalogue(@RequestParam("id") int id, Model model) {
-		vinylService.deleteById(id);
-		model.addAttribute("vinyls", vinylService.findAll());
-		model.addAttribute("formats", formatService.findAll());
-		model.addAttribute("genres", genreService.findAll());
-		return "redirect:/admin/catalogue";
 	}
 
 	@GetMapping("/admin/orders")

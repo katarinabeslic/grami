@@ -78,6 +78,7 @@ public class UserController {
 
 	@GetMapping("/my-profile")
 	public String showUserProfile(Model model, Principal principal) {
+		model.addAttribute("incorrectPassword", true);
 		if (principal == null) {
 			return "redirect:/login";
 		}
@@ -113,6 +114,14 @@ public class UserController {
 		if (newPassword != null && !newPassword.isEmpty() && !newPassword.equals("")) {
 			if (bCryptPasswordEncoder.matches(user.getPassword(), currentUser.getPassword())) {
 				user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+				if (userService.findByUsername(user.getUsername()) != null) {
+					redirectAttributes.addFlashAttribute("usernameExists", true);
+					return "redirect:" + referer;
+				}
+				if (userService.findByEmail(user.getEmail()) != null) {
+					redirectAttributes.addFlashAttribute("emailExists", true);
+					return "redirect:" + referer;
+				}
 				userService.save(user);
 			} else {
 				model.addAttribute("incorrectPassword", true);

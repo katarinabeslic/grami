@@ -28,27 +28,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter implemen
 
 	@Autowired
 	private UserSecurityService userSecurityService;
-	
+
 	private BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
 	private static final String[] PUBLIC_MATCHERS = {
-			"/css/**",
-			"/fonts/**",
-			"/js/**",
-			"/images/**",
-			"/img/**",
-			"/",
-			"/register",
-			"/register-user",
-			"/login",
-			"/shop/**",
-			"/vinyl",				
-			"/user",
-			"/error",
-			"/contact-faq",
-			"/about-us"
+			"/css/**", "/fonts/**",	"/js/**", "/images/**",
+			"/", "/register", "/register-user", "/login",
+			"/shop/**", "/vinyl", "/user", "/error",
+			"/contact-faq", "/about-us"
 	};
 	
 	@Override

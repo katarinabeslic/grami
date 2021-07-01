@@ -109,6 +109,9 @@
 							<div th:if="${cartEmpty}">
 								<div class="alert alert-danger"><span th:text="#{shop.cartEmpty}"></span><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
 							</div>
+							<div th:if="${searchResultEmpty}">
+								<div class="alert alert-danger"><span th:text="#{alert.searchResultEmpty}"></span><a class="close" data-dismiss="alert" aria-label="close">×</a></div>
+							</div>
 							<div class="row">
 								<div class="col-lg-4 col-sm-6" th:each="vinyl: ${vinyls}">
 									<input type="hidden" class="the-vinyl-id" th:value="${vinyl.id}">

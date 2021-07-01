@@ -38,9 +38,10 @@ public class VinylServiceImpl implements VinylService {
 	}
 
 	@Override
-	public void deleteById(int id) {
-		vinylRepository.deleteById(id);		
-	}
+	public boolean deleteById(int id) {
+		vinylRepository.deleteById(id);
+        return false;
+    }
 
 	@Override
 	public List<Vinyl> findAllOrderByPriceDesc() {

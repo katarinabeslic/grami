@@ -6,8 +6,9 @@ $('#locales').change(function () {
 });
 
 let currentLocale = $('#current-locale').val();
+console.log(currentLocale)
 
-if (currentLocale == 'en') {
+if (currentLocale === 'en' || currentLocale === 'en_US') {
     $('#locales option[value=en]').attr('selected', 'selected');
 } else {
     $('#locales option[value=sr]').attr('selected', 'selected');
@@ -117,7 +118,8 @@ $('#pp-btn').click(function () {
 });
 
 let cardInfoNull = $('#isCardInfoNull').val();
-if (cardInfoNull) {
+if (cardInfoNull == true) {
+    console.log("here disabling btn")
     $('#place-order').attr('disabled', true);
 }
 
@@ -138,7 +140,7 @@ function confirmDialogDelete(message, href) {
                         type: "GET",
                         url: href,
                         success: function (data) {
-                            $(location).attr('href', data);
+                            $(location).attr('href', 'http://localhost:8080/cart');
                         }
                     });
                     $(this).dialog("close");
@@ -153,9 +155,10 @@ function confirmDialogDelete(message, href) {
         });
 }
 
-$('.remove-cart-item').click(function () {
+$('.deleteCartItem').click(function () {
         event.preventDefault();
-        let href = $('.item-href').attr('href');
+        let href = $(this).attr('href');
+        console.log(href);
         let removeFromCart = $('#remove-from-cart').val();
         confirmDialogDelete(removeFromCart, href);
     }
@@ -190,7 +193,8 @@ $('.qty-dec').click(
         let qty = $('.itemQuantity').val();
         if (qty > 1) {
             let newQty = qty - 1;
-            let cartItemId = $('#cartItemId').val();
+            let cartItemId = $('.cartItemId').val();
+            console.log(cartItemId)
             let rData = {
                 "cartItemId" : parseInt(cartItemId),
                 "newQuantity" : newQty
@@ -211,7 +215,7 @@ $('.qty-dec').click(
 $('.qty-inc').click(
     function () {
         let qty = parseInt($('.itemQuantity').val()) + 1;
-        let cartItemId = parseInt($('#cartItemId').val());
+        let cartItemId = parseInt($('.cartItemId').val());
         let rData = {
             "cartItemId" : cartItemId,
             "newQuantity" : qty
@@ -228,7 +232,6 @@ $('.qty-inc').click(
                     console.log("stock not incremented")
                 }
             },
-
         });
     }
 );

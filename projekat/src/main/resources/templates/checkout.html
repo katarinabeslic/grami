@@ -168,7 +168,7 @@
                                 <li><span style="float: left" th:text="#{checkout.vinyl}"></span><span th:text="#{checkout.total}"></span></li>
                                 <li class="fw-normal" th:each="item : ${shoppingCart}"
                                     th:text="| ${item.vinyl.vinylName} - ${item.vinyl.artist.stageName} X ${item.quantity}|"></li>
-                                <li class="total-price" style="padding-bottom: 23px"><h6 style="float: left" th:text="#{checkout.total}"></h6> <span th:text="${shoppingCartTotal + '€'}"></span></li>
+                                <li class="total-price" style="padding-bottom: 23px"><h6 style="float: left" th:text="#{checkout.total}"></h6> <span th:text="${#numbers.formatDecimal(shoppingCartTotal, 0, 2) + '€'}"></span></li>
                             </ul>
                             <input type="hidden" id="price" th:value="${shoppingCartTotal}">
                             <input type="hidden" id="currency" value="EUR">

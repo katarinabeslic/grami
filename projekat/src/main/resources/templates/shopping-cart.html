@@ -25,7 +25,7 @@
                             </thead>
                             <tbody>
                                 <tr th:each="cartItem : ${shoppingCart}">
-                                    <input type="hidden" id="cartItemId" th:value="${cartItem.id}">
+                                    <input type="hidden" class="cartItemId" th:value="${cartItem.id}">
                                     <td class="cart-pic first-row"><img th:src="${cartItem.vinyl.imgUrl}" style="width: 220px;" alt=""></td>
                                     <td class="cart-title first-row">
                                         <h5 style="text-align: center" th:text="|${cartItem.vinyl.vinylName} - ${cartItem.vinyl.artist.stageName}|"></h5>
@@ -40,7 +40,7 @@
                                     </td>
 									<td class="total-price first-row totalPrice" th:with="totalPrice = ${cartItem.vinyl.price * cartItem.quantity}" 
 										th:text="${totalPrice + '€'}" th:value="${totalPrice}"></td>
-                                    <td class="close-td first-row"><a class="item-href" th:href="@{/cart/remove-item(id=${cartItem.id})}"></a><i class="remove-cart-item ti-trash"></i></td>
+                                    <td class="close-td first-row"><a class="deleteCartItem" style="text-decoration: none; color: #2d292f;" th:href="@{/cart/remove-item(id=${cartItem.id})}"><i class="remove-cart-item ti-trash"></i></a></td>
                                 </tr>
                             </tbody>
                         </table>

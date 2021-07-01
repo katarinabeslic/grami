@@ -20,7 +20,7 @@
                 </p>
                 <p style="padding-bottom: 30px">
                     <span class="text-muted" th:text="#{success.total}"></span>
-                    <span style="color: #e7ab3c"><span th:text="${order.totalPrice}" style="color: #e7ab3c"></span> €</span>
+                    <span style="color: #e7ab3c"><span th:text="${#numbers.formatDecimal(order.totalPrice, 0, 2) + '€'}" style="color: #e7ab3c"></span> €</span>
                 </p>
                 <a th:href="@{/shop}" class="site-btn" style="color: white" th:text="#{success.continue}"></a>
                 <a th:href="@{/order-detail(id=${order.id})}" class="site-btn place-btn" style="color: white" th:text="#{success.viewOrd}"></a>
